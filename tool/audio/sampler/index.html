@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Base Styles */
+        /* --- Base Styles --- */
         body {
             background-color: #ffffff;
             color: #333;
@@ -16,18 +16,15 @@
             user-select: none;
         }
 
-        /* Screen Size Blocker */
-        #size-warning {
-            display: none;
-        }
-        /* Updated height restriction to 420px */
+        /* --- Screen Size Blocker --- */
+        #size-warning { display: none; }
         @media (max-width: 479px), (max-height: 419px) {
-            #size-warning {
-                display: flex !important;
-            }
+            #size-warning { display: flex !important; }
         }
 
-        /* Range Slider Customization */
+        /* --- UI Components --- */
+        
+        /* Standard Slider */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -51,17 +48,44 @@
             border-radius: 2px;
         }
 
-        /* Vertical Slider for EQ */
+        /* Vertical Slider (EQ) */
         input[type=range].vertical-slider {
-            writing-mode: bt-lr; /* IE/Edge */
-            -webkit-appearance: slider-vertical; /* Webkit */
+            -webkit-appearance: slider-vertical;
             width: 8px;
             height: 100%;
             padding: 0 5px;
             background: transparent;
         }
+        @supports not (-webkit-appearance: slider-vertical) {
+            input[type=range].vertical-slider {
+                -webkit-appearance: none;
+                width: 100px;
+                height: 8px;
+                transform: rotate(-90deg);
+                transform-origin: center;
+                margin: 0;
+            }
+        }
 
-        /* Pad Styles */
+        /* Number Input (No Spinners) */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] {
+            -moz-appearance: textfield;
+            background: transparent;
+            text-align: center;
+            font-family: monospace;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        input[type=number]:focus {
+            border-color: #22c55e;
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        /* --- Pad Styles --- */
         .pad-surface {
             transition: all 0.1s ease;
             position: relative;
@@ -79,52 +103,52 @@
             background-color: #f0fdf4;
         }
         
-        /* Visual Logic Classes:
-           .audible -> Playing & Sounding (Pink)
-           .silenced -> Playing but Muted/Solo-blocked (Yellow)
-        */
-        .pad-surface.audible {
-            border-color: #ec4899 !important; /* Pink */
+        /* Dynamic States */
+        .pad-surface.audible { /* Playing (Pink) */
+            border-color: #ec4899 !important;
             box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
             background-color: #fff1f2;
         }
-        .pad-surface.silenced {
-            border-color: #eab308 !important; /* Yellow */
+        .pad-surface.silenced { /* Muted/Blocked (Yellow) */
+            border-color: #eab308 !important;
             background-color: #fefce8;
             opacity: 0.9;
         }
-        
-        .pad-surface.locked {
+        .pad-surface.locked { /* Locked (Gray) */
             opacity: 0.6;
             background-color: #f3f4f6;
             cursor: not-allowed;
-            border-color: #d1d5db;
+            border-color: #d1d5db !important;
         }
         
-        /* Solo Indicator Badge */
+        /* Badges */
         .solo-badge { display: none; }
         .pad-surface.soloed .solo-badge { display: block; }
 
-        /* Mode Buttons Active State */
+        /* --- Mode Buttons --- */
         .btn-mode-active {
             background-color: #3b82f6 !important; /* Blue-500 */
             color: white !important;
             border-color: #3b82f6 !important;
-            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
         }
 
-        /* Disabled Controls */
+        /* --- Play Mode Buttons (Settings) --- */
+        .playmode-active {
+            background-color: #22c55e !important; /* Green-500 */
+            color: white !important;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
         .controls-disabled {
             opacity: 0.4;
             pointer-events: none;
             filter: grayscale(100%);
         }
 
-        /* Layout Utilities */
         .layout-normal { flex-direction: row; }
         .layout-reverse { flex-direction: row-reverse; }
 
-        /* Toast Notification */
         .toast {
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             transform: translateY(150%) translateX(-50%);
@@ -135,12 +159,10 @@
             opacity: 1;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
 
-        /* EQ Grid Background */
         .eq-grid {
             background: linear-gradient(to bottom, 
                 #e5e7eb 1px, transparent 1px, transparent calc(25% - 1px),
@@ -154,33 +176,35 @@
 </head>
 <body class="h-screen w-screen flex flex-col relative">
 
-    <!-- Size Warning Overlay -->
+    <!-- Size Warning -->
     <div id="size-warning" class="fixed inset-0 bg-gray-800 z-[9999] flex flex-col items-center justify-center text-white p-6 text-center">
         <i class="fa-solid fa-display text-5xl mb-4 text-red-400"></i>
         <h2 class="text-2xl font-bold mb-2">Screen Size Too Small</h2>
         <p class="text-sm text-gray-400 mt-2">Minimum required: 480px x 420px</p>
+        <button onclick="toggleFullscreen()" class="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold transition" id="warning-fs-btn">
+            Enter Fullscreen
+        </button>
     </div>
 
     <!-- App Container -->
     <div id="app-container" class="flex flex-grow w-full h-full layout-normal overflow-hidden">
         
-        <!-- Pads Area (Left) -->
+        <!-- Pads Area -->
         <div class="flex-grow bg-white flex flex-col items-center justify-center p-3 h-full overflow-hidden">
             <div id="pads-grid" class="grid gap-3 w-full h-full max-w-6xl">
                 <!-- Pads generated via JS -->
             </div>
         </div>
 
-        <!-- Controls Area (Right) -->
+        <!-- Controls Area -->
         <div id="controls-area" class="w-60 min-w-[240px] bg-white border-l border-gray-200 flex flex-col justify-between p-4 shadow-xl z-20 relative h-full">
             
-            <!-- Top: Title & Tools -->
+            <!-- Top Tools -->
             <div class="flex flex-col gap-4 w-full">
                 <h1 class="text-xl font-bold text-gray-800 text-center tracking-tight border-b pb-3">Web Sampler Pro</h1>
                 
                 <div id="non-essential-controls" class="flex flex-col gap-4 transition-opacity duration-200">
                     
-                    <!-- Action Buttons -->
                     <div class="flex justify-center gap-3">
                         <button onclick="openSettings()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Settings">
                             <i class="fa-solid fa-gear text-lg"></i>
@@ -188,9 +212,12 @@
                         <button onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Swap Layout">
                             <i class="fa-solid fa-arrow-right-arrow-left text-lg"></i>
                         </button>
+                        <button onclick="toggleFullscreen()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Fullscreen" id="panel-fs-btn">
+                            <i class="fa-solid fa-expand text-lg"></i>
+                        </button>
                     </div>
 
-                    <!-- Grid Controls -->
+                    <!-- Grid -->
                     <div class="flex flex-col gap-2 bg-gray-50 p-2 rounded-lg border border-gray-100">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] text-gray-500 font-bold uppercase w-8">Rows</span>
@@ -210,7 +237,7 @@
                         </div>
                     </div>
 
-                    <!-- Import/Export -->
+                    <!-- IO -->
                     <div class="flex gap-2">
                         <button onclick="exportData()" class="flex-1 py-2 bg-blue-50 text-blue-600 rounded text-xs hover:bg-blue-100 font-bold transition flex items-center justify-center shadow-sm">
                             <i class="fa-solid fa-download mr-2"></i> Export
@@ -223,28 +250,18 @@
                 </div>
             </div>
 
-            <!-- Bottom: Play Control & Master Volume -->
+            <!-- Bottom Controls -->
             <div class="flex flex-col gap-3 mt-auto pt-3 border-t border-gray-100">
-                
-                <!-- Live Control Buttons (Only active during play) -->
                 <div id="live-controls" class="flex gap-2 controls-disabled transition-opacity duration-200">
-                    <button id="btn-mute-mode" onclick="toggleMuteMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">
-                        MUTE
-                    </button>
-                    <button id="btn-solo-mode" onclick="toggleSoloMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">
-                        SOLO
-                    </button>
-                    <button id="btn-end-mode" onclick="toggleEndMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">
-                        END
-                    </button>
+                    <button id="btn-mute-mode" onclick="toggleMuteMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">MUTE</button>
+                    <button id="btn-solo-mode" onclick="toggleSoloMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">SOLO</button>
+                    <button id="btn-end-mode" onclick="toggleEndMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">END</button>
                 </div>
 
-                <!-- All Stop -->
                 <button onclick="stopAllSounds()" class="w-full py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold shadow-md transition flex items-center justify-center gap-2 text-sm active:scale-95">
                     <i class="fa-solid fa-square"></i> ALL STOP
                 </button>
 
-                <!-- Master Vol -->
                 <div>
                     <div class="flex justify-between text-[10px] text-gray-500 mb-1 font-bold">
                         <span>MASTER VOL</span>
@@ -271,6 +288,7 @@
                 </div>
                 <div class="flex-grow p-6 overflow-y-auto relative bg-white">
                     <div id="pad-config-area" class="hidden space-y-6">
+                        <!-- Header -->
                         <div class="flex justify-between items-center border-b pb-4">
                             <div>
                                 <h3 id="config-pad-title" class="text-2xl font-bold text-green-600">Pad 1</h3>
@@ -279,67 +297,111 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="text-xs font-bold text-gray-600 uppercase">Lock Pad</span>
+                                <span class="text-xs font-bold text-gray-600 uppercase">Lock</span>
                                 <button id="lock-toggle" onclick="togglePadLock()" class="w-12 h-6 rounded-full bg-gray-300 relative transition-colors duration-200 focus:outline-none">
                                     <span class="absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 shadow-sm"></span>
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Config Form -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Left Col -->
                             <div class="space-y-4">
                                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                                     <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Source & Name</label>
                                     <div class="flex items-center gap-2 mb-3">
                                         <label class="cursor-pointer bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs font-bold transition shadow-sm flex items-center hover:shadow">
-                                            <i class="fa-solid fa-upload mr-2"></i> Upload Audio (Max 50MB)
+                                            <i class="fa-solid fa-upload mr-2"></i> Upload (Max 50MB)
                                             <input type="file" accept="audio/*" class="hidden" onchange="handleAudioUpload(this)">
                                         </label>
-                                        <span id="upload-status" class="text-xs text-red-500 font-bold hidden bg-red-50 px-2 py-1 rounded">Upload Failed</span>
+                                        <span id="upload-status" class="text-xs text-red-500 font-bold hidden bg-red-50 px-2 py-1 rounded">Error</span>
                                     </div>
-                                    <input type="text" id="config-name" oninput="updatePadName(this.value)" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Enter Pad Name">
+                                    <input type="text" id="config-name" oninput="updatePadName(this.value)" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-green-500" placeholder="Enter Pad Name">
                                 </div>
+
                                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                                     <div class="flex justify-between items-center mb-2">
-                                        <label class="text-xs font-bold text-gray-700 uppercase">Default Volume</label>
-                                        <span id="config-vol-display" class="text-xs font-mono bg-white px-2 py-1 rounded border">100%</span>
+                                        <label class="text-xs font-bold text-gray-700 uppercase">Volume (%)</label>
                                     </div>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <button onclick="adjustPadVolume(-10)" class="w-8 h-8 rounded-full bg-white border hover:bg-gray-100 flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
-                                        <input type="range" id="config-vol" min="0" max="200" value="100" oninput="updatePadVolume(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                                        <button onclick="adjustPadVolume(10)" class="w-8 h-8 rounded-full bg-white border hover:bg-gray-100 flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <button onclick="adjustPadVolume(-10)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                                        <input type="range" id="config-vol" min="0" max="200" value="100" oninput="updatePadVolume(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
+                                        <button onclick="adjustPadVolume(10)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                        <input type="number" id="config-vol-input" value="100" class="w-12 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadVolume(this.value)">
                                     </div>
-                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Play Mode</label>
-                                    <div class="flex rounded-md border border-gray-200 bg-white overflow-hidden shadow-sm">
-                                        <button onclick="setPlayMode('poly')" id="mode-poly" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 border-r transition">Poly</button>
-                                        <button onclick="setPlayMode('mono')" id="mode-mono" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 border-r transition">Mono</button>
-                                        <button onclick="setPlayMode('solo')" id="mode-solo" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 transition">Solo</button>
+                                </div>
+
+                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 space-y-4">
+                                    <!-- Play Mode & Loop -->
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex-1 mr-4">
+                                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Play Mode</label>
+                                            <div class="flex rounded-md border border-gray-200 bg-white overflow-hidden shadow-sm">
+                                                <button onclick="setPlayMode('poly')" id="mode-poly" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition">Poly</button>
+                                                <button onclick="setPlayMode('mono')" id="mode-mono" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition">Mono</button>
+                                                <button onclick="setPlayMode('solo')" id="mode-solo" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 transition">Solo</button>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <label class="text-xs font-bold text-gray-700 uppercase mb-2">Loop</label>
+                                            <button id="loop-toggle" onclick="togglePadLoop()" class="w-10 h-5 rounded-full bg-gray-300 relative transition-colors duration-200">
+                                                <span class="absolute top-1 left-1 bg-white w-3 h-3 rounded-full transition-transform duration-200 shadow-sm"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1">
+                                            <label class="text-xs font-bold text-gray-700 uppercase">BPM (Speed x)</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="adjustPadBpm(-0.01)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                                            <input type="range" id="config-bpm" min="0.1" max="2.0" step="0.01" value="1.0" oninput="updatePadBpm(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
+                                            <button onclick="adjustPadBpm(0.01)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                            <input type="number" id="config-bpm-input" value="1.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadBpm(this.value)">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1">
+                                            <label class="text-xs font-bold text-gray-700 uppercase">Pitch (Semitones)</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="adjustPadPitch(-0.1)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                                            <input type="range" id="config-pitch" min="-12" max="12" step="0.01" value="0" oninput="updatePadPitch(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
+                                            <button onclick="adjustPadPitch(0.1)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                            <input type="number" id="config-pitch-input" value="0.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadPitch(this.value)">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Right Col -->
                             <div class="space-y-4">
                                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                                     <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Trimming (MM:SS.mmm)</label>
                                     <div class="flex gap-4">
                                         <div class="flex-1">
-                                            <span class="text-[10px] text-gray-500 font-bold">Start Time</span>
+                                            <span class="text-[10px] text-gray-500 font-bold">Start</span>
                                             <input type="text" id="trim-start" placeholder="0:00.000" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm mt-1 focus:border-green-500 focus:outline-none">
                                         </div>
                                         <div class="flex-1">
-                                            <span class="text-[10px] text-gray-500 font-bold">End Time</span>
+                                            <span class="text-[10px] text-gray-500 font-bold">End</span>
                                             <input type="text" id="trim-end" placeholder="End" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm mt-1 focus:border-green-500 focus:outline-none">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                                     <div class="flex justify-between items-center mb-4">
-                                        <label class="text-xs font-bold text-gray-700 uppercase">9-Band Equalizer</label>
+                                        <label class="text-xs font-bold text-gray-700 uppercase">9-Band EQ</label>
                                         <button id="eq-toggle" onclick="toggleEq()" class="text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition">OFF</button>
                                     </div>
                                     <div class="relative h-40 w-full">
                                         <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[9px] text-gray-400 font-mono pointer-events-none pr-1 w-8 text-right z-10">
                                             <span>+20</span><span>+10</span><span>0dB</span><span>-10</span><span>-20</span>
                                         </div>
-                                        <div id="eq-container" class="ml-8 grid grid-cols-9 gap-1 h-full items-end opacity-50 pointer-events-none transition-opacity eq-grid relative border border-gray-200 bg-white rounded"></div>
+                                        <!-- Container for Sliders -->
+                                        <div id="eq-container" class="ml-8 grid grid-cols-9 gap-1 h-full items-end opacity-40 pointer-events-none transition-opacity eq-grid relative border border-gray-200 bg-white rounded"></div>
                                     </div>
                                     <div id="eq-labels" class="ml-8 grid grid-cols-9 gap-1 mt-1 text-center"></div>
                                 </div>
@@ -389,6 +451,9 @@
                 rawBase64: null,
                 fileName: "",
                 volume: 100,
+                playbackRate: 1.00,
+                pitch: 0.00,
+                loop: false,
                 isLocked: false,
                 playMode: 'poly',
                 trimStart: 0,
@@ -412,8 +477,29 @@
             if(audioCtx.state === 'suspended') audioCtx.resume();
         }
 
+        function toggleFullscreen() {
+            const warningBtn = document.getElementById('warning-fs-btn');
+            const panelBtn = document.getElementById('panel-fs-btn');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => { console.log(err.message); });
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const warningBtn = document.getElementById('warning-fs-btn');
+            const panelBtnIcon = document.querySelector('#panel-fs-btn i');
+            if (document.fullscreenElement) {
+                warningBtn.innerText = "Exit Fullscreen";
+                panelBtnIcon.className = "fa-solid fa-compress text-lg";
+            } else {
+                warningBtn.innerText = "Enter Fullscreen";
+                panelBtnIcon.className = "fa-solid fa-expand text-lg";
+            }
+        });
+
         function handlePadClick(padId) {
-            // Modes only work if there is active audio
             if (state.activeAudioCount === 0) {
                 playSound(padId);
                 return;
@@ -421,8 +507,6 @@
 
             const pad = state.pads[padId];
             const isPlaying = pad.activeSources.length > 0;
-            // Pad is effectively active (Pink or Yellow) if it has active sources
-            // Mute/End/Solo(Toggle/Add) logic applies to these pads.
 
             if (state.isEndMode) {
                 if (isPlaying) stopPad(padId);
@@ -435,20 +519,15 @@
             }
 
             if (state.isSoloMode) {
-                // Logic: If active (Playing or Muted), switch Solo to this pad
                 if (isPlaying) {
                     togglePadSolo(padId);
                     return;
                 }
-                // If not playing (Green), it will fall through to play sound below.
-                // Play sound (Green) during Solo -> Break Solo
                 const anySolo = state.pads.some(p => p.isSoloed);
                 if (anySolo) {
                     breakSoloState();
                 }
             } else {
-                // Normal Mode Click on Active Pad or New Pad
-                // If Solo exists and we click something, break solo
                 const anySolo = state.pads.some(p => p.isSoloed);
                 if (anySolo) {
                     breakSoloState();
@@ -459,16 +538,10 @@
         }
 
         function breakSoloState() {
-            // Remove 'S' from currently soloed pads
-            // Any pad that was implicitly muted (Yellow, !isMuted) must become explicitly muted to stay Yellow
-            // Any pad that was explicitly muted remains muted
             state.pads.forEach(p => {
                 if (p.isSoloed) {
                     p.isSoloed = false; 
-                    // It becomes Audible (Pink) unless isMuted was true (unlikely for Soloed pad)
                 } else if (p.activeSources.length > 0 && !p.isMuted) {
-                    // This pad was silenced only because of Solo.
-                    // To keep it silenced (Yellow) after Solo breaks, we must Mute it.
                     p.isMuted = true;
                 }
             });
@@ -486,26 +559,31 @@
             const source = audioCtx.createBufferSource();
             source.buffer = pad.buffer;
             
+            source.loop = pad.loop;
+            source.playbackRate.value = pad.playbackRate;
+            source.detune.value = pad.pitch * 100;
+
             const padGain = audioCtx.createGain();
             padGain.gain.value = calculatePadVolume(pad);
 
             let inputNode = source;
             const filters = [];
             
-            if (pad.eqEnabled) {
-                FREQUENCIES.forEach((freq, idx) => {
-                    const filter = audioCtx.createBiquadFilter();
-                    if (idx === 0) filter.type = 'lowshelf';
-                    else if (idx === FREQUENCIES.length - 1) filter.type = 'highshelf';
-                    else filter.type = 'peaking';
-                    filter.frequency.value = freq;
-                    filter.gain.value = pad.eqGains[idx];
-                    filter.Q.value = 1.0;
-                    inputNode.connect(filter);
-                    inputNode = filter;
-                    filters.push(filter);
-                });
-            }
+            // Always create filters to maintain consistent node graph
+            FREQUENCIES.forEach((freq, idx) => {
+                const filter = audioCtx.createBiquadFilter();
+                if (idx === 0) filter.type = 'lowshelf';
+                else if (idx === FREQUENCIES.length - 1) filter.type = 'highshelf';
+                else filter.type = 'peaking';
+                filter.frequency.value = freq;
+                filter.Q.value = 1.0;
+                // Only apply gain if EQ is enabled
+                filter.gain.value = pad.eqEnabled ? pad.eqGains[idx] : 0;
+                
+                inputNode.connect(filter);
+                inputNode = filter;
+                filters.push(filter);
+            });
 
             inputNode.connect(padGain);
             padGain.connect(masterGain);
@@ -516,7 +594,13 @@
             if (end > duration) end = duration;
             if (start >= end) start = 0;
 
-            source.start(0, start, end - start);
+            if (pad.loop) {
+                source.loopStart = start;
+                source.loopEnd = end;
+                source.start(0, start); 
+            } else {
+                source.start(0, start, end - start);
+            }
             
             const sourceObj = { source, padGain, filters };
             pad.activeSources.push(sourceObj);
@@ -575,37 +659,27 @@
         function updatePlayState(padId, isPlaying) {
             const totalPlaying = state.pads.reduce((acc, p) => acc + p.activeSources.length, 0);
             state.activeAudioCount = totalPlaying;
-
             updatePadVisual(padId);
             updateControlsState();
-
-            if (totalPlaying === 0) {
-                stopAllSounds(); 
-            }
+            if (totalPlaying === 0) stopAllSounds(); 
         }
 
         function updatePadVisual(padId) {
             const pad = state.pads[padId];
             const el = document.getElementById(`pad-surface-${padId}`);
             if(!el) return;
-
             el.classList.remove('audible', 'silenced', 'soloed', 'muted');
             if (pad.isSoloed) el.classList.add('soloed');
-
             if (pad.activeSources.length > 0) {
                 const vol = calculatePadVolume(pad);
-                if (vol > 0) {
-                    el.classList.add('audible'); 
-                } else {
-                    el.classList.add('silenced');
-                }
+                if (vol > 0) el.classList.add('audible'); 
+                else el.classList.add('silenced');
             }
         }
 
         function updateControlsState() {
             const nonEssential = document.getElementById('non-essential-controls');
             const liveControls = document.getElementById('live-controls');
-            
             if (state.activeAudioCount > 0) {
                 nonEssential.classList.add('controls-disabled');
                 liveControls.classList.remove('controls-disabled');
@@ -618,8 +692,6 @@
         function updateMasterVolumeState() {
             if(masterGain) masterGain.gain.value = state.masterVolume / 100;
         }
-
-        // --- Mode Logic ---
 
         function toggleMuteMode() {
             if (state.activeAudioCount === 0) return;
@@ -646,63 +718,112 @@
             const muteBtn = document.getElementById('btn-mute-mode');
             const soloBtn = document.getElementById('btn-solo-mode');
             const endBtn = document.getElementById('btn-end-mode');
-
-            if(state.isMuteMode) muteBtn.classList.add('btn-mode-active');
-            else muteBtn.classList.remove('btn-mode-active');
-
-            if(state.isSoloMode) soloBtn.classList.add('btn-mode-active');
-            else soloBtn.classList.remove('btn-mode-active');
-
-            if(state.isEndMode) endBtn.classList.add('btn-mode-active');
-            else endBtn.classList.remove('btn-mode-active');
+            if(state.isMuteMode) muteBtn.classList.add('btn-mode-active'); else muteBtn.classList.remove('btn-mode-active');
+            if(state.isSoloMode) soloBtn.classList.add('btn-mode-active'); else soloBtn.classList.remove('btn-mode-active');
+            if(state.isEndMode) endBtn.classList.add('btn-mode-active'); else endBtn.classList.remove('btn-mode-active');
         }
 
         function togglePadMute(padId) {
             const pad = state.pads[padId];
             const anySolo = state.pads.some(p => p.isSoloed);
-
-            // Mute Button Logic Update:
-            // If pad is effectively muted (Yellow) (either by isMuted OR by Solo),
-            // and we click Mute button -> We are "Unmuting" / "Forcing Play".
-            // If Solo is active and we do this -> Break Solo for everyone else.
-            
             const isEffectivelyMuted = pad.isMuted || (anySolo && !pad.isSoloed);
-
             if (isEffectivelyMuted) {
-                // Unmuting
-                if (anySolo) {
-                    breakSoloState(); // Reset Solo, keep others Yellow, this one will become Pink below
-                }
+                if (anySolo) breakSoloState(); 
                 pad.isMuted = false;
             } else {
-                // Muting (Pink -> Yellow)
                 pad.isMuted = true;
             }
-            
             updateAllGainsAndVisuals();
         }
 
         function togglePadSolo(padId) {
             const pad = state.pads[padId];
-            
-            // Logic: Switch Solo (Exclusive)
-            // If this pad is already Solo, we are toggling it OFF -> Solo End (Everyone Pink/Yellow based on Mute)
-            if (pad.isSoloed) {
-                pad.isSoloed = false;
-                // If no other solos exist, everyone comes back
-                // But we must respect isMuted.
+            if (!pad.isSoloed) {
+                state.pads.forEach(p => p.isSoloed = false); 
+                pad.isSoloed = true; 
+                pad.isMuted = false; 
             } else {
-                // We are turning this pad ON for Solo.
-                // Request: "Mute original solo pads, Only this pad becomes Solo"
-                state.pads.forEach(p => p.isSoloed = false); // Clear others
-                pad.isSoloed = true; // Set this one
-                pad.isMuted = false; // Ensure it plays
+                pad.isSoloed = false;
             }
-            
             updateAllGainsAndVisuals();
         }
 
-        // --- UI Rendering ---
+        function updatePadVolume(val) {
+            if(state.currentConfigId === null) return;
+            let v = parseInt(val);
+            if(isNaN(v)) v = 100;
+            if(v < 0) v = 0; if(v > 200) v = 200;
+            state.pads[state.currentConfigId].volume = v;
+            document.getElementById('config-vol').value = v;
+            document.getElementById('config-vol-input').value = v;
+        }
+        function adjustPadVolume(delta) {
+            const pad = state.pads[state.currentConfigId];
+            updatePadVolume(pad.volume + delta);
+        }
+
+        function updatePadBpm(val) {
+            if(state.currentConfigId === null) return;
+            let v = parseFloat(val);
+            if(isNaN(v)) v = 1.0;
+            if(v < 0.1) v = 0.1; if(v > 2.0) v = 2.0;
+            v = Math.round(v * 100) / 100;
+            state.pads[state.currentConfigId].playbackRate = v;
+            document.getElementById('config-bpm').value = v;
+            document.getElementById('config-bpm-input').value = v.toFixed(2);
+        }
+        function adjustPadBpm(delta) {
+            const pad = state.pads[state.currentConfigId];
+            updatePadBpm(pad.playbackRate + delta);
+        }
+
+        function updatePadPitch(val) {
+            if(state.currentConfigId === null) return;
+            let v = parseFloat(val);
+            if(isNaN(v)) v = 0;
+            if(v < -12) v = -12; if(v > 12) v = 12;
+            v = Math.round(v * 100) / 100;
+            state.pads[state.currentConfigId].pitch = v;
+            document.getElementById('config-pitch').value = v;
+            document.getElementById('config-pitch-input').value = v.toFixed(2);
+        }
+        function adjustPadPitch(delta) {
+            const pad = state.pads[state.currentConfigId];
+            updatePadPitch(pad.pitch + delta);
+        }
+
+        function togglePadLoop() {
+            if(state.currentConfigId === null) return;
+            const pad = state.pads[state.currentConfigId];
+            pad.loop = !pad.loop;
+            updateLoopUi(pad.loop);
+        }
+        function updateLoopUi(isLoop) {
+            const btn = document.getElementById('loop-toggle');
+            const knob = btn.querySelector('span');
+            if(isLoop) {
+                btn.className = "w-10 h-5 rounded-full bg-green-500 relative transition-colors duration-200";
+                knob.style.transform = "translateX(20px)";
+            } else {
+                btn.className = "w-10 h-5 rounded-full bg-gray-300 relative transition-colors duration-200";
+                knob.style.transform = "translateX(0)";
+            }
+        }
+
+        function setPlayMode(mode) {
+            if(state.currentConfigId === null) return;
+            state.pads[state.currentConfigId].playMode = mode;
+            // Update UI Logic
+            ['poly', 'mono', 'solo'].forEach(m => {
+                const btn = document.getElementById(`mode-${m}`);
+                if(m === mode) {
+                    btn.className = "flex-1 py-1.5 text-xs font-bold transition playmode-active shadow-inner";
+                } else {
+                    btn.className = "flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition bg-white text-gray-600";
+                }
+            });
+        }
+
         function renderPads() {
             const grid = document.getElementById('pads-grid');
             grid.innerHTML = '';
@@ -720,7 +841,6 @@
                 
                 let classes = "pad-surface flex flex-col justify-between p-2 relative";
                 if(pad.isLocked) classes += " locked";
-                
                 padSurface.className = classes;
                 
                 const number = document.createElement('span');
@@ -735,8 +855,8 @@
                 soloBadge.innerText = "S";
 
                 const nameLabel = document.createElement('div');
-                nameLabel.className = "absolute bottom-1 left-0 w-full text-center pl-1 pr-8 z-10";
-                nameLabel.innerHTML = `<p class="text-[11px] text-gray-600 font-bold truncate" title="${pad.name}">${pad.name}</p>`;
+                nameLabel.className = "absolute bottom-1 left-4 right-12 z-10 flex items-center justify-center"; 
+                nameLabel.innerHTML = `<p class="text-[11px] text-gray-600 font-bold truncate w-full text-center" title="${pad.name}">${pad.name}</p>`;
 
                 padSurface.innerHTML = iconsHtml;
                 padSurface.appendChild(soloBadge);
@@ -823,11 +943,11 @@
                 item.className = `p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs font-bold transition mb-1 ${isSelected ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-white hover:bg-gray-100 text-gray-600 border border-transparent'}`;
                 item.onclick = () => selectConfigPad(i);
                 item.innerHTML = `
-                    <div class="flex items-center gap-2 overflow-hidden">
-                        <span class="w-5 h-5 rounded-full ${isSelected ? 'bg-green-200' : 'bg-gray-200'} flex items-center justify-center text-[10px]">${i+1}</span>
+                    <div class="flex items-center gap-2 overflow-hidden w-full">
+                        <span class="w-5 h-5 flex-shrink-0 rounded-full ${isSelected ? 'bg-green-200' : 'bg-gray-200'} flex items-center justify-center text-[10px]">${i+1}</span>
                         <span class="truncate">${pad.name}</span>
                     </div>
-                    ${pad.buffer ? '<i class="fa-solid fa-music text-green-500 text-[10px]"></i>' : '<i class="fa-solid fa-circle text-gray-200 text-[8px]"></i>'}
+                    ${pad.buffer ? '<i class="fa-solid fa-music text-green-500 text-[10px] ml-2 flex-shrink-0"></i>' : '<i class="fa-solid fa-circle text-gray-200 text-[8px] ml-2 flex-shrink-0"></i>'}
                 `;
                 list.appendChild(item);
             }
@@ -842,8 +962,13 @@
             document.getElementById('config-pad-title').innerText = `Pad ${id+1}`;
             document.getElementById('config-current-filename').innerText = pad.fileName || "No file loaded";
             document.getElementById('config-name').value = pad.name;
-            document.getElementById('config-vol').value = pad.volume;
-            document.getElementById('config-vol-display').innerText = `${pad.volume}%`;
+            
+            updatePadVolume(pad.volume);
+            updatePadBpm(pad.playbackRate);
+            updatePadPitch(pad.pitch);
+            updateLoopUi(pad.loop);
+            setPlayMode(pad.playMode); // Set colors correctly
+
             const lockBtn = document.getElementById('lock-toggle');
             const knob = lockBtn.querySelector('span');
             if(pad.isLocked) {
@@ -853,11 +978,7 @@
                 lockBtn.className = "w-12 h-6 rounded-full bg-gray-300 relative transition-colors duration-200";
                 knob.style.transform = "translateX(0)";
             }
-            ['poly', 'mono', 'solo'].forEach(m => {
-                const btn = document.getElementById(`mode-${m}`);
-                if(pad.playMode === m) btn.className = "flex-1 py-2 text-xs font-bold bg-green-500 text-white shadow-inner transition";
-                else btn.className = "flex-1 py-2 text-xs font-bold bg-white text-gray-600 hover:bg-gray-50 transition border-r last:border-0";
-            });
+            
             document.getElementById('trim-start').value = formatTime(pad.trimStart);
             document.getElementById('trim-end').value = pad.trimEnd ? formatTime(pad.trimEnd) : "";
             renderEqSliders(pad);
@@ -904,19 +1025,6 @@
             renderPads();
             renderSettingsList();
         }
-        function updatePadVolume(val) {
-            if(state.currentConfigId === null) return;
-            const v = parseInt(val);
-            state.pads[state.currentConfigId].volume = v;
-            document.getElementById('config-vol-display').innerText = `${v}%`;
-            document.getElementById('config-vol').value = v;
-        }
-        function adjustPadVolume(delta) {
-            const pad = state.pads[state.currentConfigId];
-            let next = pad.volume + delta;
-            if(next < 0) next = 0; if(next > 200) next = 200;
-            updatePadVolume(next);
-        }
         function togglePadLock() {
             if(state.currentConfigId === null) return;
             const pad = state.pads[state.currentConfigId];
@@ -924,11 +1032,7 @@
             selectConfigPad(state.currentConfigId);
             renderPads();
         }
-        function setPlayMode(mode) {
-            if(state.currentConfigId === null) return;
-            state.pads[state.currentConfigId].playMode = mode;
-            selectConfigPad(state.currentConfigId);
-        }
+        
         function parseTime(str) {
             if(!str) return null;
             if(str.includes(':')) {
@@ -953,15 +1057,17 @@
             const container = document.getElementById('eq-container');
             const labels = document.getElementById('eq-labels');
             const toggle = document.getElementById('eq-toggle');
+            
             if(pad.eqEnabled) {
                 toggle.className = "text-[10px] px-3 py-1 rounded-full bg-green-500 text-white font-bold transition shadow";
                 toggle.innerText = "ON";
-                container.classList.remove('opacity-50', 'pointer-events-none');
+                container.classList.remove('opacity-40', 'pointer-events-none');
             } else {
                 toggle.className = "text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition";
                 toggle.innerText = "OFF";
-                container.classList.add('opacity-50', 'pointer-events-none');
+                container.classList.add('opacity-40', 'pointer-events-none');
             }
+
             container.innerHTML = ''; labels.innerHTML = '';
             FREQUENCIES.forEach((freq, idx) => {
                 const wrapper = document.createElement('div');
@@ -989,12 +1095,13 @@
             const dateStr = now.toISOString().slice(0,19).replace(/T/g, '_').replace(/:/g, '-');
             const fileName = `WebSamplerPro_${dateStr}.json`;
             const data = {
-                version: 1.8,
+                version: 1.9,
                 rows: state.rows, cols: state.cols, masterVolume: state.masterVolume,
                 pads: state.pads.map(p => ({
                     id: p.id, name: p.name, volume: p.volume, isLocked: p.isLocked, playMode: p.playMode,
                     trimStart: p.trimStart, trimEnd: p.trimEnd, eqEnabled: p.eqEnabled, eqGains: p.eqGains,
-                    fileName: p.fileName, rawBase64: p.rawBase64, isMuted: p.isMuted, isSoloed: p.isSoloed
+                    fileName: p.fileName, rawBase64: p.rawBase64, isMuted: p.isMuted, isSoloed: p.isSoloed,
+                    playbackRate: p.playbackRate, pitch: p.pitch, loop: p.loop
                 }))
             };
             const blob = new Blob([JSON.stringify(data)], {type: "application/json"});
@@ -1029,6 +1136,10 @@
                         p.eqEnabled = pd.eqEnabled; p.eqGains = pd.eqGains || new Array(9).fill(0);
                         p.fileName = pd.fileName; p.rawBase64 = pd.rawBase64;
                         p.isMuted = pd.isMuted || false; p.isSoloed = pd.isSoloed || false;
+                        p.playbackRate = pd.playbackRate || 1.0;
+                        p.pitch = pd.pitch || 0.0;
+                        p.loop = pd.loop || false;
+
                         if(p.rawBase64) {
                             pending++;
                             const bin = atob(p.rawBase64); const len = bin.length;
