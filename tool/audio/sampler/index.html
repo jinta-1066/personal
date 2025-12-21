@@ -29,21 +29,21 @@
             -webkit-appearance: none;
             width: 100%;
             background: transparent;
+            cursor: pointer;
         }
+        input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 14px;
             width: 14px;
             border-radius: 50%;
             background: #22c55e;
-            cursor: pointer;
             margin-top: -5px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            cursor: pointer;
             background: #e5e7eb;
             border-radius: 2px;
         }
@@ -51,10 +51,12 @@
         /* Vertical Slider (EQ) */
         input[type=range].vertical-slider {
             -webkit-appearance: slider-vertical;
+            writing-mode: bt-lr;
             width: 8px;
             height: 100%;
             padding: 0 5px;
             background: transparent;
+            margin: 0 auto;
         }
         @supports not (-webkit-appearance: slider-vertical) {
             input[type=range].vertical-slider {
@@ -63,7 +65,7 @@
                 height: 8px;
                 transform: rotate(-90deg);
                 transform-origin: center;
-                margin: 0;
+                margin: 45px -45px;
             }
         }
 
@@ -85,12 +87,39 @@
             outline: none;
         }
 
+        /* Toggle Switch */
+        .toggle-switch {
+            width: 2.5rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            position: relative;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+            flex-shrink: 0;
+        }
+        .toggle-knob {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 0.25rem;
+            left: 0.25rem;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .toggle-active { background-color: #22c55e; }
+        .toggle-active-blue { background-color: #3b82f6; }
+        .toggle-inactive { background-color: #d1d5db; }
+        .toggle-on .toggle-knob { transform: translateX(1.25rem); }
+
         /* --- Pad Styles --- */
         .pad-surface {
             transition: all 0.1s ease;
             position: relative;
             background-color: white;
-            border: 3px solid #22c55e; /* Default: Green */
+            border: 3px solid #22c55e;
             border-radius: 8px;
             cursor: pointer;
             touch-action: manipulation;
@@ -98,80 +127,52 @@
             width: 100%;
             overflow: hidden;
         }
-        .pad-surface:active {
-            transform: scale(0.96);
-            background-color: #f0fdf4;
-        }
+        .pad-surface:active { transform: scale(0.96); background-color: #f0fdf4; }
         
-        /* Dynamic States */
-        .pad-surface.audible { /* Playing (Pink) */
+        .pad-surface.audible {
             border-color: #ec4899 !important;
             box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
             background-color: #fff1f2;
         }
-        .pad-surface.silenced { /* Muted/Blocked (Yellow) */
+        .pad-surface.silenced {
             border-color: #eab308 !important;
             background-color: #fefce8;
             opacity: 0.9;
         }
-        .pad-surface.locked { /* Locked (Gray) */
+        .pad-surface.locked {
             opacity: 0.6;
             background-color: #f3f4f6;
             cursor: not-allowed;
             border-color: #d1d5db !important;
         }
         
-        /* Badges */
-        .solo-badge { display: none; }
-        .pad-surface.soloed .solo-badge { display: block; }
+        .badge-container { position: absolute; top: 2px; left: 2px; display: flex; gap: 2px; z-index: 10; }
+        .badge { font-size: 9px; padding: 1px 3px; border-radius: 2px; font-weight: bold; color: white; display: none; }
+        .pad-surface.soloed .badge-solo { display: block; background-color: #3b82f6; }
 
-        /* --- Mode Buttons --- */
+        /* Mode Buttons */
         .btn-mode-active {
-            background-color: #3b82f6 !important; /* Blue-500 */
+            background-color: #3b82f6 !important;
             color: white !important;
             border-color: #3b82f6 !important;
             box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
         }
-
-        /* --- Play Mode Buttons (Settings) --- */
         .playmode-active {
-            background-color: #22c55e !important; /* Green-500 */
+            background-color: #22c55e !important;
             color: white !important;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .controls-disabled {
-            opacity: 0.4;
-            pointer-events: none;
-            filter: grayscale(100%);
-        }
-
+        .controls-disabled { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
         .layout-normal { flex-direction: row; }
         .layout-reverse { flex-direction: row-reverse; }
-
-        .toast {
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            transform: translateY(150%) translateX(-50%);
-            opacity: 0;
-        }
-        .toast.show {
-            transform: translateY(0) translateX(-50%);
-            opacity: 1;
-        }
-
+        .toast { transition: transform 0.3s, opacity 0.3s; transform: translateY(150%) translateX(-50%); opacity: 0; }
+        .toast.show { transform: translateY(0) translateX(-50%); opacity: 1; }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
-
-        .eq-grid {
-            background: linear-gradient(to bottom, 
-                #e5e7eb 1px, transparent 1px, transparent calc(25% - 1px),
-                #e5e7eb 1px, transparent 1px, transparent calc(50% - 1px),
-                #9ca3af 1px, transparent 1px, transparent calc(75% - 1px),
-                #e5e7eb 1px, transparent 1px, transparent 100%
-            );
-            background-size: 100% 100%;
-        }
+        
+        .eq-grid { background: linear-gradient(to bottom, #e5e7eb 1px, transparent 1px, transparent calc(25% - 1px), #e5e7eb 1px, transparent 1px, transparent calc(50% - 1px), #9ca3af 1px, transparent 1px, transparent calc(75% - 1px), #e5e7eb 1px, transparent 1px, transparent 100%); background-size: 100% 100%; }
     </style>
 </head>
 <body class="h-screen w-screen flex flex-col relative">
@@ -181,9 +182,7 @@
         <i class="fa-solid fa-display text-5xl mb-4 text-red-400"></i>
         <h2 class="text-2xl font-bold mb-2">Screen Size Too Small</h2>
         <p class="text-sm text-gray-400 mt-2">Minimum required: 480px x 420px</p>
-        <button onclick="toggleFullscreen()" class="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold transition" id="warning-fs-btn">
-            Enter Fullscreen
-        </button>
+        <button onclick="toggleFullscreen()" class="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold transition" id="warning-fs-btn">Enter Fullscreen</button>
     </div>
 
     <!-- App Container -->
@@ -191,82 +190,37 @@
         
         <!-- Pads Area -->
         <div class="flex-grow bg-white flex flex-col items-center justify-center p-3 h-full overflow-hidden">
-            <div id="pads-grid" class="grid gap-3 w-full h-full max-w-6xl">
-                <!-- Pads generated via JS -->
-            </div>
+            <div id="pads-grid" class="grid gap-3 w-full h-full max-w-6xl"></div>
         </div>
 
         <!-- Controls Area -->
-        <div id="controls-area" class="w-60 min-w-[240px] bg-white border-l border-gray-200 flex flex-col justify-between p-4 shadow-xl z-20 relative h-full">
+        <div id="controls-area" class="w-64 min-w-[250px] bg-white border-l border-gray-200 flex flex-col justify-between p-4 shadow-xl z-20 relative h-full">
             
             <!-- Top Tools -->
             <div class="flex flex-col gap-4 w-full">
                 <h1 class="text-xl font-bold text-gray-800 text-center tracking-tight border-b pb-3">Web Sampler Pro</h1>
                 
                 <div id="non-essential-controls" class="flex flex-col gap-4 transition-opacity duration-200">
-                    
                     <div class="flex justify-center gap-3">
-                        <button onclick="openSettings()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Settings">
-                            <i class="fa-solid fa-gear text-lg"></i>
-                        </button>
-                        <button onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Swap Layout">
-                            <i class="fa-solid fa-arrow-right-arrow-left text-lg"></i>
-                        </button>
-                        <button onclick="toggleFullscreen()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Fullscreen" id="panel-fs-btn">
-                            <i class="fa-solid fa-expand text-lg"></i>
-                        </button>
-                    </div>
-
-                    <!-- Grid -->
-                    <div class="flex flex-col gap-2 bg-gray-50 p-2 rounded-lg border border-gray-100">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] text-gray-500 font-bold uppercase w-8">Rows</span>
-                            <div class="flex items-center gap-2">
-                                <button onclick="updateGridDim('rows', -1)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center text-xs text-gray-600 shadow-sm"><i class="fa-solid fa-minus"></i></button>
-                                <span id="disp-rows" class="text-xs font-bold w-4 text-center">4</span>
-                                <button onclick="updateGridDim('rows', 1)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center text-xs text-gray-600 shadow-sm"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] text-gray-500 font-bold uppercase w-8">Cols</span>
-                            <div class="flex items-center gap-2">
-                                <button onclick="updateGridDim('cols', -1)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center text-xs text-gray-600 shadow-sm"><i class="fa-solid fa-minus"></i></button>
-                                <span id="disp-cols" class="text-xs font-bold w-4 text-center">4</span>
-                                <button onclick="updateGridDim('cols', 1)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center text-xs text-gray-600 shadow-sm"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- IO -->
-                    <div class="flex gap-2">
-                        <button onclick="exportData()" class="flex-1 py-2 bg-blue-50 text-blue-600 rounded text-xs hover:bg-blue-100 font-bold transition flex items-center justify-center shadow-sm">
-                            <i class="fa-solid fa-download mr-2"></i> Export
-                        </button>
-                        <button onclick="document.getElementById('import-file').click()" class="flex-1 py-2 bg-purple-50 text-purple-600 rounded text-xs hover:bg-purple-100 font-bold transition flex items-center justify-center shadow-sm">
-                            <i class="fa-solid fa-upload mr-2"></i> Import
-                        </button>
-                        <input type="file" id="import-file" accept=".json" class="hidden" onchange="importData(this)">
+                        <button onclick="openSettings()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Settings"><i class="fa-solid fa-gear text-lg"></i></button>
+                        <button onclick="toggleLayout()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Swap Layout"><i class="fa-solid fa-arrow-right-arrow-left text-lg"></i></button>
+                        <button onclick="toggleFullscreen()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition shadow-sm" title="Fullscreen" id="panel-fs-btn"><i class="fa-solid fa-expand text-lg"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Controls -->
             <div class="flex flex-col gap-3 mt-auto pt-3 border-t border-gray-100">
-                <div id="live-controls" class="flex gap-2 controls-disabled transition-opacity duration-200">
-                    <button id="btn-mute-mode" onclick="toggleMuteMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">MUTE</button>
-                    <button id="btn-solo-mode" onclick="toggleSoloMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">SOLO</button>
-                    <button id="btn-end-mode" onclick="toggleEndMode()" class="flex-1 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200">END</button>
+                <div id="live-controls" class="grid grid-cols-3 gap-2 controls-disabled transition-opacity duration-200">
+                    <button id="btn-mute-mode" onclick="toggleMuteMode()" class="py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-[10px] transition border border-gray-200">MUTE</button>
+                    <button id="btn-solo-mode" onclick="toggleSoloMode()" class="py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-[10px] transition border border-gray-200">SOLO</button>
+                    <button id="btn-end-mode" onclick="toggleEndMode()" class="py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-[10px] transition border border-gray-200">END</button>
                 </div>
 
-                <button onclick="stopAllSounds()" class="w-full py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold shadow-md transition flex items-center justify-center gap-2 text-sm active:scale-95">
-                    <i class="fa-solid fa-square"></i> ALL STOP
-                </button>
+                <button onclick="stopAllSounds()" class="w-full py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold shadow-md transition flex items-center justify-center gap-2 text-sm active:scale-95"><i class="fa-solid fa-square"></i> ALL STOP</button>
 
                 <div>
-                    <div class="flex justify-between text-[10px] text-gray-500 mb-1 font-bold">
-                        <span>MASTER VOL</span>
-                        <span id="master-vol-display">100%</span>
-                    </div>
+                    <div class="flex justify-between text-[10px] text-gray-500 mb-1 font-bold"><span>MASTER VOL</span><span id="master-vol-display">100%</span></div>
                     <input type="range" id="master-volume" min="0" max="200" value="100" oninput="updateMasterVolume(this.value)" class="w-full">
                 </div>
             </div>
@@ -275,201 +229,140 @@
 
     <!-- Settings Modal -->
     <div id="settings-modal" class="fixed inset-0 z-40 hidden flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-[90vw] max-w-4xl h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+        <div class="bg-white w-[95vw] max-w-5xl h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
             <div class="p-4 border-b flex justify-between items-center bg-gray-50">
-                <h2 class="text-lg font-bold text-gray-700 flex items-center"><i class="fa-solid fa-sliders mr-2"></i> Pad Settings</h2>
-                <button onclick="closeSettings()" class="text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+                <h2 class="text-lg font-bold text-gray-700 flex items-center"><i class="fa-solid fa-sliders mr-2"></i> Settings</h2>
+                <button onclick="closeSettings()" class="text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="flex flex-grow overflow-hidden">
-                <div class="w-1/4 min-w-[160px] border-r bg-gray-50 overflow-y-auto p-2">
+                <!-- Left List -->
+                <div class="w-1/4 min-w-[200px] border-r bg-gray-50 overflow-y-auto p-3">
                     <div id="settings-pad-list" class="space-y-1"></div>
                 </div>
-                <div class="flex-grow p-6 overflow-y-auto relative bg-white">
-                    <div id="pad-config-area" class="hidden space-y-6">
-                        <!-- Header -->
+                
+                <!-- Right Config Area -->
+                <div class="flex-grow p-8 overflow-y-auto relative bg-white">
+                    
+                    <!-- General Settings -->
+                    <div id="general-config-area" class="hidden space-y-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-700 mb-4 border-b pb-2">General Settings</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="space-y-6">
+                                    <!-- Grid Layout -->
+                                    <div class="bg-white p-5 rounded-lg border shadow-sm">
+                                        <h4 class="text-sm font-bold text-gray-600 mb-3">Grid Layout</h4>
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-xs font-bold text-gray-500 uppercase">Rows (行)</span>
+                                            <div class="flex items-center gap-2"><button onclick="updateGridDim('rows', -1)" class="w-7 h-7 rounded bg-gray-100 border flex items-center justify-center hover:bg-gray-200"><i class="fa-solid fa-minus text-xs"></i></button><span id="disp-rows" class="text-sm font-bold w-8 text-center">4</span><button onclick="updateGridDim('rows', 1)" class="w-7 h-7 rounded bg-gray-100 border flex items-center justify-center hover:bg-gray-200"><i class="fa-solid fa-plus text-xs"></i></button></div>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-bold text-gray-500 uppercase">Cols (列)</span>
+                                            <div class="flex items-center gap-2"><button onclick="updateGridDim('cols', -1)" class="w-7 h-7 rounded bg-gray-100 border flex items-center justify-center hover:bg-gray-200"><i class="fa-solid fa-minus text-xs"></i></button><span id="disp-cols" class="text-sm font-bold w-8 text-center">4</span><button onclick="updateGridDim('cols', 1)" class="w-7 h-7 rounded bg-gray-100 border flex items-center justify-center hover:bg-gray-200"><i class="fa-solid fa-plus text-xs"></i></button></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Data IO -->
+                                    <div class="bg-white p-5 rounded-lg border shadow-sm">
+                                        <h4 class="text-sm font-bold text-gray-600 mb-3">Data Management</h4>
+                                        <div class="flex gap-3">
+                                            <button onclick="exportData()" class="flex-1 py-2.5 bg-blue-50 text-blue-600 rounded text-xs hover:bg-blue-100 font-bold border border-blue-200 transition"><i class="fa-solid fa-download mr-2"></i> Export JSON</button>
+                                            <button onclick="document.getElementById('import-file').click()" class="flex-1 py-2.5 bg-purple-50 text-purple-600 rounded text-xs hover:bg-purple-100 font-bold border border-purple-200 transition"><i class="fa-solid fa-upload mr-2"></i> Import JSON</button>
+                                            <input type="file" id="import-file" accept=".json" class="hidden" onchange="importData(this)">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Keyboard -->
+                                <div class="bg-white p-5 rounded-lg border shadow-sm">
+                                    <h4 class="text-sm font-bold text-gray-600 mb-3">Keyboard Control</h4>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="text-xs font-bold text-gray-500">Enable Shortcuts</span>
+                                        <div id="kb-toggle" onclick="toggleKeyboardControl()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 space-y-2 bg-gray-50 p-4 rounded border border-gray-100">
+                                        <p class="font-bold text-gray-600 mb-2">Controls (Playing Only):</p>
+                                        <ul class="list-disc pl-4 space-y-1">
+                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Shift</span> + Click / Key: Toggle Mute</li>
+                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Ctrl</span> + Click / Key: Toggle Solo</li>
+                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Alt</span> + Click / Key: End (Stop)</li>
+                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Space</span>: All Stop</li>
+                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Arrows</span>: Master Volume +/- 5%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pad Settings -->
+                    <div id="pad-config-area" class="hidden space-y-8">
                         <div class="flex justify-between items-center border-b pb-4">
-                            <div>
-                                <h3 id="config-pad-title" class="text-2xl font-bold text-green-600">Pad 1</h3>
-                                <div class="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                                    <span id="config-current-filename" class="font-mono bg-gray-100 px-2 py-0.5 rounded truncate max-w-[250px] block">No file loaded</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xs font-bold text-gray-600 uppercase">Lock</span>
-                                <button id="lock-toggle" onclick="togglePadLock()" class="w-12 h-6 rounded-full bg-gray-300 relative transition-colors duration-200 focus:outline-none">
-                                    <span class="absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 shadow-sm"></span>
-                                </button>
+                            <div><h3 id="config-pad-title" class="text-2xl font-bold text-green-600">Pad 1</h3><div class="flex items-center gap-2 mt-1"><span id="config-current-filename" class="text-xs text-gray-400 font-mono bg-gray-100 px-2 py-0.5 rounded">No file loaded</span></div></div>
+                            <div class="flex items-center gap-6">
+                                <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">Key:</span><input type="text" id="config-keybind" maxlength="1" class="w-8 text-center uppercase font-bold text-sm border rounded outline-none focus:border-green-500" oninput="updatePadKeybind(this.value)" placeholder="-"></div>
+                                <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">Lock</span><div id="lock-toggle" onclick="togglePadLock()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div></div>
                             </div>
                         </div>
 
-                        <!-- Config Form -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Left Col -->
-                            <div class="space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Source & Name</label>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <label class="cursor-pointer bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs font-bold transition shadow-sm flex items-center hover:shadow">
-                                            <i class="fa-solid fa-upload mr-2"></i> Upload (Max 50MB)
-                                            <input type="file" accept="audio/*" class="hidden" onchange="handleAudioUpload(this)">
-                                        </label>
-                                        <span id="upload-status" class="text-xs text-red-500 font-bold hidden bg-red-50 px-2 py-1 rounded">Error</span>
-                                    </div>
-                                    <input type="text" id="config-name" oninput="updatePadName(this.value)" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-green-500" placeholder="Enter Pad Name">
-                                </div>
-
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <label class="text-xs font-bold text-gray-700 uppercase">Volume (%)</label>
-                                    </div>
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <button onclick="adjustPadVolume(-10)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
-                                        <input type="range" id="config-vol" min="0" max="200" value="100" oninput="updatePadVolume(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
-                                        <button onclick="adjustPadVolume(10)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
-                                        <input type="number" id="config-vol-input" value="100" class="w-12 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadVolume(this.value)">
-                                    </div>
-                                </div>
-
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 space-y-4">
-                                    <!-- Play Mode & Loop -->
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex-1 mr-4">
-                                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Play Mode</label>
-                                            <div class="flex rounded-md border border-gray-200 bg-white overflow-hidden shadow-sm">
-                                                <button onclick="setPlayMode('poly')" id="mode-poly" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition">Poly</button>
-                                                <button onclick="setPlayMode('mono')" id="mode-mono" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition">Mono</button>
-                                                <button onclick="setPlayMode('solo')" id="mode-solo" class="flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 transition">Solo</button>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col items-center">
-                                            <label class="text-xs font-bold text-gray-700 uppercase mb-2">Loop</label>
-                                            <button id="loop-toggle" onclick="togglePadLoop()" class="w-10 h-5 rounded-full bg-gray-300 relative transition-colors duration-200">
-                                                <span class="absolute top-1 left-1 bg-white w-3 h-3 rounded-full transition-transform duration-200 shadow-sm"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex justify-between items-center mb-1">
-                                            <label class="text-xs font-bold text-gray-700 uppercase">Speed (x)</label>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <button onclick="adjustPadBpm(-0.05)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
-                                            <input type="range" id="config-bpm" min="0.1" max="2.0" step="0.01" value="1.0" oninput="updatePadBpm(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
-                                            <button onclick="adjustPadBpm(0.05)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
-                                            <input type="number" id="config-bpm-input" value="1.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadBpm(this.value)">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between items-center mb-1">
-                                            <label class="text-xs font-bold text-gray-700 uppercase">Pitch (Semi)</label>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <button onclick="adjustPadPitch(-0.20)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
-                                            <input type="range" id="config-pitch" min="-12" max="12" step="0.01" value="0" oninput="updatePadPitch(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
-                                            <button onclick="adjustPadPitch(0.20)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
-                                            <input type="number" id="config-pitch-input" value="0.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadPitch(this.value)">
-                                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="space-y-6">
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200"><label class="block text-xs font-bold text-gray-700 uppercase mb-2">Source & Name</label><div class="flex items-center gap-3 mb-4"><label class="cursor-pointer bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs font-bold transition shadow-sm flex items-center hover:shadow"><i class="fa-solid fa-upload mr-2"></i> Upload (Max 50MB)<input type="file" accept="audio/*" class="hidden" onchange="handleAudioUpload(this)"></label><span id="upload-status" class="text-xs font-bold hidden bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Processing...</span></div><input type="text" id="config-name" oninput="updatePadName(this.value)" class="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:border-green-500" placeholder="Enter Pad Name"></div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200"><div class="flex justify-between items-center mb-2"><label class="text-xs font-bold text-gray-700 uppercase">Volume (%)</label></div><div class="flex items-center gap-3 mb-2"><button onclick="adjustPadVolume(-10)" class="w-8 h-8 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button><input type="range" id="config-vol" min="0" max="200" value="100" oninput="updatePadVolume(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer"><button onclick="adjustPadVolume(10)" class="w-8 h-8 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button><input type="number" id="config-vol-input" value="100" class="w-12 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadVolume(this.value)"></div></div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 space-y-5">
+                                    <div class="flex justify-between items-start"><div class="flex-1 mr-6"><label class="block text-xs font-bold text-gray-700 uppercase mb-2">Play Mode</label><div class="flex rounded-md border border-gray-300 bg-white overflow-hidden shadow-sm"><button onclick="setPlayMode('poly')" id="mode-poly" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 border-r transition">Poly</button><button onclick="setPlayMode('mono')" id="mode-mono" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 border-r transition">Mono</button><button onclick="setPlayMode('solo')" id="mode-solo" class="flex-1 py-2 text-xs font-bold hover:bg-gray-50 transition">Solo</button></div></div><div class="flex gap-4"><div class="flex flex-col items-center"><label class="text-[10px] font-bold text-gray-500 uppercase mb-1">Loop</label><div id="loop-toggle" onclick="togglePadLoop()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div></div><div class="flex flex-col items-center"><label class="text-[10px] font-bold text-gray-500 uppercase mb-1">Rev</label><div id="reverse-toggle" onclick="togglePadReverse()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div></div></div></div>
+                                    <div class="space-y-4">
+                                        <div><div class="flex justify-between items-center mb-1"><label class="text-xs font-bold text-gray-700 uppercase">Speed (x)</label></div><div class="flex items-center gap-2"><button onclick="adjustPadBpm(-0.05)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-[10px]"></i></button><input type="range" id="config-bpm" min="0.1" max="2.0" step="0.01" value="1.0" oninput="updatePadBpm(this.value)" class="flex-grow h-1.5 bg-gray-200 rounded-lg cursor-pointer"><button onclick="adjustPadBpm(0.05)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></button><input type="number" id="config-bpm-input" value="1.00" step="0.01" class="w-16 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadBpm(this.value)"></div></div>
+                                        <div><div class="flex justify-between items-center mb-1"><label class="text-xs font-bold text-gray-700 uppercase">Pitch (Semi)</label></div><div class="flex items-center gap-2"><button onclick="adjustPadPitch(-0.20)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-[10px]"></i></button><input type="range" id="config-pitch" min="-12" max="12" step="0.01" value="0" oninput="updatePadPitch(this.value)" class="flex-grow h-1.5 bg-gray-200 rounded-lg cursor-pointer"><button onclick="adjustPadPitch(0.20)" class="w-6 h-6 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-[10px]"></i></button><input type="number" id="config-pitch-input" value="0.00" step="0.01" class="w-16 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadPitch(this.value)"></div></div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Right Col -->
-                            <div class="space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Trimming (MM:SS.mmm)</label>
-                                    <div class="flex gap-4">
-                                        <div class="flex-1">
-                                            <span class="text-[10px] text-gray-500 font-bold">Start</span>
-                                            <input type="text" id="trim-start" placeholder="0:00.000" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm mt-1 focus:border-green-500 focus:outline-none">
-                                        </div>
-                                        <div class="flex-1">
-                                            <span class="text-[10px] text-gray-500 font-bold">End</span>
-                                            <input type="text" id="trim-end" placeholder="End" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm mt-1 focus:border-green-500 focus:outline-none">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <label class="text-xs font-bold text-gray-700 uppercase">9-Band EQ</label>
-                                        <button id="eq-toggle" onclick="toggleEq()" class="text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition">OFF</button>
-                                    </div>
-                                    <div class="relative h-40 w-full">
-                                        <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[9px] text-gray-400 font-mono pointer-events-none pr-1 w-8 text-right z-10">
-                                            <span>+20</span><span>+10</span><span>0dB</span><span>-10</span><span>-20</span>
-                                        </div>
-                                        <!-- Container for Sliders -->
-                                        <div id="eq-container" class="ml-8 grid grid-cols-9 gap-1 h-full items-end opacity-40 pointer-events-none transition-opacity eq-grid relative border border-gray-200 bg-white rounded"></div>
-                                    </div>
-                                    <div id="eq-labels" class="ml-8 grid grid-cols-9 gap-1 mt-1 text-center"></div>
+                            <div class="space-y-6">
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200"><label class="block text-xs font-bold text-gray-700 uppercase mb-2">Trimming (MM:SS.mmm)</label><div class="flex gap-4"><div class="flex-1"><span class="text-[10px] text-gray-500 font-bold block mb-1">Start</span><input type="text" id="trim-start" placeholder="0:00.000" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm focus:border-green-500 outline-none"></div><div class="flex-1"><span class="text-[10px] text-gray-500 font-bold block mb-1">End</span><input type="text" id="trim-end" placeholder="End" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm focus:border-green-500 outline-none"></div></div></div>
+                                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                    <div class="flex justify-between items-center mb-4"><label class="text-xs font-bold text-gray-700 uppercase">9-Band EQ</label><button id="eq-toggle" onclick="toggleEq()" class="text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition">OFF</button></div>
+                                    <div class="relative h-40 w-full"><div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[9px] text-gray-400 font-mono pointer-events-none pr-1 w-8 text-right z-10"><span>+20</span><span>+10</span><span>0dB</span><span>-10</span><span>-20</span></div><div id="eq-container" class="ml-8 grid grid-cols-9 gap-1 h-full items-end opacity-40 pointer-events-none transition-opacity eq-grid relative border border-gray-200 bg-white rounded"></div></div><div id="eq-labels" class="ml-8 grid grid-cols-9 gap-1 mt-1 text-center"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="config-empty" class="h-full flex flex-col items-center justify-center text-gray-300">
-                        <i class="fa-solid fa-arrow-left-long text-4xl mb-4"></i>
-                        <p class="font-bold text-lg">Select a pad to configure</p>
-                    </div>
+                    <div id="config-empty" class="h-full flex flex-col items-center justify-center text-gray-300"><i class="fa-solid fa-arrow-left-long text-4xl mb-4"></i><p class="font-bold text-lg">Select Settings from List</p></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-10 left-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg z-50 toast font-bold text-sm pointer-events-none flex items-center gap-2">
-        <i class="fa-solid fa-circle-info"></i> <span id="toast-msg">Notification</span>
-    </div>
+    <div id="toast" class="fixed bottom-10 left-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg z-50 toast font-bold text-sm pointer-events-none flex items-center gap-2"><i class="fa-solid fa-circle-info"></i> <span id="toast-msg">Notification</span></div>
 
     <script>
         const FREQUENCIES = [62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
         const MAX_PADS = 20;
-        const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+        const MAX_FILE_SIZE = 50 * 1024 * 1024;
         
         const state = {
-            rows: 4,
-            cols: 4,
-            masterVolume: 100,
-            isRightLayout: true,
-            pads: [],
-            activeAudioCount: 0,
-            currentConfigId: null,
-            isMuteMode: false,
-            isSoloMode: false,
-            isEndMode: false
+            rows: 4, cols: 4, masterVolume: 100, isRightLayout: true,
+            pads: [], activeAudioCount: 0, currentConfigId: null,
+            isMuteMode: false, isSoloMode: false, isEndMode: false,
+            keyboardEnabled: false
         };
 
         let audioCtx = null;
         let masterGain = null;
 
-        for(let i=0; i<MAX_PADS; i++) {
-            state.pads.push({
-                id: i,
-                name: `Pad ${i + 1}`,
-                buffer: null,
-                rawBase64: null,
-                fileName: "",
-                volume: 100,
-                playbackRate: 1.00,
-                pitch: 0.00,
-                loop: false,
-                isLocked: false,
-                playMode: 'poly',
-                trimStart: 0,
-                trimEnd: null,
-                eqEnabled: false,
-                eqGains: new Array(9).fill(0),
-                activeSources: [],
-                isMuted: false,
-                isSoloed: false
-            });
-        }
+        const createPad = (id) => ({
+            id, name: `Pad ${id + 1}`, buffer: null, rawBase64: null, fileName: "",
+            volume: 100, playbackRate: 1.00, pitch: 0.00, loop: false, reverse: false,
+            isLocked: false, playMode: 'poly', trimStart: 0, trimEnd: null,
+            activeSources: [], isMuted: false, isSoloed: false,
+            keyBind: null, eqEnabled: false, eqGains: new Array(9).fill(0),
+            _revBuffer: null
+        });
+
+        for(let i=0; i<MAX_PADS; i++) state.pads.push(createPad(i));
 
         function initAudio() {
             if (!audioCtx) {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                audioCtx = new AudioContext();
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 masterGain = audioCtx.createGain();
                 masterGain.connect(audioCtx.destination);
                 updateMasterVolumeState();
@@ -477,78 +370,26 @@
             if(audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        function toggleFullscreen() {
-            const warningBtn = document.getElementById('warning-fs-btn');
-            const panelBtn = document.getElementById('panel-fs-btn');
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => { console.log(err.message); });
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-            }
-        }
-
-        document.addEventListener('fullscreenchange', () => {
-            const warningBtn = document.getElementById('warning-fs-btn');
-            const panelBtnIcon = document.querySelector('#panel-fs-btn i');
-            if (document.fullscreenElement) {
-                warningBtn.innerText = "Exit Fullscreen";
-                panelBtnIcon.className = "fa-solid fa-compress text-lg";
-            } else {
-                warningBtn.innerText = "Enter Fullscreen";
-                panelBtnIcon.className = "fa-solid fa-expand text-lg";
-            }
-        });
-
         function handlePadClick(padId) {
             if (state.activeAudioCount === 0) {
-                playSound(padId);
-                return;
+                playSound(padId); return;
             }
-
             const pad = state.pads[padId];
             const isPlaying = pad.activeSources.length > 0;
 
-            if (state.isEndMode) {
-                if (isPlaying) stopPad(padId);
-                return;
-            }
-
-            if (state.isMuteMode) {
-                if (isPlaying) togglePadMute(padId);
-                return;
-            }
+            if (state.isEndMode) { if(isPlaying) stopPad(padId); return; }
+            if (state.isMuteMode) { if(isPlaying) togglePadMute(padId); return; }
 
             if (state.isSoloMode) {
-                if (isPlaying) {
-                    togglePadSolo(padId);
-                    return;
-                }
-                const anySolo = state.pads.some(p => p.isSoloed);
-                if (anySolo) {
-                    breakSoloState();
-                }
+                if (isPlaying) { togglePadSolo(padId); return; }
+                if (state.pads.some(p => p.isSoloed)) breakSoloState();
             } else {
-                const anySolo = state.pads.some(p => p.isSoloed);
-                if (anySolo) {
-                    breakSoloState();
-                }
+                if (state.pads.some(p => p.isSoloed)) breakSoloState();
             }
-
             playSound(padId);
         }
 
-        function breakSoloState() {
-            state.pads.forEach(p => {
-                if (p.isSoloed) {
-                    p.isSoloed = false; 
-                } else if (p.activeSources.length > 0 && !p.isMuted) {
-                    p.isMuted = true;
-                }
-            });
-            updateAllGainsAndVisuals();
-        }
-
-        function playSound(padId) {
+        async function playSound(padId) {
             initAudio();
             const pad = state.pads[padId];
             if (pad.isLocked || !pad.buffer) return;
@@ -556,9 +397,23 @@
             if (pad.playMode === 'solo') stopAllSounds();
             else if (pad.playMode === 'mono') stopPad(padId);
 
+            let bufferToPlay = pad.buffer;
+            if (pad.reverse) {
+                if (!pad._revBuffer) {
+                    const ab = pad.buffer;
+                    const rb = audioCtx.createBuffer(ab.numberOfChannels, ab.length, ab.sampleRate);
+                    for(let c=0; c<ab.numberOfChannels; c++){
+                        const d = ab.getChannelData(c);
+                        const rd = rb.getChannelData(c);
+                        for(let i=0; i<ab.length; i++) rd[i] = d[ab.length - 1 - i];
+                    }
+                    pad._revBuffer = rb;
+                }
+                bufferToPlay = pad._revBuffer;
+            }
+
             const source = audioCtx.createBufferSource();
-            source.buffer = pad.buffer;
-            
+            source.buffer = bufferToPlay;
             source.loop = pad.loop;
             source.playbackRate.value = pad.playbackRate;
             source.detune.value = pad.pitch * 100;
@@ -567,9 +422,8 @@
             padGain.gain.value = calculatePadVolume(pad);
 
             let inputNode = source;
-            const filters = [];
-            
-            // Always create filters
+            const nodes = []; 
+
             FREQUENCIES.forEach((freq, idx) => {
                 const filter = audioCtx.createBiquadFilter();
                 if (idx === 0) filter.type = 'lowshelf';
@@ -577,11 +431,8 @@
                 else filter.type = 'peaking';
                 filter.frequency.value = freq;
                 filter.Q.value = 1.0;
-                filter.gain.value = pad.eqEnabled ? pad.eqGains[idx] : 0;
-                
-                inputNode.connect(filter);
-                inputNode = filter;
-                filters.push(filter);
+                filter.gain.value = pad.eqEnabled ? pad.eqGains[idx] : 0; 
+                inputNode.connect(filter); inputNode = filter; nodes.push(filter);
             });
 
             inputNode.connect(padGain);
@@ -596,391 +447,135 @@
             if (pad.loop) {
                 source.loopStart = start;
                 source.loopEnd = end;
-                source.start(0, start); 
+                source.start(0, start);
             } else {
                 source.start(0, start, end - start);
             }
-            
-            const sourceObj = { source, padGain, filters };
+
+            const sourceObj = { source, padGain, nodes };
             pad.activeSources.push(sourceObj);
-            
             updatePlayState(padId, true);
+
             source.onended = () => {
                 pad.activeSources = pad.activeSources.filter(s => s !== sourceObj);
+                try { source.disconnect(); padGain.disconnect(); nodes.forEach(n => n.disconnect()); } catch(e){}
                 if (pad.activeSources.length === 0) updatePlayState(padId, false);
             };
         }
 
         function calculatePadVolume(pad) {
             if (pad.isMuted) return 0;
-            const anySolo = state.pads.some(p => p.isSoloed);
-            if (anySolo && !pad.isSoloed) return 0;
+            if (state.pads.some(p => p.isSoloed) && !pad.isSoloed) return 0;
             return pad.volume / 100;
         }
 
         function updateAllGainsAndVisuals() {
-            state.pads.forEach(pad => {
-                const vol = calculatePadVolume(pad);
-                pad.activeSources.forEach(src => {
-                    try { src.padGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.02); } catch(e) {}
-                });
-                updatePadVisual(pad.id);
+            state.pads.forEach(p => {
+                const v = calculatePadVolume(p);
+                p.activeSources.forEach(s => { try{ s.padGain.gain.setTargetAtTime(v, audioCtx.currentTime, 0.02); }catch(e){} });
+                updatePadVisual(p.id);
             });
         }
 
         function stopPad(padId) {
             const pad = state.pads[padId];
-            pad.activeSources.forEach(s => { try { s.source.stop(); } catch(e){} });
+            pad.activeSources.forEach(s => { try{ s.source.stop(); }catch(e){} });
             pad.activeSources = [];
-            pad.isMuted = false;
-            pad.isSoloed = false;
+            pad.isMuted = false; pad.isSoloed = false;
             updatePlayState(padId, false);
-            updateAllGainsAndVisuals(); 
+            updateAllGainsAndVisuals();
         }
 
         function stopAllSounds() {
             state.pads.forEach(p => {
-                p.activeSources.forEach(s => { try { s.source.stop(); } catch(e){} });
+                p.activeSources.forEach(s => { try{s.source.stop();}catch(e){} });
                 p.activeSources = [];
-                p.isMuted = false;
-                p.isSoloed = false;
+                p.isMuted = false; p.isSoloed = false;
             });
-            state.isMuteMode = false;
-            state.isSoloMode = false;
-            state.isEndMode = false;
-            
+            state.isMuteMode = false; state.isSoloMode = false; state.isEndMode = false;
             state.activeAudioCount = 0;
-            updateModeButtons();
-            updateControlsState();
-            renderPads();
+            updateModeButtons(); updateControlsState(); renderPads();
         }
 
         function updatePlayState(padId, isPlaying) {
-            const totalPlaying = state.pads.reduce((acc, p) => acc + p.activeSources.length, 0);
-            state.activeAudioCount = totalPlaying;
+            state.activeAudioCount = state.pads.reduce((acc, p) => acc + p.activeSources.length, 0);
             updatePadVisual(padId);
             updateControlsState();
-            if (totalPlaying === 0) stopAllSounds(); 
+            if (state.activeAudioCount === 0) stopAllSounds();
+        }
+
+        function breakSoloState() {
+            state.pads.forEach(p => {
+                if (p.isSoloed) {
+                    p.isSoloed = false; 
+                } else if (p.activeSources.length > 0 && !p.isMuted) {
+                    p.isMuted = true;
+                }
+            });
+            updateAllGainsAndVisuals();
         }
 
         function updatePadVisual(padId) {
             const pad = state.pads[padId];
             const el = document.getElementById(`pad-surface-${padId}`);
             if(!el) return;
-            el.classList.remove('audible', 'silenced', 'soloed', 'muted');
-            if (pad.isSoloed) el.classList.add('soloed');
-            if (pad.activeSources.length > 0) {
-                const vol = calculatePadVolume(pad);
-                if (vol > 0) el.classList.add('audible'); 
+            el.classList.remove('audible', 'silenced', 'soloed', 'muted', 'effects-on');
+            if(pad.isSoloed) el.classList.add('soloed');
+            
+            if(pad.activeSources.length > 0) {
+                if(calculatePadVolume(pad) > 0) el.classList.add('audible');
                 else el.classList.add('silenced');
             }
         }
 
         function updateControlsState() {
-            const nonEssential = document.getElementById('non-essential-controls');
-            const liveControls = document.getElementById('live-controls');
-            if (state.activeAudioCount > 0) {
-                nonEssential.classList.add('controls-disabled');
-                liveControls.classList.remove('controls-disabled');
-            } else {
-                nonEssential.classList.remove('controls-disabled');
-                liveControls.classList.add('controls-disabled');
-            }
+            const live = document.getElementById('live-controls');
+            if (state.activeAudioCount > 0) live.classList.remove('controls-disabled');
+            else live.classList.add('controls-disabled');
         }
 
         function updateMasterVolumeState() {
             if(masterGain) masterGain.gain.value = state.masterVolume / 100;
         }
 
-        function toggleMuteMode() {
-            if (state.activeAudioCount === 0) return;
-            state.isMuteMode = !state.isMuteMode;
-            if(state.isMuteMode) { state.isSoloMode = false; state.isEndMode = false; }
-            updateModeButtons();
-        }
-
-        function toggleSoloMode() {
-            if (state.activeAudioCount === 0) return;
-            state.isSoloMode = !state.isSoloMode;
-            if(state.isSoloMode) { state.isMuteMode = false; state.isEndMode = false; }
-            updateModeButtons();
-        }
-
-        function toggleEndMode() {
-            if (state.activeAudioCount === 0) return;
-            state.isEndMode = !state.isEndMode;
-            if(state.isEndMode) { state.isMuteMode = false; state.isSoloMode = false; }
-            updateModeButtons();
+        function toggleMuteMode() { if(state.activeAudioCount>0) { state.isMuteMode = !state.isMuteMode; resetOtherModes('mute'); updateModeButtons(); } }
+        function toggleSoloMode() { if(state.activeAudioCount>0) { state.isSoloMode = !state.isSoloMode; resetOtherModes('solo'); updateModeButtons(); } }
+        function toggleEndMode() { if(state.activeAudioCount>0) { state.isEndMode = !state.isEndMode; resetOtherModes('end'); updateModeButtons(); } }
+        
+        function resetOtherModes(active) {
+            if(active !== 'mute') state.isMuteMode = false;
+            if(active !== 'solo') state.isSoloMode = false;
+            if(active !== 'end') state.isEndMode = false;
         }
 
         function updateModeButtons() {
-            const muteBtn = document.getElementById('btn-mute-mode');
-            const soloBtn = document.getElementById('btn-solo-mode');
-            const endBtn = document.getElementById('btn-end-mode');
-            if(state.isMuteMode) muteBtn.classList.add('btn-mode-active'); else muteBtn.classList.remove('btn-mode-active');
-            if(state.isSoloMode) soloBtn.classList.add('btn-mode-active'); else soloBtn.classList.remove('btn-mode-active');
-            if(state.isEndMode) endBtn.classList.add('btn-mode-active'); else endBtn.classList.remove('btn-mode-active');
+            const set = (id, active) => {
+                const b = document.getElementById(id);
+                if(active) b.classList.add('btn-mode-active');
+                else b.classList.remove('btn-mode-active');
+            };
+            set('btn-mute-mode', state.isMuteMode);
+            set('btn-solo-mode', state.isSoloMode);
+            set('btn-end-mode', state.isEndMode);
         }
 
         function togglePadMute(padId) {
-            const pad = state.pads[padId];
-            const anySolo = state.pads.some(p => p.isSoloed);
-            const isEffectivelyMuted = pad.isMuted || (anySolo && !pad.isSoloed);
-            if (isEffectivelyMuted) {
-                if (anySolo) breakSoloState(); 
-                pad.isMuted = false;
-            } else {
-                pad.isMuted = true;
-            }
+            const p = state.pads[padId];
+            const anySolo = state.pads.some(x => x.isSoloed);
+            if (p.isMuted || (anySolo && !p.isSoloed)) {
+                if(anySolo) breakSoloState();
+                p.isMuted = false;
+            } else { p.isMuted = true; }
             updateAllGainsAndVisuals();
         }
 
         function togglePadSolo(padId) {
-            const pad = state.pads[padId];
-            if (!pad.isSoloed) {
-                state.pads.forEach(p => p.isSoloed = false); 
-                pad.isSoloed = true; 
-                pad.isMuted = false; 
-            } else {
-                pad.isSoloed = false;
-            }
+            const p = state.pads[padId];
+            if (!p.isSoloed) {
+                state.pads.forEach(x => x.isSoloed = false);
+                p.isSoloed = true; p.isMuted = false;
+            } else { p.isSoloed = false; }
             updateAllGainsAndVisuals();
-        }
-
-        function updatePadVolume(val) {
-            if(state.currentConfigId === null) return;
-            let v = parseInt(val);
-            if(isNaN(v)) v = 100;
-            if(v < 0) v = 0; if(v > 200) v = 200;
-            state.pads[state.currentConfigId].volume = v;
-            document.getElementById('config-vol').value = v;
-            document.getElementById('config-vol-input').value = v;
-        }
-        function adjustPadVolume(delta) {
-            const pad = state.pads[state.currentConfigId];
-            updatePadVolume(pad.volume + delta);
-        }
-
-        function updatePadBpm(val) {
-            if(state.currentConfigId === null) return;
-            let v = parseFloat(val);
-            if(isNaN(v)) v = 1.0;
-            if(v < 0.1) v = 0.1; if(v > 2.0) v = 2.0;
-            v = Math.round(v * 100) / 100;
-            state.pads[state.currentConfigId].playbackRate = v;
-            document.getElementById('config-bpm').value = v;
-            document.getElementById('config-bpm-input').value = v.toFixed(2);
-        }
-        function adjustPadBpm(delta) {
-            const pad = state.pads[state.currentConfigId];
-            updatePadBpm(pad.playbackRate + delta);
-        }
-
-        function updatePadPitch(val) {
-            if(state.currentConfigId === null) return;
-            let v = parseFloat(val);
-            if(isNaN(v)) v = 0;
-            if(v < -12) v = -12; if(v > 12) v = 12;
-            v = Math.round(v * 100) / 100;
-            state.pads[state.currentConfigId].pitch = v;
-            document.getElementById('config-pitch').value = v;
-            document.getElementById('config-pitch-input').value = v.toFixed(2);
-        }
-        function adjustPadPitch(delta) {
-            const pad = state.pads[state.currentConfigId];
-            updatePadPitch(pad.pitch + delta);
-        }
-
-        function togglePadLoop() {
-            if(state.currentConfigId === null) return;
-            const pad = state.pads[state.currentConfigId];
-            pad.loop = !pad.loop;
-            updateLoopUi(pad.loop);
-        }
-        function updateLoopUi(isLoop) {
-            const btn = document.getElementById('loop-toggle');
-            const knob = btn.querySelector('span');
-            if(isLoop) {
-                btn.className = "w-10 h-5 rounded-full bg-green-500 relative transition-colors duration-200";
-                knob.style.transform = "translateX(20px)";
-            } else {
-                btn.className = "w-10 h-5 rounded-full bg-gray-300 relative transition-colors duration-200";
-                knob.style.transform = "translateX(0)";
-            }
-        }
-
-        function setPlayMode(mode) {
-            if(state.currentConfigId === null) return;
-            state.pads[state.currentConfigId].playMode = mode;
-            // Update UI
-            ['poly', 'mono', 'solo'].forEach(m => {
-                const btn = document.getElementById(`mode-${m}`);
-                if(m === mode) {
-                    btn.className = "flex-1 py-1.5 text-xs font-bold transition playmode-active shadow-inner";
-                } else {
-                    btn.className = "flex-1 py-1.5 text-xs font-bold hover:bg-gray-50 border-r transition bg-white text-gray-600";
-                }
-            });
-        }
-
-        function renderPads() {
-            const grid = document.getElementById('pads-grid');
-            grid.innerHTML = '';
-            grid.style.gridTemplateColumns = `repeat(${state.cols}, minmax(0, 1fr))`;
-            grid.style.gridTemplateRows = `repeat(${state.rows}, minmax(0, 1fr))`;
-            const totalPads = state.rows * state.cols;
-
-            for(let i=0; i < totalPads; i++) {
-                const pad = state.pads[i];
-                const container = document.createElement('div');
-                container.className = "w-full h-full"; 
-
-                const padSurface = document.createElement('div');
-                padSurface.id = `pad-surface-${i}`;
-                
-                let classes = "pad-surface flex flex-col justify-between p-2 relative";
-                if(pad.isLocked) classes += " locked";
-                padSurface.className = classes;
-                
-                const number = document.createElement('span');
-                number.className = "absolute bottom-1 right-2 text-gray-300 font-bold text-xl pointer-events-none select-none z-0";
-                number.innerText = i + 1;
-
-                let iconsHtml = '';
-                if(pad.isLocked) iconsHtml += '<i class="fa-solid fa-lock absolute top-2 right-2 text-gray-400 text-sm z-10"></i>';
-                
-                const soloBadge = document.createElement('div');
-                soloBadge.className = "solo-badge absolute top-2 left-2 bg-blue-500 text-white text-[10px] px-1.5 rounded font-bold shadow z-10";
-                soloBadge.innerText = "S";
-
-                const nameLabel = document.createElement('div');
-                nameLabel.className = "absolute bottom-1 left-4 right-12 z-10 flex items-center justify-center"; 
-                nameLabel.innerHTML = `<p class="text-[11px] text-gray-600 font-bold truncate w-full text-center" title="${pad.name}">${pad.name}</p>`;
-
-                padSurface.innerHTML = iconsHtml;
-                padSurface.appendChild(soloBadge);
-                padSurface.appendChild(number);
-                padSurface.appendChild(nameLabel);
-
-                const trigger = (e) => {
-                    if(e.cancelable) e.preventDefault();
-                    handlePadClick(i);
-                };
-                padSurface.addEventListener('mousedown', (e) => { if(e.button===0) trigger(e); });
-                padSurface.addEventListener('touchstart', trigger);
-
-                container.appendChild(padSurface);
-                grid.appendChild(container);
-            }
-            document.getElementById('disp-rows').innerText = state.rows;
-            document.getElementById('disp-cols').innerText = state.cols;
-        }
-
-        function toggleLayout() {
-            state.isRightLayout = !state.isRightLayout;
-            const container = document.getElementById('app-container');
-            const controls = document.getElementById('controls-area');
-            if (state.isRightLayout) {
-                container.classList.remove('layout-reverse');
-                container.classList.add('layout-normal');
-                controls.classList.remove('border-r');
-                controls.classList.add('border-l');
-            } else {
-                container.classList.remove('layout-normal');
-                container.classList.add('layout-reverse');
-                controls.classList.remove('border-l');
-                controls.classList.add('border-r');
-            }
-        }
-
-        function updateGridDim(dim, delta) {
-            let newVal = state[dim] + delta;
-            if (dim === 'rows') {
-                if (newVal < 1) newVal = 1; if (newVal > 4) newVal = 4;
-            } else if (dim === 'cols') {
-                if (newVal < 2) newVal = 2; if (newVal > 5) newVal = 5;
-            }
-            state[dim] = newVal;
-            renderPads();
-        }
-
-        function updateMasterVolume(val) {
-            state.masterVolume = parseInt(val);
-            document.getElementById('master-vol-display').innerText = `${val}%`;
-            updateMasterVolumeState();
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
-        }
-
-        function openSettings() {
-            document.getElementById('settings-modal').classList.remove('hidden');
-            renderSettingsList();
-            if(state.currentConfigId === null || state.currentConfigId >= state.rows * state.cols) {
-                selectConfigPad(0);
-            } else {
-                selectConfigPad(state.currentConfigId);
-            }
-        }
-
-        function closeSettings() {
-            document.getElementById('settings-modal').classList.add('hidden');
-        }
-
-        function renderSettingsList() {
-            const list = document.getElementById('settings-pad-list');
-            list.innerHTML = '';
-            const totalPads = state.rows * state.cols;
-            for(let i=0; i<totalPads; i++) {
-                const pad = state.pads[i];
-                const isSelected = state.currentConfigId === i;
-                const item = document.createElement('div');
-                item.className = `p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs font-bold transition mb-1 ${isSelected ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-white hover:bg-gray-100 text-gray-600 border border-transparent'}`;
-                item.onclick = () => selectConfigPad(i);
-                item.innerHTML = `
-                    <div class="flex items-center gap-2 overflow-hidden w-full">
-                        <span class="w-5 h-5 flex-shrink-0 rounded-full ${isSelected ? 'bg-green-200' : 'bg-gray-200'} flex items-center justify-center text-[10px]">${i+1}</span>
-                        <span class="truncate">${pad.name}</span>
-                    </div>
-                    ${pad.buffer ? '<i class="fa-solid fa-music text-green-500 text-[10px] ml-2 flex-shrink-0"></i>' : '<i class="fa-solid fa-circle text-gray-200 text-[8px] ml-2 flex-shrink-0"></i>'}
-                `;
-                list.appendChild(item);
-            }
-        }
-
-        function selectConfigPad(id) {
-            state.currentConfigId = id;
-            renderSettingsList();
-            const pad = state.pads[id];
-            document.getElementById('pad-config-area').classList.remove('hidden');
-            document.getElementById('config-empty').classList.add('hidden');
-            document.getElementById('config-pad-title').innerText = `Pad ${id+1}`;
-            document.getElementById('config-current-filename').innerText = pad.fileName || "No file loaded";
-            document.getElementById('config-name').value = pad.name;
-            
-            updatePadVolume(pad.volume);
-            updatePadBpm(pad.playbackRate);
-            updatePadPitch(pad.pitch);
-            updateLoopUi(pad.loop);
-            setPlayMode(pad.playMode); // Set colors correctly
-
-            const lockBtn = document.getElementById('lock-toggle');
-            const knob = lockBtn.querySelector('span');
-            if(pad.isLocked) {
-                lockBtn.className = "w-12 h-6 rounded-full bg-green-500 relative transition-colors duration-200";
-                knob.style.transform = "translateX(24px)";
-            } else {
-                lockBtn.className = "w-12 h-6 rounded-full bg-gray-300 relative transition-colors duration-200";
-                knob.style.transform = "translateX(0)";
-            }
-            
-            document.getElementById('trim-start').value = formatTime(pad.trimStart);
-            document.getElementById('trim-end').value = pad.trimEnd ? formatTime(pad.trimEnd) : "";
-            renderEqSliders(pad);
         }
 
         function handleAudioUpload(input) {
@@ -991,172 +586,229 @@
                 alert("File size exceeds 50MB limit.");
                 input.value = ""; return;
             }
-            status.classList.add('hidden');
+
+            initAudio(); // Required!
+            status.classList.remove('hidden');
+            status.innerText = "Processing...";
+
             const reader = new FileReader();
-            reader.onload = (e) => {
-                initAudio();
+            reader.onload = function(e) {
                 const arrayBuffer = e.target.result;
+                const binary = e.target.result; 
+                let b64 = '';
                 const bytes = new Uint8Array(arrayBuffer);
-                let binary = '';
-                for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
-                const base64 = btoa(binary);
-                audioCtx.decodeAudioData(arrayBuffer.slice(0), (buffer) => {
-                    const pad = state.pads[state.currentConfigId];
-                    pad.buffer = buffer;
-                    pad.rawBase64 = base64;
-                    pad.fileName = file.name;
-                    pad.name = file.name.replace(/\.[^/.]+$/, "");
-                    selectConfigPad(state.currentConfigId);
-                    renderPads();
-                }, (err) => {
-                    console.error(err);
-                    status.classList.remove('hidden');
-                    setTimeout(() => status.classList.add('hidden'), 3000);
-                });
+                const len = bytes.byteLength;
+                for (let i = 0; i < len; i++) b64 += String.fromCharCode(bytes[i]);
+                const base64 = btoa(b64);
+
+                // Need a fresh copy for decode, as decode detaches buffer
+                const bufferForDecode = arrayBuffer.slice(0);
+
+                audioCtx.decodeAudioData(bufferForDecode, 
+                    function(buffer) {
+                        const pad = state.pads[state.currentConfigId];
+                        pad.buffer = buffer;
+                        pad.rawBase64 = base64;
+                        pad.fileName = file.name;
+                        pad.name = file.name.replace(/\.[^/.]+$/, "");
+                        pad._revBuffer = null;
+
+                        status.classList.add('hidden');
+                        selectSettingsItem('pad', state.currentConfigId);
+                        renderPads();
+                        showToast("Loaded successfully!");
+                    },
+                    function(err) {
+                        console.error(err);
+                        alert("Audio decode failed.");
+                        status.classList.add('hidden');
+                    }
+                );
             };
             reader.readAsArrayBuffer(file);
             input.value = "";
         }
 
-        function updatePadName(val) {
-            if(state.currentConfigId === null) return;
-            state.pads[state.currentConfigId].name = val;
-            renderPads();
-            renderSettingsList();
+        // --- Config UI ---
+        function updatePadName(v) { if(state.currentConfigId!=null) { state.pads[state.currentConfigId].name=v; renderPads(); renderSettingsList(); } }
+        function togglePadLock(){ 
+            if(state.currentConfigId!=null) { 
+                const pad = state.pads[state.currentConfigId]; 
+                pad.isLocked = !pad.isLocked; 
+                const b=document.getElementById('lock-toggle');
+                if(pad.isLocked){ b.classList.remove('toggle-inactive'); b.classList.add('toggle-active'); b.querySelector('.toggle-knob').style.transform="translateX(1.25rem)"; }
+                else{ b.classList.remove('toggle-active'); b.classList.add('toggle-inactive'); b.querySelector('.toggle-knob').style.transform="translateX(0)"; }
+                renderPads(); 
+            } 
         }
-        function togglePadLock() {
-            if(state.currentConfigId === null) return;
-            const pad = state.pads[state.currentConfigId];
-            pad.isLocked = !pad.isLocked;
-            selectConfigPad(state.currentConfigId);
-            renderPads();
-        }
+        function updatePadKeybind(v){ if(state.currentConfigId!=null){ const val=v.toUpperCase().replace(/[^A-Z0-9]/g,''); state.pads[state.currentConfigId].keyBind=val; document.getElementById('config-keybind').value=val; } }
+        function updateReverseUi(on){ const b=document.getElementById('reverse-toggle'); if(on){ b.classList.remove('toggle-inactive'); b.classList.add('toggle-active-blue'); b.querySelector('.toggle-knob').style.transform="translateX(1.25rem)"; } else{ b.classList.remove('toggle-active-blue'); b.classList.add('toggle-inactive'); b.querySelector('.toggle-knob').style.transform="translateX(0)"; } }
+        function togglePadReverse(){ if(state.currentConfigId!=null){ const p=state.pads[state.currentConfigId]; p.reverse=!p.reverse; p._revBuffer=null; updateReverseUi(p.reverse); } }
+        function updatePadVolume(v){ if(state.currentConfigId!=null){ let val=parseInt(v)||100; state.pads[state.currentConfigId].volume=val; document.getElementById('config-vol').value=val; document.getElementById('config-vol-input').value=val; } }
+        function adjustPadVolume(d){ updatePadVolume(state.pads[state.currentConfigId].volume+d); }
+        function updatePadBpm(v){ if(state.currentConfigId!=null){ let val=Math.max(0.1, Math.min(2.0, parseFloat(v)||1)); state.pads[state.currentConfigId].playbackRate=val; document.getElementById('config-bpm').value=val; document.getElementById('config-bpm-input').value=val.toFixed(2); } }
+        function adjustPadBpm(d){ updatePadBpm(state.pads[state.currentConfigId].playbackRate+d); }
+        function updatePadPitch(v){ if(state.currentConfigId!=null){ let val=Math.max(-12, Math.min(12, parseFloat(v)||0)); state.pads[state.currentConfigId].pitch=val; document.getElementById('config-pitch').value=val; document.getElementById('config-pitch-input').value=val.toFixed(2); } }
+        function adjustPadPitch(d){ updatePadPitch(state.pads[state.currentConfigId].pitch+d); }
+        function updateLoopUi(on){ const b=document.getElementById('loop-toggle'); if(on){ b.classList.remove('toggle-inactive'); b.classList.add('toggle-active'); b.querySelector('.toggle-knob').style.transform="translateX(1.25rem)"; } else{ b.classList.remove('toggle-active'); b.classList.add('toggle-inactive'); b.querySelector('.toggle-knob').style.transform="translateX(0)"; } }
+        function togglePadLoop(){ if(state.currentConfigId!=null){ let p=state.pads[state.currentConfigId]; p.loop=!p.loop; updateLoopUi(p.loop); } }
+        function setPlayMode(m){ if(state.currentConfigId!=null){ state.pads[state.currentConfigId].playMode=m; ['poly','mono','solo'].forEach(x=>{ document.getElementById(`mode-${x}`).className=x===m?"flex-1 py-2 text-xs font-bold transition playmode-active shadow-inner":"flex-1 py-2 text-xs font-bold hover:bg-gray-50 border-r transition bg-white text-gray-600"; }); } }
         
-        function parseTime(str) {
-            if(!str) return null;
-            if(str.includes(':')) {
-                const [m, s] = str.split(':');
-                return (parseFloat(m)||0)*60 + (parseFloat(s)||0);
-            }
-            return parseFloat(str);
-        }
-        function formatTime(sec) {
-            if(sec === null || isNaN(sec)) return "";
-            const m = Math.floor(sec / 60);
-            const s = (sec % 60).toFixed(3).replace(/\.000$/, "");
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-        function updateTrim() {
-            if(state.currentConfigId === null) return;
-            state.pads[state.currentConfigId].trimStart = parseTime(document.getElementById('trim-start').value) || 0;
-            state.pads[state.currentConfigId].trimEnd = parseTime(document.getElementById('trim-end').value);
-        }
-
+        function formatTime(s){ if(s==null||isNaN(s))return""; const m=Math.floor(s/60); const sc=(s%60).toFixed(3).replace(/\.000$/,''); return `${m}:${sc<10?'0':''}${sc}`; }
+        function updateTrim(){ if(state.currentConfigId!=null){ const p=state.pads[state.currentConfigId]; const s=document.getElementById('trim-start').value.split(':'); const e=document.getElementById('trim-end').value.split(':'); const parse=(arr)=>arr.length===2?parseFloat(arr[0])*60+parseFloat(arr[1]):parseFloat(arr[0]); p.trimStart=parse(s)||0; p.trimEnd=parse(e)||null; } }
+        
         function renderEqSliders(pad) {
-            const container = document.getElementById('eq-container');
-            const labels = document.getElementById('eq-labels');
-            const toggle = document.getElementById('eq-toggle');
+            const c = document.getElementById('eq-container'); c.innerHTML = '';
+            const l = document.getElementById('eq-labels'); l.innerHTML = '';
+            FREQUENCIES.forEach((f, i) => {
+                const w = document.createElement('div'); w.className = "flex justify-center h-full items-end pb-0";
+                const s = document.createElement('input'); s.type='range'; s.className='vertical-slider'; s.min=-20; s.max=20; s.step=1; s.value=pad.eqGains[i];
+                s.oninput = (e) => pad.eqGains[i] = parseInt(e.target.value);
+                w.appendChild(s); c.appendChild(w);
+                const lbl = document.createElement('span'); lbl.className = "text-[9px] text-gray-500 transform -rotate-45 origin-center mt-2 font-mono";
+                lbl.innerText = f>=1000 ? `${f/1000}k` : f; l.appendChild(lbl);
+            });
+            const t = document.getElementById('eq-toggle');
+            if(pad.eqEnabled) { t.className="text-[10px] px-3 py-1 rounded-full bg-green-500 text-white font-bold transition"; c.classList.remove('opacity-40', 'pointer-events-none'); }
+            else { t.className="text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition"; c.classList.add('opacity-40', 'pointer-events-none'); }
+        }
+        function toggleEq() { if(state.currentConfigId!=null) { const p=state.pads[state.currentConfigId]; p.eqEnabled=!p.eqEnabled; renderEqSliders(p); } }
+
+        function openSettings() { document.getElementById('settings-modal').classList.remove('hidden'); renderSettingsList(); selectSettingsItem('general'); }
+        function closeSettings() { document.getElementById('settings-modal').classList.add('hidden'); }
+
+        function renderSettingsList() {
+            const list = document.getElementById('settings-pad-list');
+            list.innerHTML = '';
+            const general = document.createElement('div');
+            general.className = `p-3 rounded-lg cursor-pointer font-bold text-sm mb-1 text-gray-700 bg-gray-200`;
+            general.innerText = "General Settings";
+            general.id = 'list-item-general';
+            general.onclick = () => selectSettingsItem('general');
+            list.appendChild(general);
+            for(let i=0; i<state.rows*state.cols; i++) {
+                const pad = state.pads[i];
+                const item = document.createElement('div');
+                item.className = `p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs font-bold transition mb-1 bg-white hover:bg-gray-100 text-gray-600 border border-transparent`;
+                item.onclick = () => selectSettingsItem('pad', i);
+                item.innerHTML = `
+                    <div class="flex items-center gap-2 overflow-hidden w-full">
+                        <span class="w-5 h-5 flex-shrink-0 rounded-full bg-gray-200 flex items-center justify-center text-[10px]">${i+1}</span>
+                        <span class="truncate">${pad.name}</span>
+                    </div>
+                    ${pad.buffer ? '<i class="fa-solid fa-music text-green-500 text-[10px] ml-2 flex-shrink-0"></i>' : ''}
+                `;
+                item.id = `pad-list-item-${i}`;
+                list.appendChild(item);
+            }
+        }
+
+        function selectSettingsItem(type, id) {
+            document.getElementById('general-config-area').classList.add('hidden');
+            document.getElementById('pad-config-area').classList.add('hidden');
+            document.getElementById('config-empty').classList.add('hidden');
             
-            // Re-rendering logic fixed to ensure visibility
-            if(pad.eqEnabled) {
-                toggle.className = "text-[10px] px-3 py-1 rounded-full bg-green-500 text-white font-bold transition shadow";
-                toggle.innerText = "ON";
-                container.classList.remove('opacity-40', 'pointer-events-none');
-            } else {
-                toggle.className = "text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition";
-                toggle.innerText = "OFF";
-                container.classList.add('opacity-40', 'pointer-events-none');
+            const generalItem = document.getElementById('list-item-general');
+            if(generalItem) generalItem.className = "p-3 rounded-lg cursor-pointer font-bold text-sm mb-1 text-gray-700 bg-gray-200";
+            for(let i=0; i<MAX_PADS; i++) {
+                const el = document.getElementById(`pad-list-item-${i}`);
+                if(el) el.className = "p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs font-bold transition mb-1 bg-white hover:bg-gray-100 text-gray-600 border border-transparent";
             }
 
-            container.innerHTML = ''; labels.innerHTML = '';
-            FREQUENCIES.forEach((freq, idx) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = "flex justify-center h-full pt-2 pb-2";
-                const s = document.createElement('input');
-                s.type = 'range'; s.className = 'vertical-slider';
-                s.min = -20; s.max = 20; s.step = 1; s.value = pad.eqGains[idx];
-                s.oninput = (e) => pad.eqGains[idx] = parseInt(e.target.value);
-                wrapper.appendChild(s); container.appendChild(wrapper);
-                const l = document.createElement('span');
-                l.className = "text-[9px] text-gray-500 transform -rotate-45 origin-center mt-2 font-mono";
-                l.innerText = freq >= 1000 ? `${freq/1000}k` : freq;
-                labels.appendChild(l);
-            });
-        }
-        function toggleEq() {
-            if(state.currentConfigId === null) return;
-            const pad = state.pads[state.currentConfigId];
-            pad.eqEnabled = !pad.eqEnabled;
-            renderEqSliders(pad);
-        }
+            if (type === 'general') {
+                if(generalItem) generalItem.className = "p-3 rounded-lg cursor-pointer font-bold text-sm mb-1 text-white bg-gray-600 shadow";
+                document.getElementById('general-config-area').classList.remove('hidden');
+            } else {
+                state.currentConfigId = id;
+                const item = document.getElementById(`pad-list-item-${id}`);
+                if(item) item.className = "p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs font-bold transition mb-1 bg-green-50 text-green-700 border border-green-200 shadow-sm";
+                document.getElementById('pad-config-area').classList.remove('hidden');
+                
+                const pad = state.pads[id];
+                document.getElementById('config-pad-title').innerText = `Pad ${id+1}`;
+                document.getElementById('config-current-filename').innerText = pad.fileName || "No file loaded";
+                document.getElementById('config-name').value = pad.name;
+                document.getElementById('config-keybind').value = pad.keyBind || "";
+                
+                updatePadVolume(pad.volume);
+                updatePadBpm(pad.playbackRate);
+                updatePadPitch(pad.pitch);
+                updateLoopUi(pad.loop);
+                updateReverseUi(pad.reverse);
+                setPlayMode(pad.playMode);
 
-        function exportData() {
-            const now = new Date();
-            const dateStr = now.toISOString().slice(0,19).replace(/T/g, '_').replace(/:/g, '-');
-            const fileName = `WebSamplerPro_${dateStr}.json`;
-            const data = {
-                version: 1.9,
-                rows: state.rows, cols: state.cols, masterVolume: state.masterVolume,
-                pads: state.pads.map(p => ({
-                    id: p.id, name: p.name, volume: p.volume, isLocked: p.isLocked, playMode: p.playMode,
-                    trimStart: p.trimStart, trimEnd: p.trimEnd, eqEnabled: p.eqEnabled, eqGains: p.eqGains,
-                    fileName: p.fileName, rawBase64: p.rawBase64, isMuted: p.isMuted, isSoloed: p.isSoloed,
-                    playbackRate: p.playbackRate, pitch: p.pitch, loop: p.loop
-                }))
-            };
-            const blob = new Blob([JSON.stringify(data)], {type: "application/json"});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = fileName;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-            showToast("Export Complete");
+                const lockBtn = document.getElementById('lock-toggle');
+                if(pad.isLocked) {
+                    lockBtn.classList.remove('toggle-inactive'); lockBtn.classList.add('toggle-active');
+                    lockBtn.querySelector('.toggle-knob').style.transform = "translateX(1.25rem)";
+                } else {
+                    lockBtn.classList.remove('toggle-active'); lockBtn.classList.add('toggle-inactive');
+                    lockBtn.querySelector('.toggle-knob').style.transform = "translateX(0)";
+                }
+                document.getElementById('trim-start').value = formatTime(pad.trimStart);
+                document.getElementById('trim-end').value = pad.trimEnd ? formatTime(pad.trimEnd) : "";
+                renderEqSliders(pad);
+            }
         }
 
-        function importData(input) {
-            const f = input.files[0];
-            if(!f) return;
-            const r = new FileReader();
-            r.onload = (e) => {
-                try {
-                    const d = JSON.parse(e.target.result);
-                    stopAllSounds(); initAudio();
-                    if(d.rows && d.cols) { state.rows = d.rows; state.cols = d.cols; }
-                    else if (d.padCount) {
-                        if(d.padCount === 8) { state.rows=2; state.cols=4; }
-                        else if(d.padCount === 12) { state.rows=3; state.cols=4; }
-                        else { state.rows=4; state.cols=4; }
-                    }
-                    updateMasterVolume(d.masterVolume || 100);
-                    document.getElementById('master-volume').value = d.masterVolume || 100;
-                    let pending = 0;
-                    d.pads.forEach((pd, i) => {
-                        if(i >= MAX_PADS) return;
-                        const p = state.pads[i];
-                        p.name = pd.name; p.volume = pd.volume; p.isLocked = pd.isLocked;
-                        p.playMode = pd.playMode || 'poly'; p.trimStart = pd.trimStart; p.trimEnd = pd.trimEnd;
-                        p.eqEnabled = pd.eqEnabled; p.eqGains = pd.eqGains || new Array(9).fill(0);
-                        p.fileName = pd.fileName; p.rawBase64 = pd.rawBase64;
-                        p.isMuted = pd.isMuted || false; p.isSoloed = pd.isSoloed || false;
-                        p.playbackRate = pd.playbackRate || 1.0;
-                        p.pitch = pd.pitch || 0.0;
-                        p.loop = pd.loop || false;
+        // ... (Standard logic: Grid, Fullscreen, Key, Render, Export, Import)
+        function updateGridDim(d, v) { let n=state[d]+v; if(d==='rows'){if(n<1)n=1;if(n>4)n=4;}else{if(n<2)n=2;if(n>5)n=5;} state[d]=n; renderPads(); renderSettingsList(); }
+        function toggleFullscreen() { if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+        function toggleKeyboardControl() { 
+            state.keyboardEnabled = !state.keyboardEnabled; 
+            const b=document.getElementById('kb-toggle'); 
+            if(state.keyboardEnabled){ b.classList.remove('toggle-inactive'); b.classList.add('toggle-active'); b.querySelector('.toggle-knob').style.transform="translateX(1.25rem)"; }
+            else{ b.classList.remove('toggle-active'); b.classList.add('toggle-inactive'); b.querySelector('.toggle-knob').style.transform="translateX(0)"; }
+        }
+        function updateMasterVolume(v){ state.masterVolume = parseInt(v); document.getElementById('master-vol-display').innerText = `${v}%`; if(masterGain) masterGain.gain.value = v/100; }
+        function toggleLayout() { state.isRightLayout = !state.isRightLayout; const c = document.getElementById('app-container'); const p = document.getElementById('controls-area'); if(state.isRightLayout) { c.classList.remove('layout-reverse'); p.classList.remove('border-r'); p.classList.add('border-l'); } else { c.classList.add('layout-reverse'); p.classList.remove('border-l'); p.classList.add('border-r'); } }
+        function showToast(msg) { const t=document.getElementById('toast'); document.getElementById('toast-msg').innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2500); }
 
-                        if(p.rawBase64) {
-                            pending++;
-                            const bin = atob(p.rawBase64); const len = bin.length;
-                            const bytes = new Uint8Array(len); for(let k=0; k<len; k++) bytes[k] = bin.charCodeAt(k);
-                            audioCtx.decodeAudioData(bytes.buffer.slice(0), (buf) => {
-                                p.buffer = buf; pending--;
-                                if(pending === 0) { renderPads(); showToast("Import Complete"); }
-                            }, (e) => { console.error("Decode error", e); pending--; });
-                        } else { p.buffer = null; }
-                    });
-                    renderPads(); if(pending === 0) showToast("Import Complete");
-                } catch(err) { console.error(err); showToast("Import Failed"); }
-            };
-            r.readAsText(f); input.value = "";
+        function renderPads() {
+            const grid = document.getElementById('pads-grid');
+            grid.innerHTML = '';
+            grid.style.gridTemplateColumns = `repeat(${state.cols}, minmax(0, 1fr))`;
+            grid.style.gridTemplateRows = `repeat(${state.rows}, minmax(0, 1fr))`;
+            const total = state.rows * state.cols;
+            for(let i=0; i<total; i++) {
+                const pad = state.pads[i];
+                const div = document.createElement('div'); div.className = "w-full h-full";
+                const surf = document.createElement('div'); surf.id = `pad-surface-${i}`;
+                let cls = "pad-surface flex flex-col justify-between p-2 relative";
+                if(pad.isLocked) cls += " locked";
+                surf.className = cls;
+                
+                const badges = `<div class="badge-container"><span class="badge badge-solo">S</span><span class="badge badge-effect">E</span></div>`;
+                const num = `<span class="absolute bottom-1 right-2 text-gray-300 font-bold text-xl pointer-events-none select-none z-0">${i+1}</span>`;
+                const name = `<div class="absolute bottom-1 left-4 right-12 z-10 flex items-center justify-center"><p class="text-[11px] text-gray-600 font-bold truncate w-full text-center" title="${pad.name}">${pad.name}</p></div>`;
+                
+                surf.innerHTML = badges + num + name;
+                const trig = (e) => { if(e.cancelable) e.preventDefault(); handlePadClick(i); };
+                surf.addEventListener('mousedown', (e)=>{if(e.button===0)trig(e)});
+                surf.addEventListener('touchstart', trig);
+                div.appendChild(surf); grid.appendChild(div);
+            }
+            document.getElementById('disp-rows').innerText = state.rows;
+            document.getElementById('disp-cols').innerText = state.cols;
         }
 
-        window.onload = renderPads;
+        function exportData(){ const d = { version: 2.3, rows: state.rows, cols: state.cols, master: state.masterVolume, pads: state.pads.map(p => { const { buffer, activeSources, _revBuffer, ...data } = p; return data; })}; const b = new Blob([JSON.stringify(d)], {type:"application/json"}); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href=u; a.download="sampler.json"; document.body.appendChild(a); a.click(); a.remove(); }
+        function importData(inp){ const f = inp.files[0]; if(!f) return; const r = new FileReader(); r.onload = (e) => { const d = JSON.parse(e.target.result); stopAllSounds(); initAudio(); state.rows = d.rows||4; state.cols = d.cols||4; state.masterVolume = d.master||100; updateMasterVolume(state.masterVolume); d.pads.forEach((dp, i) => { if(i < MAX_PADS) { Object.assign(state.pads[i], dp); state.pads[i].activeSources=[]; state.pads[i]._revBuffer=null; if(dp.rawBase64) { const bin = atob(dp.rawBase64); const len = bin.length; const bytes = new Uint8Array(len); for(let k=0; k<len; k++) bytes[k] = bin.charCodeAt(k); audioCtx.decodeAudioData(bytes.buffer.slice(0), b => { state.pads[i].buffer = b; renderPads(); }); } } }); renderPads(); }; r.readAsText(f); inp.value=""; }
+
+        document.addEventListener('keydown', (e) => {
+            if (!state.keyboardEnabled) return; if (e.target.tagName === 'INPUT') return;
+            if (e.code === 'Space') { e.preventDefault(); stopAllSounds(); return; }
+            if (state.activeAudioCount > 0) {
+                if (e.key === 'Shift') { toggleMuteMode(); return; }
+                if (e.key === 'Control') { toggleSoloMode(); return; }
+                if (e.key === 'Alt') { e.preventDefault(); toggleEndMode(); return; }
+                if (e.code === 'ArrowUp' || e.code === 'ArrowRight') { updateMasterVolume(Math.min(200, state.masterVolume + 5)); return; }
+                if (e.code === 'ArrowDown' || e.code === 'ArrowLeft') { updateMasterVolume(Math.max(0, state.masterVolume - 5)); return; }
+            }
+            const key = e.key.toUpperCase(); const pad = state.pads.find(p => p.keyBind === key); if (pad) { e.preventDefault(); handlePadClick(pad.id); }
+        });
+
+        window.onload = () => { renderPads(); };
     </script>
 </body>
 </html>
