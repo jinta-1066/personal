@@ -353,23 +353,23 @@
 
                                     <div>
                                         <div class="flex justify-between items-center mb-1">
-                                            <label class="text-xs font-bold text-gray-700 uppercase">BPM (Speed x)</label>
+                                            <label class="text-xs font-bold text-gray-700 uppercase">Speed (x)</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <button onclick="adjustPadBpm(-0.01)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                                            <button onclick="adjustPadBpm(-0.05)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
                                             <input type="range" id="config-bpm" min="0.1" max="2.0" step="0.01" value="1.0" oninput="updatePadBpm(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
-                                            <button onclick="adjustPadBpm(0.01)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                            <button onclick="adjustPadBpm(0.05)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
                                             <input type="number" id="config-bpm-input" value="1.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadBpm(this.value)">
                                         </div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between items-center mb-1">
-                                            <label class="text-xs font-bold text-gray-700 uppercase">Pitch (Semitones)</label>
+                                            <label class="text-xs font-bold text-gray-700 uppercase">Pitch (Semi)</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <button onclick="adjustPadPitch(-0.1)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                                            <button onclick="adjustPadPitch(-0.20)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
                                             <input type="range" id="config-pitch" min="-12" max="12" step="0.01" value="0" oninput="updatePadPitch(this.value)" class="flex-grow h-2 bg-gray-200 rounded-lg cursor-pointer">
-                                            <button onclick="adjustPadPitch(0.1)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                                            <button onclick="adjustPadPitch(0.20)" class="w-7 h-7 rounded bg-white border hover:bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
                                             <input type="number" id="config-pitch-input" value="0.00" step="0.01" class="w-14 text-xs font-mono bg-white px-1 py-1 rounded border" onchange="updatePadPitch(this.value)">
                                         </div>
                                     </div>
@@ -569,7 +569,7 @@
             let inputNode = source;
             const filters = [];
             
-            // Always create filters to maintain consistent node graph
+            // Always create filters
             FREQUENCIES.forEach((freq, idx) => {
                 const filter = audioCtx.createBiquadFilter();
                 if (idx === 0) filter.type = 'lowshelf';
@@ -577,7 +577,6 @@
                 else filter.type = 'peaking';
                 filter.frequency.value = freq;
                 filter.Q.value = 1.0;
-                // Only apply gain if EQ is enabled
                 filter.gain.value = pad.eqEnabled ? pad.eqGains[idx] : 0;
                 
                 inputNode.connect(filter);
@@ -813,7 +812,7 @@
         function setPlayMode(mode) {
             if(state.currentConfigId === null) return;
             state.pads[state.currentConfigId].playMode = mode;
-            // Update UI Logic
+            // Update UI
             ['poly', 'mono', 'solo'].forEach(m => {
                 const btn = document.getElementById(`mode-${m}`);
                 if(m === mode) {
@@ -1058,6 +1057,7 @@
             const labels = document.getElementById('eq-labels');
             const toggle = document.getElementById('eq-toggle');
             
+            // Re-rendering logic fixed to ensure visibility
             if(pad.eqEnabled) {
                 toggle.className = "text-[10px] px-3 py-1 rounded-full bg-green-500 text-white font-bold transition shadow";
                 toggle.innerText = "ON";
