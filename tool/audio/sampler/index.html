@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Sampler Pro</title>
-    <link rel="icon" type="image/x-icon" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
-    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
-    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
-    <!-- Ver.4.3 -->
+    <!-- Ver.4.6 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- Base Styles --- */
         body { background-color: #ffffff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow: hidden; user-select: none; }
         
+        /* --- Screen Size Blocker (520x360) --- */
         #size-warning { display: none; }
-        @media (max-width: 479px), (max-height: 419px) { #size-warning { display: flex !important; } }
+        @media (max-width: 519px), (max-height: 359px) { #size-warning { display: flex !important; } }
 
         /* --- UI Components --- */
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
@@ -72,7 +70,6 @@
         /* Mode Buttons */
         .btn-mode-active { background-color: #3b82f6 !important; color: white !important; border-color: #3b82f6 !important; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1); }
         .playmode-active { background-color: #22c55e !important; color: white !important; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
-        
         .controls-disabled { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
         .layout-normal { flex-direction: row; }
         .layout-reverse { flex-direction: row-reverse; }
@@ -91,10 +88,18 @@
 </head>
 <body class="h-screen w-screen flex flex-col relative">
 
+    <!-- Processing Overlay -->
+    <div id="processing-overlay" class="fixed inset-0 z-[9999] bg-black bg-opacity-30 hidden flex items-center justify-center cursor-wait">
+        <div class="bg-white px-6 py-4 rounded-lg shadow-xl flex items-center gap-3">
+            <i class="fa-solid fa-spinner fa-spin text-blue-500 text-2xl"></i>
+            <span class="font-bold text-gray-700">Processing...</span>
+        </div>
+    </div>
+
     <div id="size-warning" class="fixed inset-0 bg-gray-800 z-[9999] flex flex-col items-center justify-center text-white p-6 text-center">
         <i class="fa-solid fa-display text-5xl mb-4 text-red-400"></i>
         <h2 class="text-2xl font-bold mb-2">Screen Size Too Small</h2>
-        <p class="text-sm text-gray-400 mt-2">Minimum required: 480px x 420px</p>
+        <p class="text-sm text-gray-400 mt-2">Minimum required: 520px x 360px</p>
         <button onclick="toggleFullscreen()" class="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold transition" id="warning-fs-btn">Enter Fullscreen</button>
     </div>
 
@@ -132,7 +137,8 @@
 
                 <button onclick="stopAllSounds()" class="w-full py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold shadow-md transition flex items-center justify-center gap-2 text-sm active:scale-95"><i class="fa-solid fa-square"></i> ALL STOP</button>
 
-                <div>
+                <!-- Master Volume with Margin (Modified margin-bottom) -->
+                <div class="border-b border-gray-200 pb-3 mb-3">
                     <div class="flex justify-between text-[10px] text-gray-500 mb-1 font-bold"><span>MASTER VOL</span><span id="master-vol-display">100%</span></div>
                     <input type="range" id="master-volume" min="0" max="200" value="100" oninput="updateMasterVolume(this.value)" class="w-full">
                 </div>
@@ -185,16 +191,7 @@
                                 <div class="bg-white p-5 rounded-lg border shadow-sm">
                                     <h4 class="text-sm font-bold text-gray-600 mb-3">Keyboard Control</h4>
                                     <div class="flex items-center justify-between mb-4"><span class="text-xs font-bold text-gray-500">Enable Shortcuts</span><div id="kb-toggle" onclick="toggleKeyboardControl()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div></div>
-                                    <div class="text-xs text-gray-500 space-y-2 bg-gray-50 p-4 rounded border border-gray-100">
-                                        <p class="font-bold text-gray-600 mb-2">Controls (Playing Only):</p>
-                                        <ul class="list-disc pl-4 space-y-1">
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Shift</span> + Click / Key: Toggle Mute</li>
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Ctrl</span> + Click / Key: Toggle Solo</li>
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Alt</span> + Click / Key: End (Stop)</li>
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Space</span>: All Stop</li>
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">Arrows</span>: Master Volume +/- 5%</li>
-                                        </ul>
-                                    </div>
+                                    <div class="text-xs text-gray-500 space-y-2 bg-gray-50 p-4 rounded border border-gray-100"><p class="font-bold text-gray-600 mb-2">Controls (Playing Only):</p><ul class="list-disc pl-4 space-y-1"><li>Shift: Mute</li><li>Ctrl: Solo</li><li>Alt: End</li><li>Space: Stop</li><li>Arrows: Volume</li></ul></div>
                                 </div>
                             </div>
                         </div>
@@ -240,14 +237,12 @@
                                 <div class="bg-gray-50 p-5 rounded-lg border border-gray-200"><label class="block text-xs font-bold text-gray-700 uppercase mb-2">Trimming (MM:SS.mmm)</label><div class="flex gap-4"><div class="flex-1"><span class="text-[10px] text-gray-500 font-bold block mb-1">Start</span><input type="text" id="trim-start" placeholder="0:00.000" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm focus:border-green-500 outline-none"></div><div class="flex-1"><span class="text-[10px] text-gray-500 font-bold block mb-1">End</span><input type="text" id="trim-end" placeholder="End" onchange="updateTrim()" class="w-full border border-gray-300 rounded px-2 py-1.5 text-center font-mono text-sm focus:border-green-500 outline-none"></div></div></div>
                                 <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
                                     <div class="flex justify-between items-center mb-4"><label class="text-xs font-bold text-gray-700 uppercase">9-Band EQ</label><button id="eq-toggle" onclick="toggleEq()" class="text-[10px] px-3 py-1 rounded-full bg-gray-300 text-white font-bold transition">OFF</button></div>
-                                    <!-- Ver 3.1 slider styles -->
                                     <div class="relative h-40 w-full"><div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[9px] text-gray-400 font-mono pointer-events-none pr-1 w-8 text-right z-10"><span>+20</span><span>+10</span><span>0dB</span><span>-10</span><span>-20</span></div><div id="eq-container" class="ml-8 grid grid-cols-9 gap-1 h-full items-end opacity-40 pointer-events-none transition-opacity eq-grid relative border border-gray-200 bg-white rounded"></div></div><div id="eq-labels" class="ml-8 grid grid-cols-9 gap-1 mt-1 text-center"></div>
                                 </div>
-
                                 <div class="space-y-2">
                                     <div class="flex items-center justify-between border-b pb-2 mb-3"><h4 class="text-sm font-bold text-purple-600 uppercase">Sound Effects</h4><div id="effect-pad-toggle" onclick="togglePadEffectState()" class="toggle-switch toggle-inactive"><div class="toggle-knob"></div></div></div>
                                     <div id="effects-container" class="opacity-50 pointer-events-none transition-opacity space-y-3 h-[450px] overflow-y-auto pr-2">
-                                        <!-- UPDATED FX SIZE Ver 4.2 -->
+                                        <!-- FX (Ver 4.2 Size) -->
                                         <div class="effect-group"><div class="effect-header"><span>Filter / Resonance</span><button id="filter-type-btn" class="text-[10px] bg-white border px-2 py-0.5 rounded shadow-sm hover:bg-gray-50" onclick="toggleFilterType()">LowPass</button></div><div class="grid grid-cols-2 gap-3"><div><div class="flex justify-between text-[11px] mb-1 font-medium text-gray-600"><span>Freq</span><input type="number" id="fx-cutoff-val" class="w-14 p-1 text-right border rounded bg-white text-xs" onchange="updateFx('cutoff', this.value)"></div><input type="range" id="fx-cutoff" min="20" max="20000" step="10" oninput="updateFx('cutoff', this.value)" class="h-2 bg-gray-300 rounded w-full"></div><div><div class="flex justify-between text-[11px] mb-1 font-medium text-gray-600"><span>Res</span><input type="number" id="fx-res-val" class="w-12 p-1 text-right border rounded bg-white text-xs" onchange="updateFx('res', this.value)"></div><input type="range" id="fx-res" min="0" max="100" step="5" oninput="updateFx('res', this.value)" class="h-2 bg-gray-300 rounded w-full"></div></div></div>
                                         <div class="effect-group"><div class="effect-header"><span>Drive</span></div><div class="flex items-center gap-3"><input type="range" id="fx-drive" min="0" max="100" step="5" oninput="updateFx('drive', this.value)" class="h-2 bg-gray-300 rounded flex-grow"><input type="number" id="fx-drive-val" class="w-14 text-xs p-1 border rounded bg-white text-center" onchange="updateFx('drive', this.value)"></div></div>
                                         <div class="effect-group"><div class="effect-header"><span>Compressor</span></div><div class="grid grid-cols-2 gap-3 text-[11px] font-medium text-gray-600"><div class="flex justify-between items-center">Thresh: <input type="number" id="fx-comp-thresh-val" class="w-12 p-1 border rounded bg-white text-right text-xs" onchange="updateFx('compThresh', this.value)"> dB</div><div class="flex justify-between items-center">Ratio: <input type="number" id="fx-comp-ratio-val" class="w-12 p-1 border rounded bg-white text-right text-xs" onchange="updateFx('compRatio', this.value)"> :1</div><div class="flex justify-between items-center">Att: <input type="number" id="fx-comp-att-val" class="w-12 p-1 border rounded bg-white text-right text-xs" onchange="updateFx('compAtt', this.value)"> ms</div><div class="flex justify-between items-center">Rel: <input type="number" id="fx-comp-rel-val" class="w-12 p-1 border rounded bg-white text-right text-xs" onchange="updateFx('compRel', this.value)"> ms</div></div></div>
@@ -274,7 +269,7 @@
         const state = {
             rows: 4, cols: 4, masterVolume: 100, isRightLayout: true,
             pads: [], activeAudioCount: 0, currentConfigId: null,
-            isMuteMode: false, isSoloMode: false, isEndMode: false,
+            isMuteMode: false, isSoloMode: false, isEndMode: false, isEffectMode: false,
             keyboardEnabled: false
         };
 
@@ -338,7 +333,7 @@
         }
 
         function handlePadDown(padId) {
-            if (state.activeAudioCount === 0) {
+            if (state.activeAudioCount === 0 && !state.isEffectMode) {
                 playSound(padId); return;
             }
             const pad = state.pads[padId];
@@ -346,6 +341,7 @@
 
             if (state.isEndMode) { if(isPlaying) stopPad(padId); return; }
             if (state.isMuteMode) { if(isPlaying) togglePadMute(padId); return; }
+            if (state.isEffectMode) { if(isPlaying) togglePadEffectActive(padId); return; }
 
             if (state.isSoloMode) {
                 if (isPlaying) { togglePadSolo(padId); return; }
@@ -525,7 +521,7 @@
                 const el = document.getElementById(`pad-surface-${p.id}`);
                 if(el) el.className = "pad-surface flex flex-col justify-between p-2 relative" + (p.isLocked ? " locked" : "");
             });
-            state.isMuteMode = false; state.isSoloMode = false; state.isEndMode = false;
+            state.isMuteMode = false; state.isSoloMode = false; state.isEndMode = false; state.isEffectMode = false;
             state.activeAudioCount = 0;
             updateModeButtons(); updateControlsState(); 
         }
@@ -569,22 +565,26 @@
         function toggleMuteMode() { if(state.activeAudioCount>0) { state.isMuteMode = !state.isMuteMode; resetOtherModes('mute'); updateModeButtons(); } }
         function toggleSoloMode() { if(state.activeAudioCount>0) { state.isSoloMode = !state.isSoloMode; resetOtherModes('solo'); updateModeButtons(); } }
         function toggleEndMode() { if(state.activeAudioCount>0) { state.isEndMode = !state.isEndMode; resetOtherModes('end'); updateModeButtons(); } }
+        function toggleEffectMode() { if(state.activeAudioCount>0) { state.isEffectMode = !state.isEffectMode; resetOtherModes('effect'); updateModeButtons(); } }
         
         function resetOtherModes(active) {
             if(active !== 'mute') state.isMuteMode = false;
             if(active !== 'solo') state.isSoloMode = false;
             if(active !== 'end') state.isEndMode = false;
+            if(active !== 'effect') state.isEffectMode = false;
         }
 
         function updateModeButtons() {
-            const set = (id, active) => {
+            const set = (id, active, effect) => {
                 const b = document.getElementById(id);
-                if(active) b.classList.add('btn-mode-active');
-                else b.classList.remove('btn-mode-active');
+                if(!b) return; // Should not happen but safe guard
+                if(active) b.classList.add(effect ? 'btn-effect-active' : 'btn-mode-active');
+                else b.classList.remove('btn-effect-active', 'btn-mode-active');
             };
             set('btn-mute-mode', state.isMuteMode);
             set('btn-solo-mode', state.isSoloMode);
             set('btn-end-mode', state.isEndMode);
+            // Effect button removed from main panel, but mode logic remains for hotkey/future
         }
 
         function togglePadMute(padId) {
@@ -627,8 +627,9 @@
             if (file.size > MAX_FILE_SIZE) { alert("File size exceeds 50MB limit."); input.value = ""; return; }
 
             initAudio(); 
-            status.classList.remove('hidden');
-            status.innerText = "Processing...";
+            
+            const overlay = document.getElementById('processing-overlay');
+            overlay.classList.remove('hidden');
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -650,25 +651,25 @@
                         pad.name = file.name.replace(/\.[^/.]+$/, "");
                         pad._revBuffer = null;
 
-                        status.classList.add('hidden');
+                        overlay.classList.add('hidden');
                         
-                        // FIX: Update UI immediately (Ver.3.9 Logic)
                         renderSettingsList(); 
-                        selectSettingsItem('pad', state.currentConfigId); // Refreshes form
-                        renderPads(); // Refreshes grid
-
-                        // FIX: Force set values again to ensure visibility
+                        
+                        // Force Update of Form Inputs Immediately
                         const nameInput = document.getElementById('config-name');
                         if(nameInput) nameInput.value = pad.name;
-                        const filename = document.getElementById('config-current-filename');
-                        if(filename) filename.innerText = pad.fileName;
+                        const filenameLabel = document.getElementById('config-current-filename');
+                        if(filenameLabel) filenameLabel.innerText = pad.fileName;
+                        
+                        renderPads(); 
+                        selectSettingsItem('pad', state.currentConfigId); // Re-trigger highlight logic
 
                         showToast("Loaded successfully!");
                     },
                     function(err) {
                         console.error(err);
                         alert("Audio decode failed.");
-                        status.classList.add('hidden');
+                        overlay.classList.add('hidden');
                     }
                 );
             };
@@ -902,26 +903,12 @@
             document.getElementById('disp-cols').innerText = state.cols;
         }
 
-        function exportData(){ 
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = String(now.getMonth() + 1).padStart(2, '0');
-            const d = String(now.getDate()).padStart(2, '0');
-            const h = String(now.getHours()).padStart(2, '0');
-            const min = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            const fileName = `WebSamplerPro_${y}${m}${d}_${h}${min}${s}.json`;
-            
-            const data = { version: 4.3, rows: state.rows, cols: state.cols, master: state.masterVolume, pads: state.pads.map(p => { const { buffer, activeSources, _revBuffer, ...data } = p; return data; })}; 
-            const b = new Blob([JSON.stringify(data)], {type:"application/json"}); 
-            const u = URL.createObjectURL(b); 
-            const a = document.createElement('a'); 
-            a.href=u; a.download=fileName; 
-            document.body.appendChild(a); a.click(); a.remove(); 
-        }
-        
+        function exportData(){ const d = { version: 4.6, rows: state.rows, cols: state.cols, master: state.masterVolume, pads: state.pads.map(p => { const { buffer, activeSources, _revBuffer, ...data } = p; return data; })}; const b = new Blob([JSON.stringify(d)], {type:"application/json"}); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href=u; a.download="sampler.json"; document.body.appendChild(a); a.click(); a.remove(); }
         function importData(inp){ 
             const f = inp.files[0]; if(!f) return; 
+            const overlay = document.getElementById('processing-overlay');
+            overlay.classList.remove('hidden');
+            
             const r = new FileReader(); 
             r.onload = (e) => { 
                 const d = JSON.parse(e.target.result); 
@@ -939,10 +926,11 @@
                     } 
                 }); 
                 
-                // Update UI after import
+                overlay.classList.add('hidden');
                 renderSettingsList();
+                // Ensure General Settings is selected after import
+                selectSettingsItem('general'); 
                 renderPads();
-                if(state.currentConfigId !== null) selectSettingsItem('pad', state.currentConfigId);
                 showToast("Loaded Successfully!");
             }; 
             r.readAsText(f); inp.value=""; 
@@ -959,6 +947,7 @@
                 if (e.key === 'Shift') { toggleMuteMode(); return; }
                 if (e.key === 'Control') { toggleSoloMode(); return; }
                 if (e.key === 'Alt') { e.preventDefault(); toggleEndMode(); return; }
+                if (e.key === 'Backspace') { e.preventDefault(); toggleEffectMode(); return; } 
                 if (e.code === 'ArrowUp' || e.code === 'ArrowRight') { updateMasterVolume(Math.min(200, state.masterVolume + 5)); return; }
                 if (e.code === 'ArrowDown' || e.code === 'ArrowLeft') { updateMasterVolume(Math.max(0, state.masterVolume - 5)); return; }
             }
