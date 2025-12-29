@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Sampler Pro</title>
-    <!-- Ver.4.2 -->
+    <link rel="icon" type="image/x-icon" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1Spt9dvfuObJMFrv3fzAQMBeWfWkIn6VZ">
+    <!-- Ver.4.3 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,7 +23,7 @@
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: #22c55e; margin-top: -5px; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; }
         
-        /* Vertical Slider (EQ) - Ver.3.1 Style */
+        /* Vertical Slider (EQ) */
         input[type=range].vertical-slider {
             -webkit-appearance: slider-vertical;
             writing-mode: bt-lr; 
@@ -68,7 +71,6 @@
 
         /* Mode Buttons */
         .btn-mode-active { background-color: #3b82f6 !important; color: white !important; border-color: #3b82f6 !important; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1); }
-        .btn-effect-active { background-color: #8b5cf6 !important; color: white !important; border-color: #8b5cf6 !important; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1); }
         .playmode-active { background-color: #22c55e !important; color: white !important; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
         
         .controls-disabled { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
@@ -122,11 +124,10 @@
 
             <!-- Bottom Controls -->
             <div class="flex flex-col gap-3 mt-auto pt-3 border-t border-gray-100">
-                <div id="live-controls" class="grid grid-cols-2 gap-2 controls-disabled transition-opacity duration-200">
+                <div id="live-controls" class="grid grid-cols-3 gap-2 controls-disabled transition-opacity duration-200">
                     <button id="btn-mute-mode" onclick="toggleMuteMode()" class="py-3 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200 shadow-sm">MUTE</button>
                     <button id="btn-solo-mode" onclick="toggleSoloMode()" class="py-3 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200 shadow-sm">SOLO</button>
                     <button id="btn-end-mode" onclick="toggleEndMode()" class="py-3 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200 shadow-sm">END</button>
-                    <button id="btn-effect-mode" onclick="toggleEffectMode()" class="py-3 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs transition border border-gray-200 shadow-sm">EFFECT</button>
                 </div>
 
                 <button onclick="stopAllSounds()" class="w-full py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold shadow-md transition flex items-center justify-center gap-2 text-sm active:scale-95"><i class="fa-solid fa-square"></i> ALL STOP</button>
@@ -190,7 +191,6 @@
                                             <li><span class="font-mono bg-gray-200 px-1 rounded">Shift</span> + Click / Key: Toggle Mute</li>
                                             <li><span class="font-mono bg-gray-200 px-1 rounded">Ctrl</span> + Click / Key: Toggle Solo</li>
                                             <li><span class="font-mono bg-gray-200 px-1 rounded">Alt</span> + Click / Key: End (Stop)</li>
-                                            <li><span class="font-mono bg-gray-200 px-1 rounded">BackSpace</span>: Toggle Effect Mode</li>
                                             <li><span class="font-mono bg-gray-200 px-1 rounded">Space</span>: All Stop</li>
                                             <li><span class="font-mono bg-gray-200 px-1 rounded">Arrows</span>: Master Volume +/- 5%</li>
                                         </ul>
@@ -274,7 +274,7 @@
         const state = {
             rows: 4, cols: 4, masterVolume: 100, isRightLayout: true,
             pads: [], activeAudioCount: 0, currentConfigId: null,
-            isMuteMode: false, isSoloMode: false, isEndMode: false, isEffectMode: false,
+            isMuteMode: false, isSoloMode: false, isEndMode: false,
             keyboardEnabled: false
         };
 
@@ -338,7 +338,7 @@
         }
 
         function handlePadDown(padId) {
-            if (state.activeAudioCount === 0 && !state.isEffectMode) {
+            if (state.activeAudioCount === 0) {
                 playSound(padId); return;
             }
             const pad = state.pads[padId];
@@ -346,7 +346,6 @@
 
             if (state.isEndMode) { if(isPlaying) stopPad(padId); return; }
             if (state.isMuteMode) { if(isPlaying) togglePadMute(padId); return; }
-            if (state.isEffectMode) { if(isPlaying) togglePadEffectActive(padId); return; }
 
             if (state.isSoloMode) {
                 if (isPlaying) { togglePadSolo(padId); return; }
@@ -526,7 +525,7 @@
                 const el = document.getElementById(`pad-surface-${p.id}`);
                 if(el) el.className = "pad-surface flex flex-col justify-between p-2 relative" + (p.isLocked ? " locked" : "");
             });
-            state.isMuteMode = false; state.isSoloMode = false; state.isEndMode = false; state.isEffectMode = false;
+            state.isMuteMode = false; state.isSoloMode = false; state.isEndMode = false;
             state.activeAudioCount = 0;
             updateModeButtons(); updateControlsState(); 
         }
@@ -570,25 +569,22 @@
         function toggleMuteMode() { if(state.activeAudioCount>0) { state.isMuteMode = !state.isMuteMode; resetOtherModes('mute'); updateModeButtons(); } }
         function toggleSoloMode() { if(state.activeAudioCount>0) { state.isSoloMode = !state.isSoloMode; resetOtherModes('solo'); updateModeButtons(); } }
         function toggleEndMode() { if(state.activeAudioCount>0) { state.isEndMode = !state.isEndMode; resetOtherModes('end'); updateModeButtons(); } }
-        function toggleEffectMode() { if(state.activeAudioCount>0) { state.isEffectMode = !state.isEffectMode; resetOtherModes('effect'); updateModeButtons(); } }
         
         function resetOtherModes(active) {
             if(active !== 'mute') state.isMuteMode = false;
             if(active !== 'solo') state.isSoloMode = false;
             if(active !== 'end') state.isEndMode = false;
-            if(active !== 'effect') state.isEffectMode = false;
         }
 
         function updateModeButtons() {
-            const set = (id, active, effect) => {
+            const set = (id, active) => {
                 const b = document.getElementById(id);
-                if(active) b.classList.add(effect ? 'btn-effect-active' : 'btn-mode-active');
-                else b.classList.remove('btn-effect-active', 'btn-mode-active');
+                if(active) b.classList.add('btn-mode-active');
+                else b.classList.remove('btn-mode-active');
             };
             set('btn-mute-mode', state.isMuteMode);
             set('btn-solo-mode', state.isSoloMode);
             set('btn-end-mode', state.isEndMode);
-            set('btn-effect-mode', state.isEffectMode, true);
         }
 
         function togglePadMute(padId) {
@@ -906,8 +902,51 @@
             document.getElementById('disp-cols').innerText = state.cols;
         }
 
-        function exportData(){ const d = { version: 4.2, rows: state.rows, cols: state.cols, master: state.masterVolume, pads: state.pads.map(p => { const { buffer, activeSources, _revBuffer, ...data } = p; return data; })}; const b = new Blob([JSON.stringify(d)], {type:"application/json"}); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href=u; a.download="sampler.json"; document.body.appendChild(a); a.click(); a.remove(); }
-        function importData(inp){ const f = inp.files[0]; if(!f) return; const r = new FileReader(); r.onload = (e) => { const d = JSON.parse(e.target.result); stopAllSounds(); initAudio(); state.rows = d.rows||4; state.cols = d.cols||4; state.masterVolume = d.master||100; updateMasterVolume(state.masterVolume); d.pads.forEach((dp, i) => { if(i < MAX_PADS) { Object.assign(state.pads[i], dp); state.pads[i].activeSources=[]; state.pads[i]._revBuffer=null; if(dp.rawBase64) { const bin = atob(dp.rawBase64); const len = bin.length; const bytes = new Uint8Array(len); for(let k=0; k<len; k++) bytes[k] = bin.charCodeAt(k); audioCtx.decodeAudioData(bytes.buffer.slice(0), b => { state.pads[i].buffer = b; renderPads(); }); } } }); renderPads(); }; r.readAsText(f); inp.value=""; }
+        function exportData(){ 
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const fileName = `WebSamplerPro_${y}${m}${d}_${h}${min}${s}.json`;
+            
+            const data = { version: 4.3, rows: state.rows, cols: state.cols, master: state.masterVolume, pads: state.pads.map(p => { const { buffer, activeSources, _revBuffer, ...data } = p; return data; })}; 
+            const b = new Blob([JSON.stringify(data)], {type:"application/json"}); 
+            const u = URL.createObjectURL(b); 
+            const a = document.createElement('a'); 
+            a.href=u; a.download=fileName; 
+            document.body.appendChild(a); a.click(); a.remove(); 
+        }
+        
+        function importData(inp){ 
+            const f = inp.files[0]; if(!f) return; 
+            const r = new FileReader(); 
+            r.onload = (e) => { 
+                const d = JSON.parse(e.target.result); 
+                stopAllSounds(); initAudio(); 
+                state.rows = d.rows||4; state.cols = d.cols||4; state.masterVolume = d.master||100; updateMasterVolume(state.masterVolume); 
+                d.pads.forEach((dp, i) => { 
+                    if(i < MAX_PADS) { 
+                        Object.assign(state.pads[i], dp); 
+                        state.pads[i].activeSources=[]; 
+                        state.pads[i]._revBuffer=null; 
+                        if(dp.rawBase64) { 
+                            const bin = atob(dp.rawBase64); const len = bin.length; const bytes = new Uint8Array(len); for(let k=0; k<len; k++) bytes[k] = bin.charCodeAt(k); 
+                            audioCtx.decodeAudioData(bytes.buffer.slice(0), b => { state.pads[i].buffer = b; renderPads(); }); 
+                        } 
+                    } 
+                }); 
+                
+                // Update UI after import
+                renderSettingsList();
+                renderPads();
+                if(state.currentConfigId !== null) selectSettingsItem('pad', state.currentConfigId);
+                showToast("Loaded Successfully!");
+            }; 
+            r.readAsText(f); inp.value=""; 
+        }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
@@ -920,7 +959,6 @@
                 if (e.key === 'Shift') { toggleMuteMode(); return; }
                 if (e.key === 'Control') { toggleSoloMode(); return; }
                 if (e.key === 'Alt') { e.preventDefault(); toggleEndMode(); return; }
-                if (e.key === 'Backspace') { e.preventDefault(); toggleEffectMode(); return; } 
                 if (e.code === 'ArrowUp' || e.code === 'ArrowRight') { updateMasterVolume(Math.min(200, state.masterVolume + 5)); return; }
                 if (e.code === 'ArrowDown' || e.code === 'ArrowLeft') { updateMasterVolume(Math.max(0, state.masterVolume - 5)); return; }
             }
