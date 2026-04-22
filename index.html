@@ -18,9 +18,9 @@
     <h1 id="place-name">場所を読み込み中...</h1>
     <p>現在の混雑状況を選択して送信してください</p>
 
-    <button class="btn green" onclick="send('空き')">🟢 空いている</button>
-    <button class="btn yellow" onclick="send('普通')">🟡 普通</button>
-    <button class="btn red" onclick="send('混雑')">🔴 混雑中（行列）</button>
+    <button class="btn green" onclick="send('vacant')">空いている</button>
+    <button class="btn yellow" onclick="send('normal')">普通</button>
+    <button class="btn red" onclick="send('congest')">混雑中（行列）</button>
 
     <script>
       const urlParams = new URLSearchParams(window.location.search);
@@ -33,7 +33,7 @@
         // エラーの場合：案内を表示
         document.body.innerHTML = `
         <div style="padding: 20px; color: red;">
-        <h2>⚠️ エラー</h2>
+        <h2>エラー</h2>
         <p>場所が指定されていません。専用のQRコードを読み直してください。</p>
         </div>
         `;
