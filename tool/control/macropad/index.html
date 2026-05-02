@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Web Macro Pad - Sampler UI</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            background-color: #111;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* サンプラー風のパッドデザイン */
+        .pad-btn {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            /* 上部に光、下部に影をつけて立体的に */
+            box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), inset 0 -4px 0 rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.5);
+            transition: transform 0.05s, box-shadow 0.05s, filter 0.05s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        
+        /* 押したときの沈み込み */
+        .pad-btn:active {
+            transform: translateY(4px) scale(0.98);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6), 0 0 2px rgba(0,0,0,0.5);
+            filter: brightness(0.85);
+        }
+
+        /* 編集モード時の見た目 */
+        .pad-btn.edit-mode {
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            box-shadow: none;
+        }
+        .pad-btn.edit-mode::after {
+            content: "\f044"; /* FontAwesome Edit Icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+        }
+
+        /* モーダルの背景とアニメーション */
+        dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(2px);
+        }
+        
+        /* スクロールバーのカスタマイズ (設定モーダル用) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #222; }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+    </style>
+</head>
+<body class="h-screen flex flex-col font-sans text-gray-200">
+
+    <!-- ヘッダー設定エリア -->
+    <div class="flex items-center justify-between p-3 bg-[#1a1a1a] border-b border-[#333] shadow-md z-10">
+        <div class="flex items-center gap-4">
+            <h1 class="text-xl font-bold hidden md:block text-gray-100">Web Macro Pad</h1>
+            
+            <!-- 行・列の設定 -->
+            <div class="flex items-center gap-2 text-sm bg-[#222] p-1.5 rounded-lg border border-[#333]">
+                <label class="flex items-center gap-1 text-gray-400">
+                    <i class="fas fa-arrows-alt-v"></i> Rows
+                    <input type="number" id="input-rows" min="1" max="5" class="bg-[#111] text-white w-10 text-center rounded border border-[#444] outline-none">
+                </label>
+                <span class="text-[#444]">|</span>
+                <label class="flex items-center gap-1 text-gray-400">
+                    <i class="fas fa-arrows-alt-h"></i> Cols
+                    <input type="number" id="input-cols" min="1" max="6" class="bg-[#111] text-white w-10 text-center rounded border border-[#444] outline-none">
+                </label>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- JSON エクスポート・インポートボタン -->
+            <div class="flex gap-2 mr-2">
+                <button id="btn-export" class="text-xs bg-[#222] hover:bg-[#333] px-2.5 py-1.5 rounded-lg border border-[#444] text-gray-300 transition-colors" title="Export Config"><i class="fas fa-download"></i></button>
+                <button id="btn-import-trigger" class="text-xs bg-[#222] hover:bg-[#333] px-2.5 py-1.5 rounded-lg border border-[#444] text-gray-300 transition-colors" title="Import Config"><i class="fas fa-upload"></i></button>
+                <input type="file" id="input-import" accept=".json" class="hidden">
+            </div>
+
+            <span id="status-indicator" class="text-xs text-gray-500">Ready</span>
+            <!-- 編集モードのトグル -->
+            <label class="flex items-center gap-2 cursor-pointer bg-[#222] hover:bg-[#333] px-3 py-1.5 rounded-lg border border-[#444] transition-colors">
+                <input type="checkbox" id="toggle-edit" class="accent-blue-500 w-4 h-4 cursor-pointer">
+                <span class="text-sm font-semibold select-none"><i class="fas fa-pen text-gray-400 mr-1"></i>Edit Mode</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- メインのパッドエリア -->
+    <div class="flex-1 p-3 md:p-6 flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+        <!-- CSS Gridでパッドを敷き詰めるコンテナ -->
+        <div id="pad-grid" class="w-full h-full max-w-6xl max-h-[800px] grid gap-2 md:gap-4 box-border">
+            <!-- JSで動的にボタンが生成されます -->
+        </div>
+    </div>
+
+    <!-- 設定モーダル -->
+    <dialog id="edit-modal" class="bg-[#1e1e1e] text-white p-0 rounded-xl shadow-2xl border border-[#444] w-11/12 max-w-md m-auto">
+        <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#252525] rounded-t-xl">
+            <h2 class="text-lg font-bold"><i class="fas fa-cog text-gray-400 mr-2"></i>Edit Pad Config</h2>
+            <button id="btn-close-modal" class="text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div class="p-5 space-y-5">
+            <!-- ラベル設定 -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-1 uppercase tracking-wider">Button Label</label>
+                <input type="text" id="edit-label" placeholder="e.g. Copy" class="w-full bg-[#111] border border-[#444] rounded p-2.5 text-white focus:outline-none focus:border-blue-500 transition-colors">
+            </div>
+
+            <!-- 色設定 -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Pad Color</label>
+                <div class="flex flex-wrap gap-2" id="color-palette">
+                    <!-- JSで色ボタンが生成されます -->
+                </div>
+            </div>
+
+            <!-- 修飾キー設定 -->
+            <div class="bg-[#252525] p-3 rounded-lg border border-[#333]">
+                <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Modifiers (Ctrl, Shift, etc)</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="flex items-center gap-2 p-2 bg-[#111] rounded border border-[#444] cursor-pointer hover:bg-[#1a1a1a]">
+                        <input type="checkbox" class="mod-checkbox accent-blue-500 w-4 h-4" value="LeftControl"> Ctrl
+                    </label>
+                    <label class="flex items-center gap-2 p-2 bg-[#111] rounded border border-[#444] cursor-pointer hover:bg-[#1a1a1a]">
+                        <input type="checkbox" class="mod-checkbox accent-blue-500 w-4 h-4" value="LeftShift"> Shift
+                    </label>
+                    <label class="flex items-center gap-2 p-2 bg-[#111] rounded border border-[#444] cursor-pointer hover:bg-[#1a1a1a]">
+                        <input type="checkbox" class="mod-checkbox accent-blue-500 w-4 h-4" value="LeftAlt"> Alt
+                    </label>
+                    <label class="flex items-center gap-2 p-2 bg-[#111] rounded border border-[#444] cursor-pointer hover:bg-[#1a1a1a]">
+                        <input type="checkbox" class="mod-checkbox accent-blue-500 w-4 h-4" value="LeftSuper"> Win
+                    </label>
+                </div>
+            </div>
+
+            <!-- メインキー設定 -->
+            <div class="bg-[#252525] p-3 rounded-lg border border-[#333]">
+                <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Main Key</label>
+                <select id="main-key" class="w-full bg-[#111] border border-[#444] rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+                    <option value="">-- None --</option>
+                    <!-- JSでオプショングループが生成されます -->
+                </select>
+            </div>
+        </div>
+
+        <!-- アクションボタン -->
+        <div class="p-4 border-t border-[#333] flex justify-between bg-[#252525] rounded-b-xl">
+            <button id="btn-clear" class="px-4 py-2 text-red-400 hover:bg-red-900/30 rounded font-semibold transition-colors">Clear Pad</button>
+            <div class="flex gap-2">
+                <button id="btn-cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded font-semibold transition-colors">Cancel</button>
+                <button id="btn-save" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded font-semibold shadow-lg transition-colors text-white">Save</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        // ==========================================
+        // ⚙️ 設定
+        // ==========================================
+        const SERVER_URL = ''; // 別サーバーでホストする場合のみ記入
+
+        // UI用カラーパレット
+        const PALETTE = [
+            '#374151', // Gray (Default)
+            '#b91c1c', // Red
+            '#c2410c', // Orange
+            '#a16207', // Yellow
+            '#15803d', // Green
+            '#0f766e', // Teal
+            '#1d4ed8', // Blue
+            '#6d28d9', // Purple
+            '#be185d'  // Pink
+        ];
+
+        // 選択可能なキーの一覧 (nut.js の Key Enum に準拠)
+        const KEY_OPTIONS = [
+            { group: 'Alphabets (A-Z)', keys: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(k => ({ val: k, label: k })) },
+            { group: 'Numbers (0-9)', keys: '0123456789'.split('').map(k => ({ val: `Num${k}`, label: k })) },
+            { group: 'Symbols', keys: [
+                { val: 'Minus', label: '-' }, { val: 'Equal', label: '=' },
+                { val: 'LeftBracket', label: '[' }, { val: 'RightBracket', label: ']' },
+                { val: 'Backslash', label: '\\' }, { val: 'Semicolon', label: ';' },
+                { val: 'Quote', label: '\'' }, { val: 'Comma', label: ',' },
+                { val: 'Period', label: '.' }, { val: 'Slash', label: '/' },
+                { val: 'Grave', label: '` (Backtick)' }
+            ]},
+            { group: 'Controls', keys: [
+                { val: 'Return', label: 'Enter' }, { val: 'Space', label: 'Space' },
+                { val: 'Backspace', label: 'Backspace' }, { val: 'Tab', label: 'Tab' },
+                { val: 'Escape', label: 'Esc' }
+            ]},
+            { group: 'Navigation', keys: [
+                { val: 'Up', label: '↑ Up' }, { val: 'Down', label: '↓ Down' },
+                { val: 'Left', label: '← Left' }, { val: 'Right', label: '→ Right' },
+                { val: 'Delete', label: 'Delete' }, { val: 'Insert', label: 'Insert' }
+            ]},
+            { group: 'Function Keys', keys: Array.from({length: 12}, (_, i) => ({ val: `F${i+1}`, label: `F${i+1}` })) }
+        ];
+
+        // ==========================================
+        // 💾 状態管理
+        // ==========================================
+        let config = {
+            rows: 4,
+            cols: 4,
+            pads: {} // "row-col" をキーにしてパッド設定を保存
+        };
+
+        let isEditMode = false;
+        let currentEditTarget = null; // 編集中のパッドID (例: "0-0")
+        let selectedColor = PALETTE[0];
+
+        // ==========================================
+        // 🚀 初期化処理
+        // ==========================================
+        function init() {
+            // セレクトボックスの生成
+            const selectEl = document.getElementById('main-key');
+            KEY_OPTIONS.forEach(group => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = group.group;
+                group.keys.forEach(k => {
+                    const opt = document.createElement('option');
+                    opt.value = k.val;
+                    opt.textContent = k.label;
+                    optgroup.appendChild(opt);
+                });
+                selectEl.appendChild(optgroup);
+            });
+
+            // カラーパレットの生成
+            const paletteEl = document.getElementById('color-palette');
+            PALETTE.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = 'w-8 h-8 rounded-full border-2 border-transparent hover:scale-110 transition-transform focus:outline-none';
+                btn.style.backgroundColor = color;
+                btn.onclick = () => selectColor(color);
+                // 識別のために属性を追加
+                btn.dataset.color = color;
+                paletteEl.appendChild(btn);
+            });
+
+            // localStorageから設定を読み込み
+            const saved = localStorage.getItem('streamDeckConfig');
+            if (saved) {
+                config = JSON.parse(saved);
+            } else {
+                // 初回アクセス用のデフォルト設定
+                config.pads['0-0'] = { label: 'Copy', color: '#1d4ed8', mods: ['LeftControl'], key: 'C' };
+                config.pads['0-1'] = { label: 'Paste', color: '#15803d', mods: ['LeftControl'], key: 'V' };
+                config.pads['0-2'] = { label: 'Cut', color: '#b91c1c', mods: ['LeftControl'], key: 'X' };
+                config.pads['1-0'] = { label: 'Undo', color: '#a16207', mods: ['LeftControl'], key: 'Z' };
+            }
+
+            // UIへ反映
+            document.getElementById('input-rows').value = config.rows;
+            document.getElementById('input-cols').value = config.cols;
+
+            // イベントリスナーの登録
+            document.getElementById('input-rows').addEventListener('change', updateGridSize);
+            document.getElementById('input-cols').addEventListener('change', updateGridSize);
+            document.getElementById('toggle-edit').addEventListener('change', toggleEditMode);
+            
+            // エクスポート・インポートのイベント
+            document.getElementById('btn-export').addEventListener('click', exportConfig);
+            document.getElementById('btn-import-trigger').addEventListener('click', () => document.getElementById('input-import').click());
+            document.getElementById('input-import').addEventListener('change', importConfig);
+
+            // モーダル操作
+            document.getElementById('btn-close-modal').addEventListener('click', closeModal);
+            document.getElementById('btn-cancel').addEventListener('click', closeModal);
+            document.getElementById('btn-save').addEventListener('click', savePadConfig);
+            document.getElementById('btn-clear').addEventListener('click', clearPadConfig);
+
+            renderGrid();
+        }
+
+        // ==========================================
+        // 🎨 UI レンダリング
+        // ==========================================
+        function updateGridSize(e) {
+            let val = parseInt(e.target.value);
+            if (val < 1) val = 1;
+            
+            if (e.target.id === 'input-rows') {
+                if (val > 5) val = 5;
+                config.rows = val;
+            }
+            if (e.target.id === 'input-cols') {
+                if (val > 6) val = 6;
+                config.cols = val;
+            }
+            
+            e.target.value = val;
+            
+            saveConfig();
+            renderGrid();
+        }
+
+        function toggleEditMode(e) {
+            isEditMode = e.target.checked;
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('pad-grid');
+            grid.innerHTML = '';
+            
+            // CSS Gridの設定を動的に適用
+            grid.style.gridTemplateRows = `repeat(${config.rows}, minmax(0, 1fr))`;
+            grid.style.gridTemplateColumns = `repeat(${config.cols}, minmax(0, 1fr))`;
+
+            for (let r = 0; r < config.rows; r++) {
+                for (let c = 0; c < config.cols; c++) {
+                    const padId = `${r}-${c}`;
+                    const padData = config.pads[padId] || { label: '', color: PALETTE[0], mods: [], key: '' };
+                    
+                    const btn = document.createElement('button');
+                    btn.className = `pad-btn ${isEditMode ? 'edit-mode' : ''}`;
+                    btn.style.backgroundColor = padData.color;
+                    
+                    // 中身のテキスト
+                    const span = document.createElement('span');
+                    span.className = 'text-sm md:text-xl font-bold px-1 text-center break-all leading-tight';
+                    span.textContent = padData.label;
+                    btn.appendChild(span);
+
+                    // 割り当てキーのヒント表示（編集モードでない時）
+                    if (!isEditMode && (padData.mods.length > 0 || padData.key)) {
+                        const hint = document.createElement('span');
+                        hint.className = 'text-[10px] md:text-xs opacity-60 mt-1 pointer-events-none hidden md:block';
+                        let shortcutText = [];
+                        if(padData.mods.includes('LeftControl')) shortcutText.push('Ctrl');
+                        if(padData.mods.includes('LeftShift')) shortcutText.push('Shift');
+                        if(padData.mods.includes('LeftAlt')) shortcutText.push('Alt');
+                        if(padData.mods.includes('LeftSuper')) shortcutText.push('Win');
+                        if(padData.key) shortcutText.push(padData.key.replace('Num', ''));
+                        hint.textContent = shortcutText.join('+');
+                        btn.appendChild(hint);
+                    }
+
+                    // クリックイベント
+                    btn.onclick = () => {
+                        if (isEditMode) {
+                            openModal(padId, padData);
+                        } else {
+                            executeShortcut(padData);
+                        }
+                    };
+
+                    grid.appendChild(btn);
+                }
+            }
+        }
+
+        // ==========================================
+        // 🛠 モーダル操作
+        // ==========================================
+        function openModal(padId, padData) {
+            currentEditTarget = padId;
+            document.getElementById('edit-label').value = padData.label || '';
+            
+            selectColor(padData.color || PALETTE[0]);
+
+            // チェックボックスのリセットと適用
+            document.querySelectorAll('.mod-checkbox').forEach(cb => {
+                cb.checked = (padData.mods || []).includes(cb.value);
+            });
+
+            document.getElementById('main-key').value = padData.key || '';
+
+            document.getElementById('edit-modal').showModal();
+        }
+
+        function selectColor(color) {
+            selectedColor = color;
+            document.querySelectorAll('#color-palette button').forEach(btn => {
+                if (btn.dataset.color === color) {
+                    btn.style.borderColor = 'white';
+                    btn.style.transform = 'scale(1.1)';
+                } else {
+                    btn.style.borderColor = 'transparent';
+                    btn.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('edit-modal').close();
+            currentEditTarget = null;
+        }
+
+        function savePadConfig() {
+            if (!currentEditTarget) return;
+
+            const label = document.getElementById('edit-label').value;
+            const mods = Array.from(document.querySelectorAll('.mod-checkbox:checked')).map(cb => cb.value);
+            const key = document.getElementById('main-key').value;
+
+            config.pads[currentEditTarget] = {
+                label: label,
+                color: selectedColor,
+                mods: mods,
+                key: key
+            };
+
+            saveConfig();
+            renderGrid();
+            closeModal();
+        }
+
+        function clearPadConfig() {
+            if (!currentEditTarget) return;
+            delete config.pads[currentEditTarget];
+            saveConfig();
+            renderGrid();
+            closeModal();
+        }
+
+        function saveConfig() {
+            localStorage.setItem('streamDeckConfig', JSON.stringify(config));
+        }
+
+        // ==========================================
+        // 📦 エクスポート・インポート機能
+        // ==========================================
+        function exportConfig() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "macropad_config.json");
+            document.body.appendChild(downloadAnchorNode); // Firefox対応
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function importConfig(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const importedConfig = JSON.parse(event.target.result);
+                    // 必須プロパティの簡易チェック
+                    if (importedConfig.rows && importedConfig.cols && importedConfig.pads) {
+                        config = importedConfig;
+                        
+                        // 最大値の制限を適用
+                        if(config.rows > 5) config.rows = 5;
+                        if(config.cols > 6) config.cols = 6;
+
+                        saveConfig();
+                        
+                        // UIへ反映
+                        document.getElementById('input-rows').value = config.rows;
+                        document.getElementById('input-cols').value = config.cols;
+                        renderGrid();
+                        
+                        alert("設定のインポートが完了しました。");
+                    } else {
+                        alert("無効な設定ファイルです。");
+                    }
+                } catch (error) {
+                    console.error("JSON Parsing Error:", error);
+                    alert("ファイルの読み込みに失敗しました。");
+                }
+            };
+            reader.readAsText(file);
+            // 同じファイルを再度選べるようにリセット
+            e.target.value = '';
+        }
+
+        // ==========================================
+        // 📡 サーバー通信
+        // ==========================================
+        async function executeShortcut(padData) {
+            // キー設定が空の場合は何もしない
+            if (!padData.mods || padData.mods.length === 0 && !padData.key) return;
+
+            // 押すキーの配列を作成 (例: ["LeftControl", "C"])
+            const keysToPress = [...padData.mods];
+            if (padData.key) keysToPress.push(padData.key);
+
+            // サーバーが要求する形式に整える
+            // (将来的な複数アクションマクロ対応のため、配列の配列で送る)
+            const payload = {
+                sequence: [ keysToPress ]
+            };
+
+            const indicator = document.getElementById('status-indicator');
+            if(navigator.vibrate) navigator.vibrate(50); // タップ振動
+
+            try {
+                indicator.textContent = 'Sending...';
+                indicator.className = 'text-xs text-blue-400';
+
+                const response = await fetch(`${SERVER_URL}/api/shortcut`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    indicator.textContent = 'Success';
+                    indicator.className = 'text-xs text-green-400';
+                } else {
+                    indicator.textContent = 'Error';
+                    indicator.className = 'text-xs text-red-400';
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                indicator.textContent = 'Connection Failed';
+                indicator.className = 'text-xs text-red-500 font-bold';
+            }
+
+            // ステータスを元に戻す
+            setTimeout(() => {
+                indicator.textContent = 'Ready';
+                indicator.className = 'text-xs text-gray-500';
+            }, 1500);
+        }
+
+        // 起動
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
