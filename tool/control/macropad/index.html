@@ -187,15 +187,23 @@
 
         // UI用カラーパレット
         const PALETTE = [
-            '#374151', // Gray (Default)
-            '#b91c1c', // Red
-            '#c2410c', // Orange
-            '#a16207', // Yellow
-            '#15803d', // Green
-            '#0f766e', // Teal
-            '#1d4ed8', // Blue
-            '#6d28d9', // Purple
-            '#be185d'  // Pink
+            '#374151', // Gray (Default) - 現行
+            '#b91c1c', // Red - 現行
+            '#c2410c', // Orange - 現行
+            '#b45309', // Amber (追加: オレンジと黄の中間)
+            '#a16207', // Yellow - 現行
+            '#4d7c0f', // Lime (追加: 黄と緑の中間)
+            '#15803d', // Green - 現行
+            '#047857', // Emerald (追加: 緑と青緑の中間)
+            '#0f766e', // Teal - 現行
+            '#0e7490', // Cyan (追加: 青緑と水色の中間)
+            '#0369a1', // Sky (追加: 水色と青の中間)
+            '#1d4ed8', // Blue - 現行
+            '#4338ca', // Indigo (追加: 青と紫の中間)
+            '#6d28d9', // Purple - 現行
+            '#a21caf', // Fuchsia (追加: 紫とピンクの中間)
+            '#be185d', // Pink - 現行
+            '#be123c'  // Rose (追加: ピンクと赤の中間)
         ];
 
         // 選択可能なキーの一覧 (nut.js の Key Enum に準拠)
@@ -272,10 +280,22 @@
                 config = JSON.parse(saved);
             } else {
                 // 初回アクセス用のデフォルト設定
-                config.pads['0-0'] = { label: 'Copy', color: '#1d4ed8', mods: ['LeftControl'], key: 'C' };
-                config.pads['0-1'] = { label: 'Paste', color: '#15803d', mods: ['LeftControl'], key: 'V' };
-                config.pads['0-2'] = { label: 'Cut', color: '#b91c1c', mods: ['LeftControl'], key: 'X' };
-                config.pads['1-0'] = { label: 'Undo', color: '#a16207', mods: ['LeftControl'], key: 'Z' };
+                config.pads['0-0'] = { label: 'Copy', color: '#b91c1c', mods: ['LeftControl'], key: 'C' };
+                config.pads['0-1'] = { label: 'Paste', color: '#c2410c', mods: ['LeftControl'], key: 'V' };
+                config.pads['0-2'] = { label: 'Cut', color: '#b45309', mods: ['LeftControl'], key: 'X' };
+                config.pads['0-3'] = { label: 'Save', color: '#a16207', mods: ['LeftControl'], key: 'S' };
+                config.pads['1-0'] = { label: 'Undo', color: '#4d7c0f', mods: ['LeftControl'], key: 'Z' };
+                config.pads['1-1'] = { label: 'Redo', color: '#15803d', mods: ['LeftControl'], key: 'Y' };
+                config.pads['1-2'] = { label: 'Select All', color: '#047857', mods: ['LeftControl'], key: 'A' };
+                config.pads['1-3'] = { label: 'Search', color: '#0f766e', mods: ['LeftControl'], key: 'F' };
+                config.pads['2-0'] = { label: 'Show Desktop', color: '#0e7490', mods: ['LeftSuper'], key: 'D' };
+                config.pads['2-1'] = { label: 'App Switcher', color: '#0369a1', mods: ['LeftAlt'], key: 'Tab' };
+                config.pads['2-2'] = { label: 'Clip History', color: '#1d4ed8', mods: ['LeftSuper'], key: 'V' };
+                config.pads['2-3'] = { label: 'Screen Snip', color: '#4338ca', mods: ['LeftShift','LeftSuper'], key: 'S' };
+                config.pads['3-0'] = { label: 'New Tab', color: '#6d28d9', mods: ['LeftControl'], key: 'T' };
+                config.pads['3-1'] = { label: 'Respone Tab', color: '#15803d', mods: ['LeftControl','LeftShift'], key: 'T' };
+                config.pads['3-2'] = { label: 'Refresh', color: '#b91c1c', mods: ['LeftControl'], key: 'R' };
+                config.pads['3-3'] = { label: 'Exit', color: '#a16207', mods: ['LeftAlt'], key: 'F4' };
             }
 
             // UIへ反映
