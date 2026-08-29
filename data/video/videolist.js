@@ -435,4 +435,4 @@ const template = [
       },
     ]
   },
-]
+];
