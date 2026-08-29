@@ -410,6 +410,9 @@ const videoData = [
       },
     ]
   },
+];
+
+const template = [
   {
     id: "",
     categories: [""],
@@ -432,4 +435,4 @@ const videoData = [
       },
     ]
   },
-];
+]
