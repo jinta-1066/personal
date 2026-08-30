@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="filterContainer">
+      <button class="filterBtn active" data-category="All">All</button>
+      <button class="filterBtn" data-category="Anime">Anime</button>
+      <button class="filterBtn" data-category="Movie">Movie</button>
+      <button class="filterBtn" data-category="Drama">Drama</button>
+    </div>
+    <div id="videoList" class="main"></div>
+    <div id="popupOverlay" class="popupOverlay">
+      <div id="popupContent" class="popupContent">
+        <div class="popupHeader">
+          <div id="popupTabs" class="popupTabs"></div>
+          <button id="closePopup" class="closePopup">&times;</button>
+        </div>
+        <img id="popupImg" class="popupMainImg" src="" alt="">
+        <h2 id="popupTitle" class="popupTitle"></h2>
+        <p id="popupString" class="popupString"></p>
+        
+        <span class="popupHeading">PV</span>
+        <iframe id="popupYoutube" class="youtube" src="" title="PV" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        
+        <span class="popupHeading">Links</span>
+        <div id="popupLinks" class="popupLinks"></div>
+      </div>
+    </div>
+    <script src="/personal/data/videos/videolist.js"></script>
+    <script>
+      // ===================================================
+      // 2. DOM要素の取得
+      // ===================================================
+      const videoList = document.getElementById('videoList');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const popupContent = document.getElementById('popupContent');
+      const closePopup = document.getElementById('closePopup');
+      
+      const popupTabs = document.getElementById('popupTabs');
+      const popupImg = document.getElementById('popupImg');
+      const popupTitle = document.getElementById('popupTitle');
+      const popupString = document.getElementById('popupString');
+      const popupYoutube = document.getElementById('popupYoutube');
+      const popupLinks = document.getElementById('popupLinks');
+      
+      let currentCategory = 'All';
+      
+      // ===================================================
+      // 3. 動画一覧（サムネイルカード）の描画（フィルタリング対応）
+      // ===================================================
+      function renderVideoList() {
+        videoList.innerHTML = '';
+        
+        const filteredVideos = videoData.filter(item => {
+          return currentCategory === 'All' || item.categories.includes(currentCategory);
+        });
+        
+        filteredVideos.forEach(item => {
+          if (!item.id) return false;
+          const contentDiv = document.createElement('div');
+          contentDiv.className = 'content';
+          
+          let badgeHtml = '';
+          if (item.badge) {
+            const positionClass = item.badge.toLowerCase() === 'new' ? 'badge-new' : 'badge-normal';
+            badgeHtml = `<span class="badge ${positionClass}">${item.badge}</span>`;
+          }
+          
+          contentDiv.innerHTML = `<a class="popupBtn">${badgeHtml}<img src="${item.thumb}" alt="${item.series[0].title}"></a>`;
+          
+          contentDiv.addEventListener('click', () => {
+            openPopup(item);
+          });
+          
+          videoList.appendChild(contentDiv);
+        });
+      }
+      
+      // ===================================================
+      // 4. ポップアップの表示とタブ切り替え処理
+      // ===================================================
+      function openPopup(item) {
+        // 1. シリーズ切り替え用タブを自動作成
+        popupTabs.innerHTML = '';
+        
+        item.series.forEach((seriesItem, index) => {
+          const tabBtn = document.createElement('a');
+          tabBtn.className = `popupHeaderSelecter ${index === 0 ? 'active' : ''}`;
+          tabBtn.textContent = seriesItem.tabName;
+          
+          tabBtn.addEventListener('click', () => {
+            // タブのアクティブ表示切替
+            document.querySelectorAll('.popupHeaderSelecter').forEach(b => b.classList.remove('active'));
+            tabBtn.classList.add('active');
+            
+            // シリーズ詳細画面の更新
+            updatePopupDetail(seriesItem);
+          });
+          
+          popupTabs.appendChild(tabBtn);
+        });
+        
+        // 2. 最初（0番目）のシリーズ情報を初期表示
+        updatePopupDetail(item.series[0]);
+        
+        // 3. ポップアップ表示
+        popupOverlay.style.display = 'flex';
+      }
+      
+      // タブ切り替え時に中身を書き換える関数
+      function updatePopupDetail(seriesItem) {
+        popupTitle.textContent = seriesItem.title;
+        popupImg.src = seriesItem.thumb;
+        popupString.textContent = seriesItem.description;
+        popupYoutube.src = seriesItem.youtubeUrl;
+        
+        // リンクボタンの書き換え
+        popupLinks.innerHTML = '';
+        seriesItem.links.forEach(link => {
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.textContent = link.text;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          popupLinks.appendChild(a);
+        });
+      }
+      
+      // ===================================================
+      // 5. フィルターボタンのイベント登録
+      // ===================================================
+      document.querySelectorAll('.filterBtn').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.filterBtn').forEach(b => b.classList.remove('active'));
+          button.classList.add('active');
+          
+          currentCategory = button.dataset.category;
+          renderVideoList();
+        });
+      });
+      
+      // ===================================================
+      // 6. ポップアップの閉じる処理
+      // ===================================================
+      function hidePopup() {
+        popupOverlay.style.display = 'none';
+        popupYoutube.src = '';
+      }
+      
+      closePopup.addEventListener('click', hidePopup);
+      
+      popupOverlay.addEventListener('click', (e) => {
+        if (!popupContent.contains(e.target)) {
+          hidePopup();
+        }
+      });
+      
+      renderVideoList();
+    </script>
+  </body>
+</html>
