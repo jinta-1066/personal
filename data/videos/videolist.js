@@ -416,7 +416,7 @@ const template = [
   {
     id: "",
     categories: [""],
-    badge: ,
+    badge: "",
     thumb: "",
     series: [
       {
