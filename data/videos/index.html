@@ -5,6 +5,271 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      * {
+  box-sizing: border-box;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+/* --- フィルターボタンエリア --- */
+.filterContainer {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filterBtn {
+  padding: 8px 16px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filterBtn.active,
+.filterBtn:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* --- サムネイル一覧エリア --- */
+.main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(140px, calc(50% - 10px), 200px), 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto 60px;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  cursor: pointer;
+}
+
+.popupBtn {
+  display: block;
+  width: 100%;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.popupBtn:hover {
+  transform: translateY(-4px);
+}
+
+.popupBtn img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.badge-normal {
+  background: #fff;
+  color: #000;
+}
+
+.badge-new {
+  background: #e50914;
+  color: #fff;
+}
+
+/* --- ポップアップ共通エリア --- */
+.popupOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popupContent {
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 900px;
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 12px;
+  position: relative;
+  text-align: center;
+  color: #000;
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+.popupHeader {
+  width: 100%;
+  min-height: 50px;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  z-index: 10;
+}
+
+/* タブ切り替えボタンのコンテナ */
+.popupTabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.popupHeaderSelecter {
+  display: inline-block;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 12px;
+  border: solid 2px #000;
+  border-radius: 6px;
+  color: #000;
+  background: #fff;
+  text-decoration: none;
+  line-height: 32px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* 選択中のタブのスタイル */
+.popupHeaderSelecter.active {
+  background: #000;
+  color: #fff;
+}
+
+.closePopup {
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #4a5568;
+  line-height: 1;
+  margin-left: auto;
+}
+
+.popupTitle {
+  font-size: 24px;
+  margin: 20px 10px 10px;
+}
+
+.popupMainImg {
+  width: 90%;
+  max-width: 750px;
+  aspect-ratio: 16 / 9;
+  margin: 15px auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.popupString {
+  width: 90%;
+  max-width: 750px;
+  margin: 20px auto;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.popupHeading {
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 40px auto 20px;
+}
+
+.popupHeading::before,
+.popupHeading::after {
+  display: inline-block;
+  width: 40px;
+  height: 2px;
+  position: relative;
+  top: -5px;
+  margin: 0 15px;
+  background: #f00;
+  content: "";
+}
+
+.youtube {
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  border: none;
+  border-radius: 8px;
+}
+
+.popupLinks {
+  width: 90%;
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.popupLinks a {
+  display: inline-block;
+  min-width: 150px;
+  line-height: 42px;
+  padding: 0 15px;
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.popupLinks a:hover {
+  background: #fff;
+  color: #000;
+}
+    </style>
   </head>
   <body>
     <div class="filterContainer">
