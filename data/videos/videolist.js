@@ -6,8 +6,8 @@ const videoData = [
     thumb: "https://imgc.nxtv.jp/img/info/tit/00019/SID0019579.png?p=W320",
     series: [
       {
-        tabName: "劇場版 あの日見見た花の名前を僕達はまだ知らない",
-        title: "劇場版 あの日見見た花の名前を僕達はまだ知らない",
+        tabName: "劇場版 あの日見た花の名前を僕達はまだ知らない",
+        title: "劇場版 あの日見た花の名前を僕達はまだ知らない",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00019/SID0019579.png",
         description: 
 `ある日、彼女は突然現れた
