@@ -20,9 +20,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/8c7qL8o9BYo",
         links: [
           { text: "公式サイト", url: "https://anohana.jp/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/70299545" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0019579" },
           { text: "Abema", url: "https://abema.tv/video/title/19-106" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/70299545" },
         ],
       },
     ]
@@ -30,7 +30,7 @@ const videoData = [
   {
     id: "kokosake",
     categories: ["Movie"],
-    badge: "",
+    badge: "人気急上昇",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00030/SID0030438.png?p=W320",
     series: [
       {
@@ -46,9 +46,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/mllee2j-l-c",
         links: [
           { text: "公式サイト", url: "https://kokosake.jp/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/80077129" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0030438" },
           { text: "Hulu", url: "https://hulu.jp/the-anthem-of-the-heart" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/80077129" },
         ],
       },
     ]
@@ -68,9 +68,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/Px1htzPeYCc",
         links: [
           { text: "公式サイト", url: "https://soraaoproject.jp/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81427482" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0049095" },
           { text: "Hulu", url: "https://hulu.jp/her-blue-sky" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/81427482" },
         ],
       },
     ]
@@ -198,9 +198,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/jcS7-PFS0cc",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/99768" },
-          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0088424" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0C9RVQDD5" },
           { text: "Netflix", url: "https://netflix.com/jp/title/82616555" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0088424" },
         ],
       },
     ]
@@ -224,8 +224,8 @@ const videoData = [
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/112930" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0DCCG1KC5" },
-          { text: "Hulu", url: "https://hulu.jp/a-girl-named-ann" },
           { text: "Netflix", url: "https://netflix.com/jp/title/82127594" },
+          { text: "Hulu", url: "https://hulu.jp/a-girl-named-ann" },
         ],
       },
     ]
@@ -247,8 +247,8 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/becz_2qAwgo",
         links: [
           { text: "公式サイト", url: "https://yurusaretakodomotachi.w-lab.jp/" },
-          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050826" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0FLNGZGYQ" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050826" },
           { text: "Hulu", url: "https://hulu.jp/forgiven-children" },
         ],
       },
@@ -269,9 +269,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/85NlHysDieI",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/68541" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0FLX43LWP" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0029456" },
           { text: "Hulu", url: "https://hulu.jp/kiseki-sobito-of-that-day-based-on-a-true-story" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0FLX43LWP" },
         ],
       },
     ]
@@ -291,9 +291,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/2Zk2P8XZvPM",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/79240" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0GXGTG3W2" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0041630" },
           { text: "Hulu", url: "https://hulu.jp/ai-uta-my-promise-to-nakuhito" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0GXGTG3W2" },
         ],
       },
     ]
@@ -315,8 +315,8 @@ const videoData = [
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/60451" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0GQ529ZH3" },
-          { text: "Abema", url: "https://abema.tv/video/title/482-22" },
           { text: "FOD", url: "https://fod.fujitv.co.jp/title/6t03/6t03110001/" },
+          { text: "Abema", url: "https://abema.tv/video/title/482-22" },
         ],
       },
     ]
@@ -340,9 +340,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/gH6zVJVHEaM",
         links: [
           { text: "公式サイト", url: "https://lookback-anime.com/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/82622300" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0242285" },
           { text: "Hulu", url: "https://hulu.jp/look-back" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/82622300" },
         ],
       },
     ]
@@ -362,9 +362,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/DFTMDcD2BOE",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/82708" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0B857B1J8" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0047761" },
           { text: "Hulu", url: "https://hulu.jp/family-of-strangers" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0B857B1J8" },
         ],
       },
     ]
@@ -381,31 +381,100 @@ const videoData = [
         thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png",
         description: 
 `幼少のころ、幼なじみの祈本里香を交通事故により目の前で失った乙骨憂太。
-
 「約束だよ 里香と憂太は大人になったら結婚するの」
-
 怨霊と化した里香の呪いに苦しみ、自身の死を望む乙骨だったが、
 最強の呪術師・五条悟によって、呪術高専に迎え入れられた。
-
 そして、同級生の禪院真希・狗巻 棘・パンダと出会い、乙骨はある決意をする。
-
 「生きてていいって自信が欲しいんだ」
 「僕は呪術高専で里香ちゃんの呪いを解きます」
-
 一方、乙骨たちの前にかつて一般人を大量虐殺し高専を追放された最悪の呪詛師・夏油 傑が現れる。
-
 「来たる12月24日 我々は百鬼夜行を行う」
-
 呪術師だけの楽園を標榜する夏油は、非術師を殲滅させんと、ついに新宿・京都に千の呪いを放ち――
-
 果たして、乙骨は夏油を止められるのか、
 そして、里香の解呪の行方は‥‥。`,
         youtubeUrl: "https://youtube.com/embed/h3YKB_XWcb4",
         links: [
           { text: "公式サイト", url: "https://jujutsukaisen-movie.jp/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81602834" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0078792" },
           { text: "Hulu", url: "https://hulu.jp/jujutsu-kaisen-0" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/81602834" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "drkoto",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00089/SID0089696.png?p=W320",
+    series: [
+      {
+        tabName: "Dr. コトー診療所",
+        title: "Dr. コトー診療所",
+        thumb: "https://i.fod.fujitv.co.jp/imf/synth/h=540/img/program/4238/4238_a.jpg",
+        description: 
+`『Ｄｒ．コトー診療所』は、離島医療に情熱をかけ、命の尊さに執着する青年医師、五島健助の熱い闘いを描きます。
+人間関係が希薄な都市と違い、島民がみな家族と言われるほど、人の結びつきが強い共同体を舞台に、親子、夫婦、友人といった人と人とのつながりを深く見つめて行きます。
+島には、手つかずの自然が息づき、そのすばらしさとともに、漁業など自然の恩恵にも預っている。
+しかし同時に、自然の厳しさと共存していかなくてはならない島の生活があり、そこには、愛も憎しみも孤独も喜びも、すべてイキのいい直球勝負の感動があるのです。
+満足な医療設備も整わない孤島の診療所にもかかわらず、健助は、決してあきらめません。
+どんな困難なオペにも、そのテクニックと情熱で立ち向かいます。
+「病気を見ずに、人を見ろ！人が人を治すんだ。」
+医療の原点。
+人が生きていくという事。
+『Ｄｒ．コトー診療所』は、病気、命、家族といった普遍的テーマを、濃密な人間関係、手つかずな大自然が残る南海の孤島を舞台に描く、スケールの大きなヒューマンドラマです。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://fujitv.co.jp/b_hp/kotoh/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81947201" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/4238/" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "miu404",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14999/14999.jpg?p=W320",
+    series: [
+      {
+        tabName: "MIU404",
+        title: "MIU404",
+        thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14999/14999.jpg",
+        description: 
+`考える前に行動してしまう野性的な男と、観察力にたけた理性的な男。対照的な2人の刑事が警視庁"機動捜査隊"でバディを組んで、24時間という限られた時間の中で犯人逮捕にすべてを懸ける。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://tbs.co.jp/MIU404_TBS/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0CH3S25WH" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81423571" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0058296" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "rookies",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/12072/12072.jpg?p=W320",
+    series: [
+      {
+        tabName: "ROOKIES",
+        title: "ROOKIES",
+        thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/12072/12072.jpg",
+        description: 
+`将来に希望を抱けず、自分が何をしたいのかも分からない現代の若者たち。
+そんな彼らに「この世は希望だらけだ」「夢を持つ人間をバカにするな」と叱ってくれる先生がいる。
+彼の名は、川藤幸一。希望に燃える新任教師である。
+舞台となる高校では、野球部が試合中に起きた不祥事により活動停止状態になってしまう。教師に裏切られ、責任をとらされた野球部員は、何よりも夢を大切にし、生徒のためなら職を捨てる覚悟の川藤と本音でぶつかりながら、まだ夢を捨てていない、捨てたくないという心の叫び声をあげる…。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://tbs.co.jp/rookies08/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0DT7SKKT8" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81781593" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0003622" },
         ],
       },
     ]
