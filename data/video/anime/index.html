@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Anime List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <base target="_blank">
     <link rel="stylesheet" type="text/css" href="/personal/style-basic.css" media="all">
     <link rel="stylesheet" type="text/css" href="/personal/data/video/style.css" media="all">
@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&family=Zen+Kaku+Gothic+New:wght@500&display=swap" rel="stylesheet">
   </head>
   <!-- body -->
-  <body oncontextmenu="return false">
+  <body>
     <!-- header -->
     <div class="header">
       <img class="logo" src="https://lh3.googleusercontent.com/d/1fo-BbGyzw9qhWioJYo-NGvuBYQDDlfJ_" alt="jinta.1066">
@@ -25,18 +25,6 @@
       <div class="main_heading"><h1 class="heading">Anime List</h1></div>
       <!-- content -->
       <div class="main_content">
-        <nav class="main_nav">
-          <h2>ON AIR</h2>
-          <span class="">現在、放送中のアニメはありません。</span>
-          <!-- memo -->
-          <dl class="main_dl_noopen no">
-            <dt><a href="">
-              <img src="">
-              <span>Noopen</span>
-            </a></dt>
-          </dl>
-        </nav>
-        <!-- all -->
         <nav class="main_nav">
           <h2>All</h2>
           <dl class="main_dl_open">
@@ -136,21 +124,6 @@
             </dd>
           </dl>
           <dl class="main_dl_open">
-            <input id="main_con_spy" type="checkbox">
-            <label for="main_con_spy">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00232/SID0232885.png?p=W320">
-                <span>SPY×FAMILY</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://spy-family.net/tvseries/episodes/index_season1.php">SPY×FAMILY Season1</a></li>
-                <li><a href="https://spy-family.net/tvseries/episodes/index_season2.php">SPY×FAMILY Season2</a></li>
-                <li><a href="https://spy-family.net/tvseries/episodes/index.php">SPY×FAMILY Season3</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
             <input id="main_con_no8" type="checkbox">
             <label for="main_con_no8">
               <dt><a>
@@ -165,35 +138,6 @@
             </dd>
           </dl>
           <dl class="main_dl_open">
-            <input id="main_con_sakamoto" type="checkbox">
-            <label for="main_con_sakamoto">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00163/SID0163171.png?p=W320">
-                <span>SAKAMOTO DAYS</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://sakamotodays.jp/">SAKAMOTO DAYS Season1</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_to-reve" type="checkbox">
-            <label for="main_con_to-reve">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00091/SID0091712.png?p=W320">
-                <span>東京リベンジャーズ</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://tokyo-revengers-anime.com/story/">東京リベンジャーズ 血のハロウィン編</a></li>
-                <li><a href="https://tokyo-revengers-anime.com/story/">東京リベンジャーズ 聖夜決戦編</a></li>
-                <li><a href="https://tokyo-revengers-anime.com/story/">東京リベンジャーズ 天竺編</a></li>
-                <li class="no"><a href="https://tokyo-revengers-anime.com/story/">東京リベンジャーズ 三天戦争編</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
             <input id="main_con_aonohako" type="checkbox">
             <label for="main_con_aonohako">
               <dt><a>
@@ -204,20 +148,6 @@
               <ul>
                 <li><a href="https://aonohako-anime.com/">アオのハコ</a></li>
                 <li class="no"><a href="">アオのハコ 第2期</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_bluelock" type="checkbox">
-            <label for="main_con_bluelock">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00157/SID0157091.png?p=W320">
-                <span>ブルーロック</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://tv.bluelock-pr.com/tv1st/">ブルーロック</a></li>
-                <li><a href="https://tv.bluelock-pr.com/">ブルーロック vs. U-20 JAPAN</a></li>
               </ul>
             </dd>
           </dl>
@@ -249,41 +179,11 @@
               </ul>
             </dd>
           </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_boukyaku" type="checkbox">
-            <label for="main_con_boukyaku">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00100/SID0100046.png?p=W320">
-                <span>忘却バッテリー</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://boukyaku-battery.com/">忘却バッテリー</a></li>
-                <li class="no"><a href="">忘却バッテリー 第2期</a></li>
-              </ul>
-            </dd>
-          </dl>
           <dl class="main_dl_noopen">
             <dt><a href="https://ai-no-idenshi.com/">
               <img src="https://imgc.nxtv.jp/img/info/tit/00087/SID0087605.png?p=W320">
               <span>AIの遺伝子</span>
             </a></dt>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_dm-lost" type="checkbox">
-            <label for="main_con_dm-lost">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00165/SID0165716.png?p=W320">
-                <!-- img src="https://imgc.nxtv.jp/img/info/tit/00251/SID0251576.png?p=W320" -->
-                <span>DUEL MASTERS LOST</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://shopro.co.jp/anime/duelmasters_lost/">DUEL MASTERS LOST ～追憶の水晶～</a></li>
-                <li><a href="https://shopro.co.jp/anime/duelmasters_lost/">DUEL MASTERS LOST ～月下の死神～</a></li>
-                <li class="no"><a href="https://shopro.co.jp/anime/duelmasters_lost/">DUEL MASTERS LOST ～忘却の太陽～</a></li>
-              </ul>
-            </dd>
           </dl>
           <dl class="main_dl_noopen">
             <dt><a href="https://anohana.jp/tv/">
@@ -291,42 +191,11 @@
               <span>あの日見た花の名前を僕達はまだ知らない。</span>
             </a></dt>
           </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_danmachi" type="checkbox">
-            <label for="main_con_danmachi">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00157/SID0157087.png?p=W320">
-                <span>ダンジョンに出会いを求めるのは間違っているだろうか</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://danmachi.com/danmachi/story/">ダンまち</a></li>
-                <li><a href="https://danmachi.com/danmachi2/story/">ダンまちⅡ</a></li>
-                <li><a href="https://danmachi.com/danmachi3/story/">ダンまちⅢ</a></li>
-                <li><a href="https://danmachi.com/danmachi4/story/">ダンまちⅣ</a></li>
-                <li class="no"><a href="https://danmachi.com/danmachi5/story/">ダンまちⅤ</a></li>
-              </ul>
-            </dd>
-          </dl>
           <dl class="main_dl_noopen">
             <dt><a href="https://anime-chi.jp/">
               <img src="https://imgc.nxtv.jp/img/info/tit/00166/SID0166163.png?p=W320">
               <span>チ。―地球の運動について―</span>
             </a></dt>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_beast" type="checkbox">
-            <label for="main_con_beast">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00052/SID0052906.png?p=W320">
-                <span>BEASTARS</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://bst-anime.com/">BEASTARS 第1期</a></li>
-                <li><a href="https://bst-anime.com/">BEASTARS 第2期</a></li>
-              </ul>
-            </dd>
           </dl>
           <dl class="main_dl_open">
             <input id="main_con_osama" type="checkbox">
@@ -352,23 +221,6 @@
             <dd>
               <ul>
                 <li><a href="https://g-witch.net/">機動戦士ガンダム 水星の魔女</a></li>
-                <li><a href="https://gundam.info/feature/gquuuuuux/">機動戦士Gundam GQuuuuuuX</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_eupho" type="checkbox">
-            <label for="main_con_eupho">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00100/SID0100045.png?p=W320">
-                <span>響け！ユーフォニアム</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://tv.anime-eupho.com/">響け！ユーフォニアム</a></li>
-                <li><a href="https://tv2nd.anime-eupho.com/">響け！ユーフォニアム２</a></li>
-                <li><a href="https://ensemble.anime-eupho.com/">特別編 響け！ユーフォニアム～アンサンブルコンテスト～</a></li>
-                <li><a href="https://tv3rd.anime-eupho.com/">響け！ユーフォニアム３</a></li>
               </ul>
             </dd>
           </dl>
@@ -383,21 +235,6 @@
               <ul>
                 <li><a href="https://aooke-anime.com/story/season1/">青のオーケストラ</a></li>
                 <li><a href="https://aooke-anime.com/story/">青のオーケストラ 第2期</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_sentai" type="checkbox">
-            <label for="main_con_sentai">
-              <dt><a>
-                <img src="https://image-cf.kddi-video.com/3e4/3e4ee2e3272402e6bb3d6d40fc2e66da/fit-background-transparent/1744791542/285x160.png">
-                <!-- img src="https://m.media-amazon.com/images/S/pv-target-images/7af2d973a05d12553d79c73f5c9e9566a698620e8df8b48487550ac40a47a710._SX320_.jpg" -->
-                <span>戦隊大失格</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://sh-anime.shochiku.co.jp/anime-sentai-daishikkaku/">戦隊大失格 1st Season</a></li>
-                <li class="no"><a href="https://sh-anime.shochiku.co.jp/anime-sentai-daishikkaku/">戦隊大失格 2nd Season</a></li>
               </ul>
             </dd>
           </dl>
@@ -420,21 +257,9 @@
             </a></dt>
           </dl>
           <dl class="main_dl_noopen">
-            <dt><a href="https://hikanatsu-anime.com/">
-              <img src="https://image.p-c2-x.abema-tv.com/image/series/218-757/thumb.png?width=320">
-              <span>光が死んだ夏</span>
-            </a></dt>
-          </dl>
-          <dl class="main_dl_noopen">
             <dt><a href="https://city-the-animation.com/">
               <img src="https://m.media-amazon.com/images/S/pv-target-images/5e9d1d550fe0b99ed536d003634c097c268a9f251ef30f49d230cdfb5a259151._SX320_.png">
               <span>CITY THE ANIMATION</span>
-            </a></dt>
-          </dl>
-          <dl class="main_dl_noopen">
-            <dt><a href="https://karaoke-muchusa.com/">
-              <img src="https://imgc.nxtv.jp/img/info/tit/00200/SID0200141.png?p=W320">
-              <span>カラオケ行こ！</span>
             </a></dt>
           </dl>
           <dl class="main_dl_noopen">
@@ -448,37 +273,6 @@
               <img src="https://imgc.nxtv.jp/img/info/tit/00052/SID0052910.png?p=W320">
               <span>SK∞ エスケーエイト</span>
             </a></dt>
-          </dl>
-          <dl class="main_dl_noopen">
-            <dt><a href="https://darwinsincident.net/">
-              <img src="https://m.media-amazon.com/images/S/pv-target-images/d6d7f7befd5f1eb592df055bf5f7eac7ac1e095b27afedde8c520d6b17e03bb8._SX320_.jpg">
-              <span>ダーウィン事変</span>
-            </a></dt>
-          </dl>
-          <dl class="main_dl_noopen">
-            <dt><a href="https://www.evangelion.jp/neon_genesis.html">
-              <img src="https://imgc.nxtv.jp/img/info/tit/00002/SID0002228.png?p=W320">
-              <span>新世紀エヴァンゲリオン</span>
-            </a></dt>
-          </dl>
-          <dl class="main_dl_open">
-            <input id="main_con_natsume" type="checkbox">
-            <label for="main_con_natsume">
-              <dt><a>
-                <img src="https://imgc.nxtv.jp/img/info/tit/00157/SID0157072.png?p=W320">
-                <span>夏目友人帳</span>
-              </a></dt></label>
-            <dd>
-              <ul>
-                <li><a href="https://www.natsume-anime.jp/introduction/series1">夏目友人帳</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series2">続 夏目友人帳</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series3">夏目友人帳 参</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series4">夏目友人帳 肆</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series5">夏目友人帳 伍</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series6">夏目友人帳 陸</a></li>
-                <li><a href="https://www.natsume-anime.jp/introduction/series7">夏目友人帳 漆</a></li>
-              </ul>
-            </dd>
           </dl>
           <!-- memo -->
           <dl class="main_dl_noopen no">
