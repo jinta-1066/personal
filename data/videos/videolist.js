@@ -3,7 +3,7 @@ const videoData = [
     id: "anohana",
     categories: ["Movie", "Anime"],
     badge: "New",
-    thumb: "https://imgc.nxtv.jp/img/info/tit/00019/SID0019579.png?p=W320",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00002/SID0002144.png?p=W320",
     series: [
       {
         tabName: "あの日見た花の名前を僕達はまだ知らない",
@@ -105,7 +105,7 @@ const videoData = [
     id: "evangelion",
     categories: ["Movie"],
     badge: "",
-    thumb: "https://imgc.nxtv.jp/img/info/tit/00071/SID0071609.png?p=W320",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042410.png?p=W320",
     series: [
       {
         tabName: "新世紀エヴァンゲリオン劇場版 Air／まごころを、君に",
@@ -351,12 +351,12 @@ const videoData = [
     id: "lookback",
     categories: ["Movie"],
     badge: "",
-    thumb: "https://images-fe.ssl-images-amazon.com/images/S/pv-target-images/f4768a321f6dc0bb6cb26806f9625a0d383405dd44711dad8735ee898be020ea._SX320_.jpg",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00242/SID0242285.png?p=W320",
     series: [
       {
         tabName: "ルックバック",
         title: "ルックバック",
-        thumb: "https://images-fe.ssl-images-amazon.com/images/S/pv-target-images/f4768a321f6dc0bb6cb26806f9625a0d383405dd44711dad8735ee898be020ea.jpg",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00242/SID0242285.png",
         description: 
 `学年新聞で４コマ漫画を連載している小学４年生の藤野。クラスメートから絶賛され、自分の画力に絶対の自信を持つ藤野だったが、ある日の学年新聞に初めて掲載された不登校の同級生・京本の４コマ漫画を目にし、その画力の高さに驚愕する。以来、脇目も振らず、ひたすら漫画を描き続けた藤野だったが、一向に縮まらない京本との画力差に打ちひしがれ、漫画を描くことを諦めてしまう。
 
@@ -399,7 +399,7 @@ const videoData = [
     id: "jujutsu",
     categories: ["Movie", "Anime"],
     badge: "",
-    thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png?p=W320",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050925.png?p=W320",
     series: [
       {
         tabName: "呪術廻戦",
@@ -484,7 +484,7 @@ const videoData = [
     id: "drkoto",
     categories: ["Drama"],
     badge: "",
-    thumb: "https://imgc.nxtv.jp/img/info/tit/00089/SID0089696.png?p=W320",
+    thumb: "https://i.fod.fujitv.co.jp/imf/synth/h=540/img/program/4238/4238_a.jpg",
     series: [
       {
         tabName: "Dr. コトー診療所",
