@@ -1,10 +1,36 @@
 const videoData = [
   {
     id: "anohana",
-    categories: ["Movie"],
+    categories: ["Movie", "Anime"],
     badge: "New",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00019/SID0019579.png?p=W320",
     series: [
+      {
+        tabName: "あの日見た花の名前を僕達はまだ知らない",
+        title: "あの日見た花の名前を僕達はまだ知らない",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00002/SID0002144.png",
+        description: 
+`昔は仲良しだった幼馴染たち。
+でも、高校生になった彼らの距離はいつの間にか離れてしまっていた。
+
+ヒキコモリぎみの主人公“じんたん”。
+ギャル友達に流され気味の“あなる”。
+進学校に通う“ゆきあつ”と“つるこ”。
+高校に進学せず旅を重ねる“ぽっぽ”。
+そして、仲良しだった小学生の頃から、それぞれが変わっていく中で変わらない少女“めんま”。
+
+ある日、“お願いを叶えて欲しい”とじんたんにお願いをするめんま。
+困りながらも“めんまのお願い”を探るじんたん。
+
+そのめんまの願い事がきっかけとなり、それぞれの領域でそれぞれの生活を送っていた幼馴染達は再びかつてのように集まりはじめる。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://anohana.jp/tv/" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0002144" },
+          { text: "Hulu", url: "https://hulu.jp/anohana-the-flower-we-saw-that-day" },
+          { text: "Abema", url: "https://abema.tv/video/title/19-105" },
+        ],
+      },
       {
         tabName: "劇場版 あの日見た花の名前を僕達はまだ知らない",
         title: "劇場版 あの日見た花の名前を僕達はまだ知らない",
@@ -87,7 +113,7 @@ const videoData = [
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042410.png",
         description: 
 `人為的なサードインパクトに失敗したゼーレはネルフに攻撃を仕掛けてきた。絶望的状況の中、母の存在、自己の存在を確認したアスカが復活、反撃を開始。しかし、初号機に搭乗したシンジの見たモノは、無惨な残骸となったアスカの弐号機だった。`,
-        youtubeUrl: "https://youtube.com/embed/xZM_zcnAhaI",
+        youtubeUrl: "",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/24247" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0FHZVYLBK" },
@@ -101,7 +127,7 @@ const videoData = [
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042409.png",
         description: 
 `西暦2000年、南極大陸で行われた実験は、人類に壊滅的打撃を与えた。このカタストロフィを、人々はセカンド・インパクトと呼んだ。地球の地軸はねじ曲がり、世界人口は激減した。それから15年後、人類は再び試練の時を迎える。`,
-        youtubeUrl: "https://youtube.com/embed/X_WjugkUWco",
+        youtubeUrl: "",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/15372" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0HBHM4W9V" },
@@ -126,7 +152,7 @@ const videoData = [
 「人類補完計画」の真実とは？
 
 すべての謎の鍵を握る碇ゲンドウは、シンジの苦闘をじっと見つめている……。`,
-        youtubeUrl: "https://youtube.com/embed/gVp9DEbrygE",
+        youtubeUrl: "",
         links: [
           { text: "公式サイト", url: "https://evangelion.jp/1_0/" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0038838" },
@@ -145,7 +171,7 @@ const videoData = [
 謎の敵性体“使徒”とEVAシリーズの戦いは新エヴァンゲリオン仮設5号機の参加で、さらに激しくエスカレートしていく。
 スクリーンに続々と展開する、誰も見たことのないバトルシーン。
 驚異のスペクタクルの興奮は、未知の物語へとつながっていく。`,
-        youtubeUrl: "https://youtube.com/embed/P9e5HubWXI0",
+        youtubeUrl: "",
         links: [
           { text: "公式サイト", url: "https://evangelion.jp/2_0/" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0038839" },
@@ -159,7 +185,7 @@ const videoData = [
         thumb: "https://imgc.nxtv.jp/img/info/tit/00044/SID0044609.png",
         description: 
 `アスカのEVA改2号機とマリのEVA8号機は、静止衛星軌道上で“US作戦”を実行していた。円盤状のEVA Mark.04と激戦の末、初号機とシンジを奪いとるミッションだ。ようやく目ざめたシンジの前には、思いがけない知人らの姿があった。そこは14年の歳月がたっており、ミサトやリツコら元ネルフの職員は、新たなクルーを加えて反ネルフ組織“ヴィレ”を結成していた。戦艦AAAヴンダーを起動し、襲撃してきたEVA Mark.04の群れを退けた“ヴィレ”。初号機から復活できたのはシンジひとりで、綾波レイは発見されなかった。だがEVA Mark.09がシンジ奪還のため急襲をしかけ、レイの声を聞いたシンジはヴンダーから去って、ネルフ本部へと向かった。`,
-        youtubeUrl: "https://youtube.com/embed/AnLnr_50jq8",
+        youtubeUrl: "",
         links: [
           { text: "公式サイト", url: "https://www.evangelion.jp/3_0/" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0044609" },
@@ -370,11 +396,29 @@ const videoData = [
     ]
   },
   {
-    id: "juju0",
-    categories: ["Movie"],
+    id: "jujutsu",
+    categories: ["Movie", "Anime"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png?p=W320",
     series: [
+      {
+        tabName: "呪術廻戦",
+        title: "呪術廻戦",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050925.png",
+        description: 
+`少年は戦う――「正しい死」を求めて
+辛酸・後悔・恥辱　人間が生む負の感情は呪いと化し日常に潜む 呪いは世に蔓延る禍源であり、最悪の場合、人間を死へと導く　そして、呪いは呪いでしか祓えない
+驚異的な身体能力を持つ、少年・虎杖悠仁はごく普通の高校生活を送っていたが、ある日“呪い”に襲われた学友を救うため、特級呪物“両面宿儺の指”を喰らい、己の魂に呪いを宿してしまう
+呪いである“両面宿儺”と肉体を共有することとなった虎杖は、最強の呪術師である五条 悟の案内で、対呪い専門機関である「東京都立呪術高等専門学校」へと編入することになり.....
+呪いを祓うべく呪いを宿した少年の後戻りのできない、壮絶な物語が廻りだす―`,
+        youtubeUrl: "https://youtube.com/embed/xLveUtkjixs",
+        links: [
+          { text: "公式サイト", url: "https://jujutsukaisen.jp/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0CB1XZBW5" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81278456 },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050925" },
+        ],
+      },
       {
         tabName: "劇場版 呪術廻戦 0",
         title: "劇場版 呪術廻戦 0",
@@ -398,6 +442,40 @@ const videoData = [
           { text: "Netflix", url: "https://netflix.com/jp/title/81602834" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0078792" },
           { text: "Hulu", url: "https://hulu.jp/jujutsu-kaisen-0" },
+        ],
+      },
+      {
+        tabName: "呪術廻戦 懐玉・玉折/渋谷事変",
+        title: "呪術廻戦 懐玉・玉折/渋谷事変",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00087/SID0087615.png",
+        description: 
+`2018年10月、特級呪霊による交流会の襲撃以降呪術高専内の緊張が高まる中、ついに内通者の正体が判明する。果たして内通者は誰なのか、その目的とは!?
+そして、2018年10月31日。ハロウィンで賑わう渋谷駅周辺に突如“帳”が降ろされ大勢の一般人が閉じ込められる。
+“一般人のみが閉じ込められる帳”という高度な結界術に加え、一般人を介して告げられた「五条 悟を連れてこい」という指名から、上層部は被害を最小限に抑えるために五条単独での渋谷平定を決定する。
+罠を仕掛け待ち構える夏油や真人ら呪詛師・呪霊達、そこに単独で乗り込む五条、さらには“帳”の外側に集結した虎杖、伏黒、釘崎、七海、そして数多くの呪術師たち。
+渋谷に集結した呪術師VS.呪詛師・呪霊のかつてない大規模な呪い合いがついに始まる!`,
+        youtubeUrl: "https://youtube.com/embed/O6qVieflwqs",
+        links: [
+          { text: "公式サイト", url: "https://jujutsukaisen-movie.jp/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0H45DCWW7" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81278456" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0087615" },
+        ],
+      },
+      {
+        tabName: "呪術廻戦 死滅回游 前編",
+        title: "呪術廻戦 死滅回游 前編",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00249/SID0249078.png",
+        description: 
+`廻れ呪え 死の遊戯の中で「渋谷事変」を経て、夏油 傑(加茂憲倫)により呪霊が蔓延る魔窟と化した全国10の結界（コロニー）。戦いは、史上最悪の術師・加茂憲倫が仕組んだ呪術を持つ者達による殺し合い「死滅回游」へ。
+加速していく混沌の中、伏黒の姉・津美紀が巻き込まれたことが発覚する。五条の復活と津美紀救出の術を見出すべく動く虎杖たちだが…。
+果たして、羂索の目的は何なのか。「死滅回游」平定のためゲームに参加し、再び廻る彼らの行き着く先とは―。`,
+        youtubeUrl: "https://youtube.com/embed/ruX3rIj3--w",
+        links: [
+          { text: "公式サイト", url: "https://jujutsukaisen-movie.jp/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0H8NNL3Z2" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81278456" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0249078" },
         ],
       },
     ]
