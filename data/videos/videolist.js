@@ -20,8 +20,8 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/8c7qL8o9BYo",
         links: [
           { text: "公式サイト", url: "https://anohana.jp/" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/70299545" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0019579" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/6a58/" },
           { text: "Abema", url: "https://abema.tv/video/title/19-106" },
         ],
       },
@@ -68,9 +68,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/Px1htzPeYCc",
         links: [
           { text: "公式サイト", url: "https://soraaoproject.jp/" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/81427482" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0049095" },
           { text: "Hulu", url: "https://hulu.jp/her-blue-sky" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/c942/" },
         ],
       },
     ]
@@ -82,7 +82,7 @@ const videoData = [
     thumb: "https://imgc.nxtv.jp/img/info/tit/00071/SID0071609.png?p=W320",
     series: [
       {
-        tabName: "Air/まごころを、君に",
+        tabName: "新世紀エヴァンゲリオン劇場版 Air／まごころを、君に",
         title: "新世紀エヴァンゲリオン劇場版 Air／まごころを、君に",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042410.png",
         description: 
@@ -90,13 +90,13 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/xZM_zcnAhaI",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/24247" },
-          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0042410" },
-          { text: "Hulu", url: "https://hulu.jp/the-end-of-evangelion" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0FHZVYLBK" },
           { text: "Netflix", url: "https://netflix.com/jp/title/60024788" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0042410" },
         ],
       },
       {
-        tabName: "DEATH(TRUE)²",
+        tabName: "新世紀エヴァンゲリオン劇場版 DEATH(TRUE)²",
         title: "新世紀エヴァンゲリオン劇場版 DEATH(TRUE)²",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042409.png",
         description: 
@@ -104,13 +104,13 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/X_WjugkUWco",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/15372" },
-          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0042409" },
-          { text: "Hulu", url: "https://hulu.jp/evangelion-death-true-2" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0HBHM4W9V" },
           { text: "Netflix", url: "https://netflix.com/jp/title/81033473" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0042409" },
         ],
       },
       {
-        tabName: "新劇場版：序",
+        tabName: "ヱヴァンゲリヲン新劇場版：序",
         title: "ヱヴァンゲリヲン新劇場版：序",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00038/SID0038838.png",
         description: 
@@ -135,7 +135,7 @@ const videoData = [
         ],
       },
       {
-        tabName: "新劇場版：破",
+        tabName: "ヱヴァンゲリヲン新劇場版：破",
         title: "ヱヴァンゲリヲン新劇場版：破",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00038/SID0038839.png",
         description: 
@@ -154,7 +154,7 @@ const videoData = [
         ],
       },
       {
-        tabName: "新劇場版：Ｑ",
+        tabName: "ヱヴァンゲリヲン新劇場版：Ｑ",
         title: "ヱヴァンゲリヲン新劇場版：Ｑ",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00044/SID0044609.png",
         description: 
@@ -168,7 +168,7 @@ const videoData = [
         ],
       },
       {
-        tabName: "シン・エヴァンゲリオン",
+        tabName: "シン・エヴァンゲリオン劇場版",
         title: "シン・エヴァンゲリオン劇場版",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00071/SID0071609.png",
         description: 
@@ -198,7 +198,7 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/jcS7-PFS0cc",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/99768" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0C9RVQDD5" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0C9RVQDD5" },
           { text: "Netflix", url: "https://netflix.com/jp/title/82616555" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0088424" },
         ],
@@ -247,9 +247,9 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/becz_2qAwgo",
         links: [
           { text: "公式サイト", url: "https://yurusaretakodomotachi.w-lab.jp/" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0FLNGZGYQ" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050826" },
           { text: "Hulu", url: "https://hulu.jp/forgiven-children" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/717h/717h110001/" },
         ],
       },
     ]
@@ -269,7 +269,7 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/85NlHysDieI",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/68541" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0FLX43LWP" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0FLX43LWP" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0029456" },
           { text: "Hulu", url: "https://hulu.jp/kiseki-sobito-of-that-day-based-on-a-true-story" },
         ],
@@ -291,7 +291,7 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/2Zk2P8XZvPM",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/79240" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0GXGTG3W2" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0GXGTG3W2" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0041630" },
           { text: "Hulu", url: "https://hulu.jp/ai-uta-my-promise-to-nakuhito" },
         ],
@@ -314,7 +314,7 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/tTjg97dbOGI",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/60451" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0GQ529ZH3" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0GQ529ZH3" },
           { text: "FOD", url: "https://fod.fujitv.co.jp/title/6t03/6t03110001/" },
           { text: "Abema", url: "https://abema.tv/video/title/482-22" },
         ],
@@ -362,7 +362,7 @@ const videoData = [
         youtubeUrl: "https://youtube.com/embed/DFTMDcD2BOE",
         links: [
           { text: "filmarks", url: "https://filmarks.com/movies/82708" },
-          { text: "PrimeVideo", url: "https://amazon.co.jp/gp/video/detail/B0B857B1J8" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0B857B1J8" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0047761" },
           { text: "Hulu", url: "https://hulu.jp/family-of-strangers" },
         ],
@@ -376,7 +376,7 @@ const videoData = [
     thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png?p=W320",
     series: [
       {
-        tabName: "呪術廻戦 0",
+        tabName: "劇場版 呪術廻戦 0",
         title: "劇場版 呪術廻戦 0",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png",
         description: 
