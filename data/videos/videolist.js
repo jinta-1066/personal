@@ -557,6 +557,242 @@ const videoData = [
       },
     ]
   },
+  {
+    id: "avalanche",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://imgc.nxtv.jp/img/info/tit/00061/SID0061717.png?p=W320",
+    series: [
+      {
+        tabName: "アバランチ",
+        title: "アバランチ",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00061/SID0061717.png",
+        description: 
+`政治家、官僚、大企業といった富と権力を持った“強者”だけではなく、一般市民においてもモラルハザードが叫ばれて久しい令和の日本を舞台に、主人公・羽生誠一（綾野剛）が所属する謎に包まれた集団・アバランチの過激かつ痛快な活躍を描き、令和ニッポンで暮らす人々の正義感に訴えかける劇場型ピカレスク・エンターテインメント`,
+        youtubeUrl: "https://youtube.com/embed/Cirk2TXsN7c",
+        links: [
+          { text: "公式サイト", url: "https://www.fujitv.co.jp/b_hp/A/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0DN1DJX9X" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81568895" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0061717" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "conpaji",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/65c800ff-ffc9-4b06-a2a6-f08ac3a9f7fb.jpg?w=320",
+    series: [
+      {
+        tabName: "コントが始まる",
+        title: "コントが始まる",
+        thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/65c800ff-ffc9-4b06-a2a6-f08ac3a9f7fb.jpg",
+        description: 
+`「人生」とは壮大な…「コント (喜劇)」である!? それはある売れないトリオによる、取り留めのないショートコント…。しかし実はそのコント、――後に起きる53分の物語の〇〇〇だった!!
+本日、夢を諦め解散を決意した「コント師」の3人の男たち。数年勤めた一流会社をドロップアウトし抜け殻のようになった姉。その姉の世話を言い訳に目標もなく夜の街で働く妹。
+20代後半。誰もが指さす「大敗」のド渦中にいる男女5人。――だがそれは煌めく未来への大いなる「前フリ」なのかもしれない!?
+さぁ笑って泣いて、俯いた「前フリ」回収する群像劇が始まる!!`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://ntv.co.jp/conpaji/" },
+          { text: "コントが始まる", url: "https://hulu.jp/lifes-punchline" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "nanbamg5",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://m.media-amazon.com/images/S/pv-target-images/1e85054854d9589f81d9603ee3b28c86680ea63d5a37d65dd6a18a5b14be4991._SX320_.jpg",
+    series: [
+      {
+        tabName: "ナンバMG5",
+        title: "ナンバMG5",
+        thumb: "https://m.media-amazon.com/images/S/pv-target-images/1e85054854d9589f81d9603ee3b28c86680ea63d5a37d65dd6a18a5b14be4991.jpg",
+        description: 
+`最強ヤンキーの夢は、普通の高校生活だった――
+筋金入りのヤンキー一家“難破（なんば）家”の次男・剛（つよし／間宮祥太朗）が、実は「ヤンキーをやめたい」「普通の高校生になりたい」と、家族に内緒で健全な高校に入学するという＜高校“逆”デビュー＞物語。
+家族の前では特攻服を着たバリバリのヤンキー剛は、学校では制服を着た真面目な高校生という二重生活をスタート。学校では優等生として美術部に入部するのですが、いじめられている友人を放っておけず、つい特攻服に着替えて助けたことをきっかけに、正体不明の最強ヤンキーとしてどんどんのし上がってしまうという波瀾（はらん）万丈なストーリー。
+誰にも言えない秘密を抱えながら、憧れだった普通の高校生活を送ることは出来るのでしょうか？“制服⇔特攻服”という変身ヒーローもののような痛快コメディー要素だけではなく、二重生活から生じる人間関係の亀裂、そして苦悩…。しかしそこから生まれる友情・家族愛までを描く全く新しい青春ヤンキードラマ！`,
+        youtubeUrl: "https://youtube.com/embed/G4ahdEVTDSg",
+        links: [
+          { text: "公式サイト", url: "https://www.fujitv.co.jp/nanbaMG5/" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/4z12/" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "noside-game",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14862/14862.jpg?p=W320",
+    series: [
+      {
+        tabName: "ノーサイド・ゲーム",
+        title: "ノーサイド・ゲーム",
+        thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14862/14862.jpg",
+        description: 
+`大手自動車メーカー「トキワ自動車」の中堅サラリーマン・君嶋隼人は出世レースの先頭に立ち幹部候補とまで言われていたが、上司が主導する企業買収に異を唱えた結果、左遷人事で府中工場に総務部長として赴任することに。意に染まない異動だが、これもサラリーマンの宿命。やるせない思いで赴任先の工場に赴いたところ、トキワ自動車ラグビーチーム「アストロズ」のゼネラルマネージャーを兼務するよう命じられる。かつては強豪チームだったアストロズだが、いまは成績不振にあえいでいた。こうして知識も経験もない君嶋にチーム再建という重荷が課せられた。低迷するラグビー部と出世の道を絶たれた君嶋の、再起をかけた戦いが始まる。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://www.tbs.co.jp/noside_game_tbs/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0B8LYL8FS" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81714792" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050396" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "old-rookie",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/21807/21807.jpg?p=W320",
+    series: [
+      {
+        tabName: "オールドルーキー",
+        title: "オールドルーキー",
+        thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/21807/21807.jpg",
+        description: 
+`主人公・新町亮太郎（しんまち・りょうたろう）は、底抜けに明るく、サッカーに人生をかけてきたプロサッカー選手。日本代表まで上り詰めて、決定的な場面でゴールも決めたが、その後は怪我の影響で低迷。まさに“記録より記憶に残る男”だった。その後、Ｊ３のチームに所属していたが、３７歳で突如現役引退に追い込まれてしまう。
+サッカー以外のスキルが全くない新町に襲いかかる「現実」――。
+
+「選手を辞めたら、どうやって生きていけばいいんだ！？」
+
+３７歳にして新人。社会人デビューとしてはあまりに遅すぎる新町が、どん底の中で出会ったのは“スポーツマネージメント会社「ビクトリー」”。スポーツマネージメントとは、現役アスリートの代理人やマネージメントを行う、いわば裏方。それでも、サッカーを心底愛していたし、スポーツを誰よりもリスペクトしているからこそ、新町はそこで働く決意をする。そして、何よりもサッカー選手だった自分を誇りに思ってくれていた娘たちのために。
+
+しかし、その娘たちには、引退したことを言えないでいる。
+でも、近い将来、娘たちに自信を持って引退したことを、セカンドキャリアを踏み出したことを言えるように、持ち前のポジティブ力と、サッカーで鍛えた直感力で突き進む決意をする。
+ただ、心のどこかでは “引退”が未だ受け入れられない自分がいて、現実の間で揺れ動いていく。
+そして、３７歳での新卒は簡単なものではなく、仕事でも大きな壁に直面する。
+彼が選ぶのはサッカーか新しい人生か――。`,
+        youtubeUrl: "https://youtube.com/embed/YZNa68-ELYw",
+        links: [
+          { text: "公式サイト", url: "https://www.tbs.co.jp/OLDROOKIE_tbs/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0BZZG2162" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81714717" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0088894" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "not-mystery",
+    categories: ["Drama", "Movie"],
+    badge: "",
+    thumb: "https://m.media-amazon.com/images/S/pv-target-images/ebd95acbf2a2645c25c14c76e8211aac87e871bdc825b5b87dede06127e146ce._SX320_.jpg",
+    series: [
+      {
+        tabName: "ミステリという勿れ",
+        title: "ミステリという勿れ",
+        thumb: "https://m.media-amazon.com/images/S/pv-target-images/ebd95acbf2a2645c25c14c76e8211aac87e871bdc825b5b87dede06127e146ce.jpg",
+        description: 
+`主人公・久能整（くのう・ととのう）は、天然パーマにコンプレックスを持つ、友だちも彼女もひとりもいない、カレーをこよなく愛する大学生。社会で「当たり前のこと」として流されていることに常に疑問を持ち、とことん考え抜く性格で、膨大な知識と独自の価値観による持論をあざやかに展開します。たとえ周囲で何が起きていようとも喋らずにはいられないため、「うざい、面倒くさい」と言われ続けて生きて来た青年です。
+
+そんな整がある日、身に覚えのない殺人事件の容疑をかけられることに。
+刑事たちから取り調べを受ける中、整は事件の裏に隠されたヒントや、刑事たちが抱えている悩みの存在に気づいていきます。そして、特に「事件を解決したい」という思いはないまま、ただただ思いつくことをマイペースに話すうちに、いつのまにか事件の謎だけでなく、人の心まで解きほぐしてしまうのです。`,
+        youtubeUrl: "https://youtube.com/embed/YC5zaqbSWo8",
+        links: [
+          { text: "公式サイト", url: "https://www.fujitv.co.jp/mystery/" },
+          { text: "FOD", url: "https://fod.fujitv.co.jp/title/4x65/" },
+        ],
+      },
+      {
+        tabName: "映画 ミステリという勿れ",
+        title: "映画 ミステリという勿れ",
+        thumb: "https://imgc.nxtv.jp/img/info/tit/00097/SID0097759.png",
+        description: 
+`天然パーマでおしゃべりな大学生・久能整は、美術展のために広島を訪れていた。そこで、犬堂我路の知り合いだという一人の女子高生・狩集汐路と出会う。
+「バイトしませんか。お金と命がかかっている。マジです。」そう言って汐路は、とあるバイトを整に持ちかける。それは、狩集家の莫大な遺産相続を巡るものだった。
+当主の孫にあたる、汐路、狩集理紀之助、波々壁新音、赤峰ゆらの4人の相続候補者たちと狩集家の顧問弁護士の孫・車坂朝晴は、遺言書に書かれた「それぞれの蔵においてあるべきものをあるべき所へ過不足なくせよ」というお題に従い、遺産を手にすべく、謎を解いていく。
+ただし先祖代々続く、この遺産相続はいわくつきで、その度に死人が出ている。汐路の父親も8年前に、他の候補者たちと自動車事故で死亡していたのだった…
+次第に紐解かれていく遺産相続に隠された＜真実＞。
+そしてそこには世代を超えて受け継がれる一族の＜闇と秘密＞があった――― 。`,
+        youtubeUrl: "https://youtube.com/embed/MFSfKuxAbBc",
+        links: [
+          { text: "公式サイト", url: "https://not-mystery-movie.jp/" },
+          { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0CPPKFXLZ" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81708094" },
+          { text: "U-NEXT", url: "https://video.unext.jp/title/SID0097759" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "3-a",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/18b54ccf-2845-47ad-91be-03b8cf703b17.jpg?w=320",
+    series: [
+      {
+        tabName: "3年A組 －今から皆さんは、人質です－",
+        title: "3年A組 －今から皆さんは、人質です－",
+        thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/18b54ccf-2845-47ad-91be-03b8cf703b17.jpg",
+        description: 
+`卒業まで残り10日―。生徒たちの高校生活は平穏に幕を閉じる…はずだった。だが、教師はその日、担当生徒29人を集めて、突然こう告げた。「今から皆さんは…僕の人質です」鳴り響く爆発音。騒然とする生徒たち。『教師=生徒』の関係は一言で『犯人=人質』へ変貌を遂げる。この瞬間から教師と29人の人質生徒による、『最後の授業』が始まった―。謎と事件が連鎖的に絡み合う、一人の教師の『最後の授業』! たった10日間という日々を描き、死ぬ気で生きる人々を紡ぐ超限定的連続ドラマ! 誰も想像していない衝撃的学園ミステリーがここに開幕! ―この真相を知るまで、誰も卒業なんかできない。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://ntv.co.jp/3A10/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81506844" },
+          { text: "Hulu", url: "https://hulu.jp/3a10" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "saikyo",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/98954dc6-45a6-4ded-8b5b-575f43aace8a.jpg?w=320",
+    series: [
+      {
+        tabName: "最高の教師　1年後、私は生徒に■された",
+        title: "最高の教師　1年後、私は生徒に■された",
+        thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/98954dc6-45a6-4ded-8b5b-575f43aace8a.jpg",
+        description: 
+`教師が生徒のために全てを賭けて向き合う。そんな熱い教育理念を持った者は最早今の時代、絶滅危惧種だ。SNSが発達し、生徒の生活領域を把握するのは不可能となった現代。生徒を叱ればパワハラと揶揄され、悩みを聞こうとすればモラハラと糾弾される今。生徒に近づけと言われる方が理不尽であり、そして生徒も誰もそれを望んでもいない。しかし、この教師は文字通り“死ぬ気”で生徒と向き合い、教育に励む。生徒が悲しみ悩む時、生徒が怒りを抱く時、全力でその問題と向き合い、そして、本気で“想い”を伝える。『君たちは、納得のいかない毎日を……“誰か”のせいにしてはいないか?』と。そんな“今は無き教師”像を体現する女教師。なぜならその教師は、1年後の卒業式の日、―――『生徒に殺される』未来を経験したからだ。`,
+        youtubeUrl: "",
+        links: [
+          { text: "公式サイト", url: "https://ntv.co.jp/saikyo/" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/82119591" },
+          { text: "Hulu", url: "https://hulu.jp/the-greatest-teacher" },
+        ],
+      },
+    ]
+  },
+  {
+    id: "toumei",
+    categories: ["Drama"],
+    badge: "",
+    thumb: "https://image.p-c2-x.abema-tv.com/image/series/90-2002/thumb.png?width=320",
+    series: [
+      {
+        tabName: "透明なわたしたち",
+        title: "透明なわたしたち",
+        thumb: "https://image.p-c2-x.abema-tv.com/image/series/90-2002/thumb.png",
+        description: 
+`「もしも凶悪事件の犯人が、高校時代の同級生だったらー」
+
+2024年渋谷。身元不明の⻘年が、ある凶悪事件を引き起こす。
+週刊誌ライターの主人公・碧（あおい）は、事件の犯人が高校の同級生ではないかと気付き、疎遠になっていたかつての仲間たちと再会。
+誰が、なぜ、事件を起こしたのか。
+高校時代を回想しながら、真相を追いかけていく。
+その中で鮮明な記憶として甦るのは、文化祭の日に起きたある事件。
+
+過去と現在、それぞれの事件が繋がり“真実”が紐解かれる、群像サスペンス。`,
+        youtubeUrl: "https://youtube.com/embed/_ItjF9C95aE",
+        links: [
+          { text: "公式サイト", url: "https://abema.tv/lp/toumeinawatashitachi-onair" },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81933671" },
+          { text: "Abema", url: "https://abema.tv/video/title/90-2002" },
+        ],
+      },
+    ]
+  },
 ];
 
 const template = [
