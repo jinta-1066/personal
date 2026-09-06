@@ -415,7 +415,7 @@ const videoData = [
         links: [
           { text: "公式サイト", url: "https://jujutsukaisen.jp/" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0CB1XZBW5" },
-          { text: "Netflix", url: "https://netflix.com/jp/title/81278456 },
+          { text: "Netflix", url: "https://netflix.com/jp/title/81278456" },
           { text: "U-NEXT", url: "https://video.unext.jp/title/SID0050925" },
         ],
       },
