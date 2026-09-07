@@ -1,12 +1,12 @@
 const videoData = [
   {
     id: "anohana",
-    categories: ["Movie", "Anime"],
     badge: "New",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00002/SID0002144.png?p=W320",
     series: [
       {
         tabName: "あの日見た花の名前を僕達はまだ知らない",
+        category: "Anime",
         title: "あの日見た花の名前を僕達はまだ知らない",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00002/SID0002144.png",
         description: 
@@ -33,6 +33,7 @@ const videoData = [
       },
       {
         tabName: "劇場版 あの日見た花の名前を僕達はまだ知らない",
+        category: "Movie",
         title: "劇場版 あの日見た花の名前を僕達はまだ知らない",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00019/SID0019579.png",
         description: 
@@ -55,12 +56,12 @@ const videoData = [
   },
   {
     id: "kokosake",
-    categories: ["Movie"],
     badge: "人気急上昇",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00030/SID0030438.png?p=W320",
     series: [
       {
         tabName: "心が叫びたがっているんだ。",
+        category: "Movie",
         title: "心が叫びたがっているんだ。",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00030/SID0030438.png",
         description: 
@@ -81,12 +82,12 @@ const videoData = [
   },
   {
     id: "soraao",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00049/SID0049095.png?p=W320",
     series: [
       {
         tabName: "空の青さを知る人よ",
+        category: "Movie",
         title: "空の青さを知る人よ",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00049/SID0049095.png",
         description: 
@@ -103,12 +104,12 @@ const videoData = [
   },
   {
     id: "evangelion",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042410.png?p=W320",
     series: [
       {
         tabName: "新世紀エヴァンゲリオン劇場版 Air／まごころを、君に",
+        category: "Movie",
         title: "新世紀エヴァンゲリオン劇場版 Air／まごころを、君に",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042410.png",
         description: 
@@ -123,6 +124,7 @@ const videoData = [
       },
       {
         tabName: "新世紀エヴァンゲリオン劇場版 DEATH(TRUE)²",
+        category: "Movie",
         title: "新世紀エヴァンゲリオン劇場版 DEATH(TRUE)²",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00042/SID0042409.png",
         description: 
@@ -137,6 +139,7 @@ const videoData = [
       },
       {
         tabName: "ヱヴァンゲリヲン新劇場版：序",
+        category: "Movie",
         title: "ヱヴァンゲリヲン新劇場版：序",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00038/SID0038838.png",
         description: 
@@ -162,6 +165,7 @@ const videoData = [
       },
       {
         tabName: "ヱヴァンゲリヲン新劇場版：破",
+        category: "Movie",
         title: "ヱヴァンゲリヲン新劇場版：破",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00038/SID0038839.png",
         description: 
@@ -181,6 +185,7 @@ const videoData = [
       },
       {
         tabName: "ヱヴァンゲリヲン新劇場版：Ｑ",
+        category: "Movie",
         title: "ヱヴァンゲリヲン新劇場版：Ｑ",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00044/SID0044609.png",
         description: 
@@ -195,6 +200,7 @@ const videoData = [
       },
       {
         tabName: "シン・エヴァンゲリオン劇場版",
+        category: "Movie",
         title: "シン・エヴァンゲリオン劇場版",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00071/SID0071609.png",
         description: 
@@ -211,12 +217,12 @@ const videoData = [
   },
   {
     id: "lageli",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00088/SID0088424.png?p=W320",
     series: [
       {
         tabName: "ラーゲリより愛を込めて",
+        category: "Movie",
         title: "ラーゲリより愛を込めて",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00088/SID0088424.png",
         description: 
@@ -233,12 +239,12 @@ const videoData = [
   },
   {
     id: "annokoto",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00167/SID0167824.png?p=W320",
     series: [
       {
         tabName: "あんのこと",
+        category: "Movie",
         title: "あんのこと",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00167/SID0167824.png",
         description: 
@@ -258,12 +264,12 @@ const videoData = [
   },
   {
     id: "forgivenchildren",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050826.png?p=W320",
     series: [
       {
         tabName: "許された子どもたち",
+        category: "Movie",
         title: "許された子どもたち",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050826.png",
         description: 
@@ -282,12 +288,12 @@ const videoData = [
   },
   {
     id: "kiseki",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00029/SID0029456.png?p=W320",
     series: [
       {
         tabName: "キセキ あの日のソビト",
+        category: "Movie",
         title: "キセキ あの日のソビト",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00029/SID0029456.png",
         description: 
@@ -304,12 +310,12 @@ const videoData = [
   },
   {
     id: "aiuta",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00041/SID0041630.png?p=W320",
     series: [
       {
         tabName: "愛唄 ―約束のナクヒト―",
+        category: "Movie",
         title: "愛唄 ―約束のナクヒト―",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00041/SID0041630.png",
         description: 
@@ -326,12 +332,12 @@ const videoData = [
   },
   {
     id: "hanachan",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://m.media-amazon.com/images/S/pv-target-images/df53a755932538c60447225a3717b345c19156792c84922dda43515cd6fc9c75._SX320_.jpg",
     series: [
       {
         tabName: "はなちゃんのみそ汁",
+        category: "Movie",
         title: "はなちゃんのみそ汁",
         thumb: "https://m.media-amazon.com/images/S/pv-target-images/df53a755932538c60447225a3717b345c19156792c84922dda43515cd6fc9c75.jpg",
         description: 
@@ -349,12 +355,12 @@ const videoData = [
   },
   {
     id: "lookback",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00242/SID0242285.png?p=W320",
     series: [
       {
         tabName: "ルックバック",
+        category: "Movie",
         title: "ルックバック",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00242/SID0242285.png",
         description: 
@@ -375,12 +381,12 @@ const videoData = [
   },
   {
     id: "heisabyoto",
-    categories: ["Movie"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00047/SID0047761.png?p=W320",
     series: [
       {
         tabName: "閉鎖病棟ーそれぞれの朝ー",
+        category: "Movie",
         title: "閉鎖病棟ーそれぞれの朝ー",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00047/SID0047761.png",
         description: 
@@ -397,12 +403,12 @@ const videoData = [
   },
   {
     id: "jujutsu",
-    categories: ["Movie", "Anime"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050925.png?p=W320",
     series: [
       {
         tabName: "呪術廻戦",
+        category: "Anime",
         title: "呪術廻戦",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00050/SID0050925.png",
         description: 
@@ -421,6 +427,7 @@ const videoData = [
       },
       {
         tabName: "劇場版 呪術廻戦 0",
+        category: "Movie",
         title: "劇場版 呪術廻戦 0",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00078/SID0078792.png",
         description: 
@@ -446,6 +453,7 @@ const videoData = [
       },
       {
         tabName: "呪術廻戦 懐玉・玉折/渋谷事変",
+        category: "Anime",
         title: "呪術廻戦 懐玉・玉折/渋谷事変",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00087/SID0087615.png",
         description: 
@@ -454,7 +462,7 @@ const videoData = [
 “一般人のみが閉じ込められる帳”という高度な結界術に加え、一般人を介して告げられた「五条 悟を連れてこい」という指名から、上層部は被害を最小限に抑えるために五条単独での渋谷平定を決定する。
 罠を仕掛け待ち構える夏油や真人ら呪詛師・呪霊達、そこに単独で乗り込む五条、さらには“帳”の外側に集結した虎杖、伏黒、釘崎、七海、そして数多くの呪術師たち。
 渋谷に集結した呪術師VS.呪詛師・呪霊のかつてない大規模な呪い合いがついに始まる!`,
-        youtubeUrl: "https://youtube.com/embed/O6qVieflwqs",
+        youtubeUrl: "https://youtube.com/embed/PKHQuQF1S8k",
         links: [
           { text: "公式サイト", url: "https://jujutsukaisen-movie.jp/" },
           { text: "PrimeVideo", url: "https://amazon.co.jp/dp/B0H45DCWW7" },
@@ -464,6 +472,7 @@ const videoData = [
       },
       {
         tabName: "呪術廻戦 死滅回游 前編",
+        category: "Anime",
         title: "呪術廻戦 死滅回游 前編",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00249/SID0249078.png",
         description: 
@@ -482,12 +491,12 @@ const videoData = [
   },
   {
     id: "drkoto",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://i.fod.fujitv.co.jp/imf/synth/h=540/img/program/4238/4238_a.jpg",
     series: [
       {
         tabName: "Dr. コトー診療所",
+        category: "Drama",
         title: "Dr. コトー診療所",
         thumb: "https://i.fod.fujitv.co.jp/imf/synth/h=540/img/program/4238/4238_a.jpg",
         description: 
@@ -512,12 +521,12 @@ const videoData = [
   },
   {
     id: "miu404",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14999/14999.jpg?p=W320",
     series: [
       {
         tabName: "MIU404",
+        category: "Drama",
         title: "MIU404",
         thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14999/14999.jpg",
         description: 
@@ -534,12 +543,12 @@ const videoData = [
   },
   {
     id: "rookies",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/12072/12072.jpg?p=W320",
     series: [
       {
         tabName: "ROOKIES",
+        category: "Drama",
         title: "ROOKIES",
         thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/12072/12072.jpg",
         description: 
@@ -559,12 +568,12 @@ const videoData = [
   },
   {
     id: "avalanche",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://imgc.nxtv.jp/img/info/tit/00061/SID0061717.png?p=W320",
     series: [
       {
         tabName: "アバランチ",
+        category: "Drama",
         title: "アバランチ",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00061/SID0061717.png",
         description: 
@@ -581,12 +590,12 @@ const videoData = [
   },
   {
     id: "conpaji",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/65c800ff-ffc9-4b06-a2a6-f08ac3a9f7fb.jpg?w=320",
     series: [
       {
         tabName: "コントが始まる",
+        category: "Drama",
         title: "コントが始まる",
         thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/65c800ff-ffc9-4b06-a2a6-f08ac3a9f7fb.jpg",
         description: 
@@ -597,19 +606,19 @@ const videoData = [
         youtubeUrl: "",
         links: [
           { text: "公式サイト", url: "https://ntv.co.jp/conpaji/" },
-          { text: "コントが始まる", url: "https://hulu.jp/lifes-punchline" },
+          { text: "Hulu", url: "https://hulu.jp/lifes-punchline" },
         ],
       },
     ]
   },
   {
     id: "nanbamg5",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://m.media-amazon.com/images/S/pv-target-images/1e85054854d9589f81d9603ee3b28c86680ea63d5a37d65dd6a18a5b14be4991._SX320_.jpg",
     series: [
       {
         tabName: "ナンバMG5",
+        category: "Drama",
         title: "ナンバMG5",
         thumb: "https://m.media-amazon.com/images/S/pv-target-images/1e85054854d9589f81d9603ee3b28c86680ea63d5a37d65dd6a18a5b14be4991.jpg",
         description: 
@@ -627,12 +636,12 @@ const videoData = [
   },
   {
     id: "noside-game",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14862/14862.jpg?p=W320",
     series: [
       {
         tabName: "ノーサイド・ゲーム",
+        category: "Drama",
         title: "ノーサイド・ゲーム",
         thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/14862/14862.jpg",
         description: 
@@ -649,12 +658,12 @@ const videoData = [
   },
   {
     id: "old-rookie",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/21807/21807.jpg?p=W320",
     series: [
       {
         tabName: "オールドルーキー",
+        category: "Drama",
         title: "オールドルーキー",
         thumb: "https://metac.nxtv.jp/img/info/video/0001512/tit/21807/21807.jpg",
         description: 
@@ -682,12 +691,12 @@ const videoData = [
   },
   {
     id: "not-mystery",
-    categories: ["Drama", "Movie"],
     badge: "",
     thumb: "https://m.media-amazon.com/images/S/pv-target-images/ebd95acbf2a2645c25c14c76e8211aac87e871bdc825b5b87dede06127e146ce._SX320_.jpg",
     series: [
       {
         tabName: "ミステリという勿れ",
+        category: "Drama",
         title: "ミステリという勿れ",
         thumb: "https://m.media-amazon.com/images/S/pv-target-images/ebd95acbf2a2645c25c14c76e8211aac87e871bdc825b5b87dede06127e146ce.jpg",
         description: 
@@ -703,6 +712,7 @@ const videoData = [
       },
       {
         tabName: "映画 ミステリという勿れ",
+        category: "Movie",
         title: "映画 ミステリという勿れ",
         thumb: "https://imgc.nxtv.jp/img/info/tit/00097/SID0097759.png",
         description: 
@@ -724,12 +734,12 @@ const videoData = [
   },
   {
     id: "3-a",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/18b54ccf-2845-47ad-91be-03b8cf703b17.jpg?w=320",
     series: [
       {
         tabName: "3年A組 －今から皆さんは、人質です－",
+        category: "Drama",
         title: "3年A組 －今から皆さんは、人質です－",
         thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/18b54ccf-2845-47ad-91be-03b8cf703b17.jpg",
         description: 
@@ -745,12 +755,12 @@ const videoData = [
   },
   {
     id: "saikyo",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/98954dc6-45a6-4ded-8b5b-575f43aace8a.jpg?w=320",
     series: [
       {
         tabName: "最高の教師　1年後、私は生徒に■された",
+        category: "Drama",
         title: "最高の教師　1年後、私は生徒に■された",
         thumb: "https://images.prod.hjholdings.tv/d3urerHm/uploads/98954dc6-45a6-4ded-8b5b-575f43aace8a.jpg",
         description: 
@@ -766,12 +776,12 @@ const videoData = [
   },
   {
     id: "toumei",
-    categories: ["Drama"],
     badge: "",
     thumb: "https://image.p-c2-x.abema-tv.com/image/series/90-2002/thumb.png?width=320",
     series: [
       {
         tabName: "透明なわたしたち",
+        category: "Drama",
         title: "透明なわたしたち",
         thumb: "https://image.p-c2-x.abema-tv.com/image/series/90-2002/thumb.png",
         description: 
@@ -798,12 +808,12 @@ const videoData = [
 const template = [
   {
     id: "",
-    categories: [""],
     badge: "",
     thumb: "",
     series: [
       {
         tabName: "",
+        category: "",
         title: "",
         thumb: "",
         description: 
